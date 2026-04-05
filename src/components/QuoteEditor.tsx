@@ -1380,14 +1380,6 @@ const QuoteEditor = ({ state: rawState, onChange, isPro = false }: QuoteEditorPr
   );
 };
 
-const UNIT_OPTIONS = [
-  { value: "px", label: "Pixels" },
-  { value: "cm", label: "Centimeters" },
-  { value: "in", label: "Inches" },
-  { value: "mm", label: "Millimeters" },
-] as const;
-
-type Unit = typeof UNIT_OPTIONS[number]["value"];
 
 const convertUnit = (value: number, from: Unit, to: Unit, dpi: number): number => {
   // Convert to pixels first
