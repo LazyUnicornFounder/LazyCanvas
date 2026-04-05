@@ -378,7 +378,7 @@ const QuotePreview = forwardRef<HTMLDivElement, QuotePreviewProps>(
             <div
               className="absolute bottom-0 right-0 z-20 font-heading"
               style={{
-                margin: "clamp(4px, 1.5%, 8px)",
+                margin: "clamp(8px, 3%, 16px)",
                 padding: "clamp(2px, 0.8%, 5px) clamp(4px, 1.2%, 8px)",
                 fontSize: "clamp(6px, 1.8%, 11px)",
                 backgroundColor: "rgba(0,0,0,0.55)",
