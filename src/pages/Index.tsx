@@ -348,10 +348,29 @@ const Index = () => {
                     placeholder="Your name"
                     className="w-full bg-transparent border border-border rounded-md px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-foreground/20 font-body"
                   />
+                  <div className="flex gap-2">
+                    <select
+                      value={socialPlatform}
+                      onChange={(e) => setSocialPlatform(e.target.value)}
+                      className="bg-transparent border border-border rounded-md px-2 py-2.5 text-xs text-foreground focus:outline-none focus:ring-1 focus:ring-foreground/20 font-body"
+                    >
+                      {SOCIAL_PLATFORMS.map((p) => (
+                        <option key={p.value} value={p.value} className="bg-card">
+                          {p.label}
+                        </option>
+                      ))}
+                    </select>
+                    <input
+                      value={socialUsername}
+                      onChange={(e) => setSocialUsername(e.target.value)}
+                      placeholder="username"
+                      className="flex-1 bg-transparent border border-border rounded-md px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-foreground/20 font-body"
+                    />
+                  </div>
                   <input
-                    value={socials}
-                    onChange={(e) => setSocials(e.target.value)}
-                    placeholder="@handle or website"
+                    value={website}
+                    onChange={(e) => setWebsite(e.target.value)}
+                    placeholder="website.com"
                     className="w-full bg-transparent border border-border rounded-md px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-foreground/20 font-body"
                   />
                 </div>
