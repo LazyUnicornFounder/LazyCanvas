@@ -38,15 +38,18 @@ const ASPECT_RATIOS: Record<string, number> = {
   "iphone-wallpaper": 1179/2556, "android-wallpaper": 1080/2400, "lock-screen": 1170/2532,
 };
 
-const getPreviewWidth = (aspectRatio: string, customW?: number, customH?: number): string => {
+const getPreviewContainerWidth = (aspectRatio: string, customW?: number, customH?: number): string => {
   let ratio = ASPECT_RATIOS[aspectRatio];
   if (aspectRatio === "custom" && customW && customH) ratio = customW / customH;
   if (!ratio) ratio = 1;
-  if (ratio >= 2) return "clamp(320px, 35vw, 450px)";
-  if (ratio >= 1.5) return "clamp(300px, 30vw, 400px)";
-  if (ratio >= 1) return "clamp(260px, 25vw, 340px)";
-  if (ratio >= 0.6) return "clamp(240px, 22vw, 300px)";
-  return "clamp(200px, 18vw, 260px)";
+  // Target: preview fills ~(100vh - 180px) in height
+  // width = availableHeight * ratio, capped at 500px, min 180px
+  // Available height ≈ window viewport minus header+padding (~180px)
+  // Use CSS clamp with vw approximation: 1vh ≈ aspect of height
+  const heightVh = 100; // vh units for available height
+  const offsetPx = 180;
+  // clamp(180px, (Hvh - offset) * ratio, 500px)
+  return `clamp(180px, calc((${heightVh}vh - ${offsetPx}px) * ${ratio.toFixed(4)}), 500px)`;
 };
 
 const Index = () => {
@@ -326,7 +329,7 @@ const Index = () => {
             </div>
           </div>
           {/* Preview — right */}
-          <div className="hidden lg:flex flex-shrink-0 flex-col gap-3 sticky top-6 self-start transition-all duration-300" style={{ width: getPreviewWidth(editorState.aspectRatio, editorState.customWidth, editorState.customHeight) }}>
+          <div className="hidden lg:flex flex-shrink-0 flex-col gap-3 sticky top-6 self-start transition-all duration-300" style={{ width: getPreviewContainerWidth(editorState.aspectRatio, editorState.customWidth, editorState.customHeight) }}>
             <div className="w-full overflow-hidden">
                 <QuotePreview
                   ref={previewRef}
