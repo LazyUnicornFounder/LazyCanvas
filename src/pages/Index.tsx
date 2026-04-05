@@ -63,6 +63,11 @@ const Index = () => {
     setEditorState(DEFAULT_EDITOR_STATE);
   };
 
+  // Scroll to top on mount (e.g. when navigating from marketing pages)
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   // Clear draft from localStorage once user is logged in and state is restored
   useEffect(() => {
     if (user) {
