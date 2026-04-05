@@ -14,7 +14,7 @@ import type {
 } from "@/components/QuotePreview";
 import type { ColoredWord } from "@/components/QuotePreview";
 
-const FORMAT_GROUPS: { label: string; options: { value: AspectRatio; label: string }[] }[] = [
+const DIGITAL_FORMAT_GROUPS: { label: string; options: { value: AspectRatio; label: string }[] }[] = [
   {
     label: "Instagram",
     options: [
@@ -78,6 +78,9 @@ const FORMAT_GROUPS: { label: string; options: { value: AspectRatio; label: stri
       { value: "2:1", label: "2:1" },
     ],
   },
+];
+
+const PHYSICAL_FORMAT_GROUPS: { label: string; options: { value: AspectRatio; label: string }[] }[] = [
   {
     label: "A-Series",
     options: [
