@@ -242,20 +242,39 @@ const QuoteEditor = ({ state, onChange }: QuoteEditorProps) => {
       {/* Font */}
       <div className="md:col-span-2">
         <ControlSection label="Font">
-          <div className="flex flex-wrap gap-2">
-            {FONT_OPTIONS.map((opt) => (
-              <button
-                key={opt.value}
-                onClick={() => set("font", opt.value)}
-                className={`px-4 py-2 text-sm rounded-md border transition-all ${opt.preview} ${
-                  state.font === opt.value
-                    ? "bg-foreground text-background border-foreground"
-                    : "border-border text-muted-foreground hover:text-foreground hover:border-foreground/30"
-                }`}
-              >
-                {opt.label}
-              </button>
-            ))}
+          <div className="space-y-2">
+            <p className="text-[10px] text-muted-foreground/70 uppercase tracking-wider">Serif</p>
+            <div className="flex flex-wrap gap-2">
+              {SERIF_FONTS.map((opt) => (
+                <button
+                  key={opt.value}
+                  onClick={() => set("font", opt.value)}
+                  className={`px-4 py-2 text-sm rounded-md border transition-all ${opt.preview} ${
+                    state.font === opt.value
+                      ? "bg-foreground text-background border-foreground"
+                      : "border-border text-muted-foreground hover:text-foreground hover:border-foreground/30"
+                  }`}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+            <p className="text-[10px] text-muted-foreground/70 uppercase tracking-wider pt-1">Sans-serif</p>
+            <div className="flex flex-wrap gap-2">
+              {SANS_FONTS.map((opt) => (
+                <button
+                  key={opt.value}
+                  onClick={() => set("font", opt.value)}
+                  className={`px-4 py-2 text-sm rounded-md border transition-all ${opt.preview} ${
+                    state.font === opt.value
+                      ? "bg-foreground text-background border-foreground"
+                      : "border-border text-muted-foreground hover:text-foreground hover:border-foreground/30"
+                  }`}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
           </div>
           <div className="flex items-center gap-2 mt-3">
             <button
