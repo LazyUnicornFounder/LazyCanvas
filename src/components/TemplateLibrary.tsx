@@ -57,6 +57,39 @@ const PEXELS_IMAGES: Record<string, string> = {
   "books-library": "https://images.pexels.com/photos/30618330/pexels-photo-30618330.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
   "art-splash": "https://images.pexels.com/photos/8603638/pexels-photo-8603638.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
   "tech-setup": "https://images.pexels.com/photos/12877898/pexels-photo-12877898.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "cars-supercar": "https://images.pexels.com/photos/12484821/pexels-photo-12484821.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "cars-vintage": "https://images.pexels.com/photos/35563087/pexels-photo-35563087.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "cars-racing": "https://images.pexels.com/photos/33148036/pexels-photo-33148036.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "crypto-bitcoin": "https://images.pexels.com/photos/4808279/pexels-photo-4808279.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "crypto-blockchain": "https://images.pexels.com/photos/17483849/pexels-photo-17483849.png?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "crypto-trading": "https://images.pexels.com/photos/17505864/pexels-photo-17505864.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "science-lab": "https://images.pexels.com/photos/7738296/pexels-photo-7738296.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "science-dna": "https://images.pexels.com/photos/25626587/pexels-photo-25626587.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "science-chemistry": "https://images.pexels.com/photos/6395524/pexels-photo-6395524.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "architecture-modern": "https://images.pexels.com/photos/34868972/pexels-photo-34868972.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "architecture-classic": "https://images.pexels.com/photos/31718772/pexels-photo-31718772.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "architecture-interior": "https://images.pexels.com/photos/32421762/pexels-photo-32421762.png?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "education-classroom": "https://images.pexels.com/photos/6602623/pexels-photo-6602623.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "education-books": "https://images.pexels.com/photos/8199252/pexels-photo-8199252.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "education-graduation": "https://images.pexels.com/photos/25643174/pexels-photo-25643174.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "parenting-family": "https://images.pexels.com/photos/3890220/pexels-photo-3890220.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "parenting-baby": "https://images.pexels.com/photos/12654853/pexels-photo-12654853.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "parenting-playground": "https://images.pexels.com/photos/11015643/pexels-photo-11015643.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "real-estate-luxury": "https://images.pexels.com/photos/13203179/pexels-photo-13203179.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "real-estate-city": "https://images.pexels.com/photos/33112743/pexels-photo-33112743.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "real-estate-interior": "https://images.pexels.com/photos/32269122/pexels-photo-32269122.png?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "wellness-meditation": "https://images.pexels.com/photos/16843771/pexels-photo-16843771.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "wellness-yoga": "https://images.pexels.com/photos/30251338/pexels-photo-30251338.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "wellness-spa": "https://images.pexels.com/photos/6273927/pexels-photo-6273927.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "motivation-summit": "https://images.pexels.com/photos/12909947/pexels-photo-12909947.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "motivation-road": "https://images.pexels.com/photos/27636187/pexels-photo-27636187.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "motivation-hustle": "https://images.pexels.com/photos/57690/pexels-photo-57690.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "business-office": "https://images.pexels.com/photos/32216281/pexels-photo-32216281.png?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "business-meeting": "https://images.pexels.com/photos/34129728/pexels-photo-34129728.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "business-startup": "https://images.pexels.com/photos/34769279/pexels-photo-34769279.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "photography-portrait": "https://images.pexels.com/photos/18535941/pexels-photo-18535941.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "photography-landscape": "https://images.pexels.com/photos/26872995/pexels-photo-26872995.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "photography-street": "https://images.pexels.com/photos/20598236/pexels-photo-20598236.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
 };
 
 const BUILTIN_TEMPLATES: Template[] = [
@@ -887,6 +920,325 @@ const BUILTIN_TEMPLATES: Template[] = [
       backgroundImage: PEXELS_IMAGES["tech-setup"], backgroundOpacity: 0.35,
     },
   },
+
+  // ── CARS ──
+  {
+    id: "cars-supercar", name: "Supercar", category: "cars",
+    editorState: {
+      font: "oswald", theme: "dark", fontSize: 1.8, textAlign: "center", letterSpacing: 0.04, lineHeight: 1.3,
+      textColor: "#ef4444", authorFont: "heading", authorColor: "#dc2626", authorFontSize: 0.7,
+      isBold: true, isItalic: false, backgroundColor: "#0a0a0a", textShadow: "soft", showQuotationMarks: false,
+      backgroundImage: PEXELS_IMAGES["cars-supercar"], backgroundOpacity: 0.4,
+    },
+  },
+  {
+    id: "cars-vintage", name: "Classic Ride", category: "cars",
+    editorState: {
+      font: "playfair", theme: "cream", fontSize: 1.4, textAlign: "center", letterSpacing: 0.02, lineHeight: 1.7,
+      textColor: "#44403c", authorFont: "lora", authorColor: "#78716c", authorFontSize: 0.7,
+      isBold: false, isItalic: true, backgroundColor: "#f5f0e8", textShadow: "none", backgroundFilter: "vintage", showQuotationMarks: true,
+      backgroundImage: PEXELS_IMAGES["cars-vintage"], backgroundOpacity: 0.35,
+    },
+  },
+  {
+    id: "cars-racing", name: "Speed", category: "cars",
+    editorState: {
+      font: "bebas", theme: "dark", fontSize: 2.2, textAlign: "center", letterSpacing: 0.06, lineHeight: 1.1,
+      textColor: "#fbbf24", authorFont: "oswald", authorColor: "#f59e0b", authorFontSize: 0.7,
+      isBold: true, isItalic: false, backgroundColor: "#0a0a0a", textShadow: "soft", showQuotationMarks: false,
+      backgroundImage: PEXELS_IMAGES["cars-racing"], backgroundOpacity: 0.4,
+    },
+  },
+
+  // ── CRYPTO ──
+  {
+    id: "crypto-bitcoin", name: "Bitcoin", category: "crypto",
+    editorState: {
+      font: "orbitron", theme: "dark", fontSize: 1.2, textAlign: "center", letterSpacing: 0.06, lineHeight: 1.8,
+      textColor: "#f59e0b", authorFont: "rajdhani", authorColor: "#d97706", authorFontSize: 0.65,
+      isBold: false, isItalic: false, backgroundColor: "#0a0a0a", textShadow: "glow", showQuotationMarks: false,
+      backgroundImage: PEXELS_IMAGES["crypto-bitcoin"], backgroundOpacity: 0.35,
+    },
+  },
+  {
+    id: "crypto-blockchain", name: "Blockchain", category: "crypto",
+    editorState: {
+      font: "rajdhani", theme: "ink", fontSize: 1.4, textAlign: "center", letterSpacing: 0.04, lineHeight: 1.6,
+      textColor: "#22d3ee", authorFont: "mono", authorColor: "#06b6d4", authorFontSize: 0.65,
+      isBold: false, isItalic: false, backgroundColor: "#020617", textShadow: "glow", showQuotationMarks: false,
+      backgroundImage: PEXELS_IMAGES["crypto-blockchain"], backgroundOpacity: 0.4,
+    },
+  },
+  {
+    id: "crypto-trading", name: "Trading", category: "crypto",
+    editorState: {
+      font: "mono", theme: "dark", fontSize: 1.1, textAlign: "left", letterSpacing: 0.02, lineHeight: 2.0,
+      textColor: "#4ade80", authorFont: "rajdhani", authorColor: "#22c55e", authorFontSize: 0.65,
+      isBold: false, isItalic: false, backgroundColor: "#0a0a0a", textShadow: "glow", showQuotationMarks: false,
+      backgroundImage: PEXELS_IMAGES["crypto-trading"], backgroundOpacity: 0.35,
+    },
+  },
+
+  // ── SCIENCE ──
+  {
+    id: "science-lab", name: "Lab", category: "science",
+    editorState: {
+      font: "inter", theme: "light", fontSize: 1.2, textAlign: "center", letterSpacing: 0.02, lineHeight: 1.8,
+      textColor: "#1e3a5f", authorFont: "heading", authorColor: "#3b82f6", authorFontSize: 0.7,
+      isBold: false, isItalic: false, backgroundColor: "#f0f9ff", textShadow: "none", showQuotationMarks: false,
+      backgroundImage: PEXELS_IMAGES["science-lab"], backgroundOpacity: 0.3,
+    },
+  },
+  {
+    id: "science-dna", name: "DNA", category: "science",
+    editorState: {
+      font: "montserrat", theme: "dark", fontSize: 1.3, textAlign: "center", letterSpacing: 0.01, lineHeight: 1.7,
+      textColor: "#a78bfa", authorFont: "heading", authorColor: "#8b5cf6", authorFontSize: 0.7,
+      isBold: false, isItalic: false, backgroundColor: "#0f0720", textShadow: "glow", showQuotationMarks: false,
+      backgroundImage: PEXELS_IMAGES["science-dna"], backgroundOpacity: 0.4,
+    },
+  },
+  {
+    id: "science-chemistry", name: "Chemistry", category: "science",
+    editorState: {
+      font: "inter", theme: "light", fontSize: 1.3, textAlign: "center", letterSpacing: 0.0, lineHeight: 1.8,
+      textColor: "#0e7490", authorFont: "heading", authorColor: "#0891b2", authorFontSize: 0.7,
+      isBold: false, isItalic: false, backgroundColor: "#ecfeff", textShadow: "none", showQuotationMarks: false,
+      backgroundImage: PEXELS_IMAGES["science-chemistry"], backgroundOpacity: 0.3,
+    },
+  },
+
+  // ── ARCHITECTURE ──
+  {
+    id: "architecture-modern", name: "Modern", category: "architecture",
+    editorState: {
+      font: "heading", theme: "light", fontSize: 1.4, textAlign: "center", letterSpacing: 0.06, lineHeight: 1.6,
+      textColor: "#1c1917", authorFont: "raleway", authorColor: "#78716c", authorFontSize: 0.65,
+      isBold: false, isItalic: false, backgroundColor: "#f5f5f4", textShadow: "none", showQuotationMarks: false,
+      backgroundImage: PEXELS_IMAGES["architecture-modern"], backgroundOpacity: 0.3,
+    },
+  },
+  {
+    id: "architecture-classic", name: "Classical", category: "architecture",
+    editorState: {
+      font: "cormorant", theme: "cream", fontSize: 1.6, textAlign: "center", letterSpacing: 0.04, lineHeight: 1.7,
+      textColor: "#44403c", authorFont: "heading", authorColor: "#78716c", authorFontSize: 0.65,
+      isBold: false, isItalic: true, backgroundColor: "#f5f0e8", textShadow: "none", showQuotationMarks: true,
+      backgroundImage: PEXELS_IMAGES["architecture-classic"], backgroundOpacity: 0.3,
+    },
+  },
+  {
+    id: "architecture-interior", name: "Interior", category: "architecture",
+    editorState: {
+      font: "raleway", theme: "light", fontSize: 1.3, textAlign: "center", letterSpacing: 0.02, lineHeight: 1.8,
+      textColor: "#292524", authorFont: "heading", authorColor: "#a8a29e", authorFontSize: 0.7,
+      isBold: false, isItalic: false, backgroundColor: "#fafaf9", textShadow: "none", showQuotationMarks: false,
+      backgroundImage: PEXELS_IMAGES["architecture-interior"], backgroundOpacity: 0.3,
+    },
+  },
+
+  // ── EDUCATION ──
+  {
+    id: "education-classroom", name: "Classroom", category: "education",
+    editorState: {
+      font: "poppins", theme: "light", fontSize: 1.3, textAlign: "center", letterSpacing: 0.0, lineHeight: 1.8,
+      textColor: "#1e40af", authorFont: "heading", authorColor: "#3b82f6", authorFontSize: 0.7,
+      isBold: false, isItalic: false, backgroundColor: "#eff6ff", textShadow: "none", showQuotationMarks: false,
+      backgroundImage: PEXELS_IMAGES["education-classroom"], backgroundOpacity: 0.3,
+    },
+  },
+  {
+    id: "education-books", name: "Study", category: "education",
+    editorState: {
+      font: "merriweather", theme: "cream", fontSize: 1.2, textAlign: "center", letterSpacing: 0.01, lineHeight: 1.9,
+      textColor: "#44403c", authorFont: "lora", authorColor: "#78716c", authorFontSize: 0.75,
+      isBold: false, isItalic: true, backgroundColor: "#f5f0e8", textShadow: "none", showQuotationMarks: true,
+      backgroundImage: PEXELS_IMAGES["education-books"], backgroundOpacity: 0.35,
+    },
+  },
+  {
+    id: "education-graduation", name: "Graduation", category: "education",
+    editorState: {
+      font: "playfair", theme: "dark", fontSize: 1.4, textAlign: "center", letterSpacing: 0.02, lineHeight: 1.7,
+      textColor: "#fef3c7", authorFont: "raleway", authorColor: "#fbbf24", authorFontSize: 0.7,
+      isBold: false, isItalic: false, backgroundColor: "#1e3a5f", textShadow: "soft", showQuotationMarks: false,
+      backgroundImage: PEXELS_IMAGES["education-graduation"], backgroundOpacity: 0.4,
+    },
+  },
+
+  // ── PARENTING ──
+  {
+    id: "parenting-family", name: "Family", category: "parenting",
+    editorState: {
+      font: "poppins", theme: "light", fontSize: 1.3, textAlign: "center", letterSpacing: 0.0, lineHeight: 1.8,
+      textColor: "#831843", authorFont: "heading", authorColor: "#be185d", authorFontSize: 0.7,
+      isBold: false, isItalic: false, backgroundColor: "#fdf2f8", textShadow: "none", showQuotationMarks: false,
+      backgroundImage: PEXELS_IMAGES["parenting-family"], backgroundOpacity: 0.3,
+    },
+  },
+  {
+    id: "parenting-baby", name: "Little One", category: "parenting",
+    editorState: {
+      font: "caveat", theme: "light", fontSize: 1.8, textAlign: "center", letterSpacing: 0.0, lineHeight: 1.4,
+      textColor: "#78350f", authorFont: "poppins", authorColor: "#92400e", authorFontSize: 0.7,
+      isBold: false, isItalic: false, backgroundColor: "#fef3c7", textShadow: "none", showQuotationMarks: false,
+      backgroundImage: PEXELS_IMAGES["parenting-baby"], backgroundOpacity: 0.3,
+    },
+  },
+  {
+    id: "parenting-playground", name: "Playground", category: "parenting",
+    editorState: {
+      font: "satisfy", theme: "light", fontSize: 1.6, textAlign: "center", letterSpacing: 0.0, lineHeight: 1.5,
+      textColor: "#15803d", authorFont: "heading", authorColor: "#22c55e", authorFontSize: 0.7,
+      isBold: false, isItalic: false, backgroundColor: "#ecfdf5", textShadow: "none", showQuotationMarks: false,
+      backgroundImage: PEXELS_IMAGES["parenting-playground"], backgroundOpacity: 0.35,
+    },
+  },
+
+  // ── REAL ESTATE ──
+  {
+    id: "real-estate-luxury", name: "Luxury Home", category: "real-estate",
+    editorState: {
+      font: "playfair", theme: "light", fontSize: 1.4, textAlign: "center", letterSpacing: 0.02, lineHeight: 1.7,
+      textColor: "#78350f", authorFont: "raleway", authorColor: "#92400e", authorFontSize: 0.7,
+      isBold: false, isItalic: true, backgroundColor: "#fef3c7", textShadow: "none", showQuotationMarks: true,
+      backgroundImage: PEXELS_IMAGES["real-estate-luxury"], backgroundOpacity: 0.3,
+    },
+  },
+  {
+    id: "real-estate-city", name: "City View", category: "real-estate",
+    editorState: {
+      font: "heading", theme: "dark", fontSize: 1.5, textAlign: "center", letterSpacing: 0.04, lineHeight: 1.4,
+      textColor: "#e2e8f0", authorFont: "montserrat", authorColor: "#94a3b8", authorFontSize: 0.7,
+      isBold: true, isItalic: false, backgroundColor: "#0f172a", textShadow: "soft", showQuotationMarks: false,
+      backgroundImage: PEXELS_IMAGES["real-estate-city"], backgroundOpacity: 0.4,
+    },
+  },
+  {
+    id: "real-estate-interior", name: "Dream Home", category: "real-estate",
+    editorState: {
+      font: "raleway", theme: "light", fontSize: 1.3, textAlign: "center", letterSpacing: 0.01, lineHeight: 1.8,
+      textColor: "#292524", authorFont: "heading", authorColor: "#a8a29e", authorFontSize: 0.7,
+      isBold: false, isItalic: false, backgroundColor: "#fafaf9", textShadow: "none", showQuotationMarks: false,
+      backgroundImage: PEXELS_IMAGES["real-estate-interior"], backgroundOpacity: 0.3,
+    },
+  },
+
+  // ── WELLNESS ──
+  {
+    id: "wellness-meditation", name: "Meditation", category: "wellness",
+    editorState: {
+      font: "cormorant", theme: "light", fontSize: 1.5, textAlign: "center", letterSpacing: 0.01, lineHeight: 1.8,
+      textColor: "#14532d", authorFont: "heading", authorColor: "#15803d", authorFontSize: 0.7,
+      isBold: false, isItalic: true, backgroundColor: "#ecfdf5", textShadow: "none", showQuotationMarks: true,
+      backgroundImage: PEXELS_IMAGES["wellness-meditation"], backgroundOpacity: 0.3,
+    },
+  },
+  {
+    id: "wellness-yoga", name: "Yoga", category: "wellness",
+    editorState: {
+      font: "lora", theme: "cream", fontSize: 1.4, textAlign: "center", letterSpacing: 0.0, lineHeight: 1.7,
+      textColor: "#78350f", authorFont: "raleway", authorColor: "#92400e", authorFontSize: 0.7,
+      isBold: false, isItalic: true, backgroundColor: "#fef3c7", textShadow: "soft", showQuotationMarks: false,
+      backgroundImage: PEXELS_IMAGES["wellness-yoga"], backgroundOpacity: 0.35,
+    },
+  },
+  {
+    id: "wellness-spa", name: "Spa", category: "wellness",
+    editorState: {
+      font: "dancing", theme: "light", fontSize: 1.6, textAlign: "center", letterSpacing: 0.0, lineHeight: 1.5,
+      textColor: "#581c87", authorFont: "montserrat", authorColor: "#7e22ce", authorFontSize: 0.7,
+      isBold: false, isItalic: false, backgroundColor: "#f3e8ff", textShadow: "none", showQuotationMarks: false,
+      backgroundImage: PEXELS_IMAGES["wellness-spa"], backgroundOpacity: 0.3,
+    },
+  },
+
+  // ── MOTIVATION ──
+  {
+    id: "motivation-summit", name: "Summit", category: "motivation",
+    editorState: {
+      font: "oswald", theme: "dark", fontSize: 1.8, textAlign: "center", letterSpacing: 0.04, lineHeight: 1.3,
+      textColor: "#fef3c7", authorFont: "heading", authorColor: "#fbbf24", authorFontSize: 0.7,
+      isBold: true, isItalic: false, backgroundColor: "#1e3a5f", textShadow: "soft", showQuotationMarks: false,
+      backgroundImage: PEXELS_IMAGES["motivation-summit"], backgroundOpacity: 0.4,
+    },
+  },
+  {
+    id: "motivation-road", name: "The Road", category: "motivation",
+    editorState: {
+      font: "raleway", theme: "dark", fontSize: 1.4, textAlign: "center", letterSpacing: 0.02, lineHeight: 1.7,
+      textColor: "#e2e8f0", authorFont: "heading", authorColor: "#94a3b8", authorFontSize: 0.7,
+      isBold: false, isItalic: false, backgroundColor: "#0f172a", textShadow: "soft", showQuotationMarks: false,
+      backgroundImage: PEXELS_IMAGES["motivation-road"], backgroundOpacity: 0.4,
+    },
+  },
+  {
+    id: "motivation-hustle", name: "Hustle", category: "motivation",
+    editorState: {
+      font: "archivo", theme: "dark", fontSize: 1.6, textAlign: "left", letterSpacing: 0.02, lineHeight: 1.4,
+      textColor: "#ffffff", authorFont: "heading", authorColor: "#737373", authorFontSize: 0.7,
+      isBold: true, isItalic: false, backgroundColor: "#0a0a0a", textShadow: "none", showQuotationMarks: false,
+      backgroundImage: PEXELS_IMAGES["motivation-hustle"], backgroundOpacity: 0.35,
+    },
+  },
+
+  // ── BUSINESS ──
+  {
+    id: "business-office", name: "Office", category: "business",
+    editorState: {
+      font: "inter", theme: "light", fontSize: 1.2, textAlign: "center", letterSpacing: 0.02, lineHeight: 1.8,
+      textColor: "#1e293b", authorFont: "heading", authorColor: "#64748b", authorFontSize: 0.7,
+      isBold: false, isItalic: false, backgroundColor: "#f8fafc", textShadow: "none", showQuotationMarks: false,
+      backgroundImage: PEXELS_IMAGES["business-office"], backgroundOpacity: 0.3,
+    },
+  },
+  {
+    id: "business-meeting", name: "Corporate", category: "business",
+    editorState: {
+      font: "heading", theme: "dark", fontSize: 1.4, textAlign: "center", letterSpacing: 0.04, lineHeight: 1.6,
+      textColor: "#e2e8f0", authorFont: "montserrat", authorColor: "#94a3b8", authorFontSize: 0.7,
+      isBold: false, isItalic: false, backgroundColor: "#0f172a", textShadow: "soft", showQuotationMarks: false,
+      backgroundImage: PEXELS_IMAGES["business-meeting"], backgroundOpacity: 0.35,
+    },
+  },
+  {
+    id: "business-startup", name: "Startup", category: "business",
+    editorState: {
+      font: "inter", theme: "light", fontSize: 1.3, textAlign: "center", letterSpacing: 0.0, lineHeight: 1.8,
+      textColor: "#7c3aed", authorFont: "heading", authorColor: "#8b5cf6", authorFontSize: 0.7,
+      isBold: false, isItalic: false, backgroundColor: "#f5f3ff", textShadow: "none", showQuotationMarks: false,
+      backgroundImage: PEXELS_IMAGES["business-startup"], backgroundOpacity: 0.3,
+    },
+  },
+
+  // ── PHOTOGRAPHY ──
+  {
+    id: "photography-portrait", name: "Portrait", category: "photography",
+    editorState: {
+      font: "playfair", theme: "dark", fontSize: 1.4, textAlign: "center", letterSpacing: 0.02, lineHeight: 1.7,
+      textColor: "#d4d4d8", authorFont: "raleway", authorColor: "#71717a", authorFontSize: 0.75,
+      isBold: false, isItalic: true, backgroundColor: "#18181b", textShadow: "soft", showQuotationMarks: true,
+      backgroundImage: PEXELS_IMAGES["photography-portrait"], backgroundOpacity: 0.35,
+    },
+  },
+  {
+    id: "photography-landscape", name: "Landscape", category: "photography",
+    editorState: {
+      font: "cormorant", theme: "dark", fontSize: 1.5, textAlign: "center", letterSpacing: 0.01, lineHeight: 1.7,
+      textColor: "#fef3c7", authorFont: "heading", authorColor: "#fbbf24", authorFontSize: 0.7,
+      isBold: false, isItalic: true, backgroundColor: "#1e3a5f", textShadow: "soft", showQuotationMarks: true,
+      backgroundImage: PEXELS_IMAGES["photography-landscape"], backgroundOpacity: 0.4,
+    },
+  },
+  {
+    id: "photography-street", name: "Street", category: "photography",
+    editorState: {
+      font: "mono", theme: "dark", fontSize: 1.1, textAlign: "left", letterSpacing: 0.02, lineHeight: 2.0,
+      textColor: "#e2e8f0", authorFont: "heading", authorColor: "#94a3b8", authorFontSize: 0.65,
+      isBold: false, isItalic: false, backgroundColor: "#0a0a0a", textShadow: "soft", showQuotationMarks: false,
+      backgroundImage: PEXELS_IMAGES["photography-street"], backgroundOpacity: 0.4,
+    },
+  },
 ];
 
 const CATEGORIES = [
@@ -917,6 +1269,17 @@ const CATEGORIES = [
   { value: "books", label: "Books" },
   { value: "art", label: "Art" },
   { value: "tech", label: "Tech" },
+  { value: "cars", label: "Cars" },
+  { value: "crypto", label: "Crypto" },
+  { value: "science", label: "Science" },
+  { value: "architecture", label: "Architecture" },
+  { value: "education", label: "Education" },
+  { value: "parenting", label: "Parenting" },
+  { value: "real-estate", label: "Real Estate" },
+  { value: "wellness", label: "Wellness" },
+  { value: "motivation", label: "Motivation" },
+  { value: "business", label: "Business" },
+  { value: "photography", label: "Photography" },
 ];
 
 const FONT_CLASS_MAP: Record<string, string> = {
@@ -991,6 +1354,39 @@ const PREVIEW_QUOTES: Record<string, { text: string; author: string }> = {
   "books-library": { text: "A reader lives a thousand lives before he dies. The man who never reads lives only one.", author: "George R.R. Martin" },
   "art-splash": { text: "EVERY ARTIST WAS FIRST AN AMATEUR.", author: "Ralph Waldo Emerson" },
   "tech-setup": { text: "any sufficiently advanced technology is indistinguishable from magic.", author: "Arthur C. Clarke" },
+  "cars-supercar": { text: "RACING IS LIFE. EVERYTHING ELSE IS JUST WAITING.", author: "Steve McQueen" },
+  "cars-vintage": { text: "A dream without ambition is like a car without gas.", author: "Sean Hampton" },
+  "cars-racing": { text: "IF EVERYTHING SEEMS UNDER CONTROL, YOU'RE NOT GOING FAST ENOUGH.", author: "Mario Andretti" },
+  "crypto-bitcoin": { text: "BITCOIN IS A TECHNOLOGICAL TOUR DE FORCE.", author: "Bill Gates" },
+  "crypto-blockchain": { text: "THE BLOCKCHAIN DOES ONE THING: IT REPLACES THIRD-PARTY TRUST WITH MATHEMATICAL PROOF.", author: "Adam Draper" },
+  "crypto-trading": { text: "The stock market is a device for transferring money from the impatient to the patient.", author: "Warren Buffett" },
+  "science-lab": { text: "The important thing is not to stop questioning.", author: "Albert Einstein" },
+  "science-dna": { text: "Nothing in biology makes sense except in the light of evolution.", author: "Theodosius Dobzhansky" },
+  "science-chemistry": { text: "The good thing about science is that it's true whether or not you believe in it.", author: "Neil deGrasse Tyson" },
+  "architecture-modern": { text: "LESS IS MORE.", author: "Ludwig Mies van der Rohe" },
+  "architecture-classic": { text: "Architecture is the learned game, correct and magnificent, of forms assembled in the light.", author: "Le Corbusier" },
+  "architecture-interior": { text: "Design is not just what it looks like. Design is how it works.", author: "Steve Jobs" },
+  "education-classroom": { text: "Education is the most powerful weapon which you can use to change the world.", author: "Nelson Mandela" },
+  "education-books": { text: "Live as if you were to die tomorrow. Learn as if you were to live forever.", author: "Mahatma Gandhi" },
+  "education-graduation": { text: "The future belongs to those who believe in the beauty of their dreams.", author: "Eleanor Roosevelt" },
+  "parenting-family": { text: "The most important thing a father can do for his children is to love their mother.", author: "Theodore Hesburgh" },
+  "parenting-baby": { text: "A baby is born with a need to be loved — and never outgrows it.", author: "Frank A. Clark" },
+  "parenting-playground": { text: "Children are not things to be molded, but people to be unfolded.", author: "Jess Lair" },
+  "real-estate-luxury": { text: "Real estate cannot be lost or stolen, nor can it be carried away.", author: "Franklin D. Roosevelt" },
+  "real-estate-city": { text: "Don't wait to buy real estate. Buy real estate and wait.", author: "Will Rogers" },
+  "real-estate-interior": { text: "Home is where love resides, memories are created, and laughter never ends.", author: "Unknown" },
+  "wellness-meditation": { text: "The mind is everything. What you think you become.", author: "Buddha" },
+  "wellness-yoga": { text: "Yoga is the journey of the self, through the self, to the self.", author: "The Bhagavad Gita" },
+  "wellness-spa": { text: "Almost everything will work again if you unplug it for a few minutes, including you.", author: "Anne Lamott" },
+  "motivation-summit": { text: "IT'S NOT THE MOUNTAIN WE CONQUER, BUT OURSELVES.", author: "Edmund Hillary" },
+  "motivation-road": { text: "The only impossible journey is the one you never begin.", author: "Tony Robbins" },
+  "motivation-hustle": { text: "WORK HARD IN SILENCE. LET SUCCESS MAKE THE NOISE.", author: "Frank Ocean" },
+  "business-office": { text: "Your work is going to fill a large part of your life. Make it great.", author: "Steve Jobs" },
+  "business-meeting": { text: "Coming together is a beginning. Keeping together is progress. Working together is success.", author: "Henry Ford" },
+  "business-startup": { text: "The way to get started is to quit talking and begin doing.", author: "Walt Disney" },
+  "photography-portrait": { text: "A portrait is not made in the camera but on either side of it.", author: "Edward Steichen" },
+  "photography-landscape": { text: "In every walk with nature one receives far more than he seeks.", author: "John Muir" },
+  "photography-street": { text: "Photography is the story I fail to put into words.", author: "Destin Sparks" },
 };
 
 interface TemplateLibraryProps {
