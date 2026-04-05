@@ -1041,10 +1041,11 @@ interface TemplateLibraryProps {
   onApply: (state: Partial<QuoteEditorState>) => void;
   backgroundOpacity: number;
   onOpacityChange: (value: number) => void;
+  defaultCategory?: string;
 }
 
-export default function TemplateLibrary({ onApply, backgroundOpacity, onOpacityChange }: TemplateLibraryProps) {
-  const [category, setCategory] = useState("all");
+export default function TemplateLibrary({ onApply, backgroundOpacity, onOpacityChange, defaultCategory }: TemplateLibraryProps) {
+  const [category, setCategory] = useState(defaultCategory || "all");
   const [dbTemplates, setDbTemplates] = useState<Template[]>([]);
 
   useEffect(() => {
