@@ -1,11 +1,19 @@
 import { forwardRef, useRef, useEffect, useState } from "react";
-import { Instagram, Twitter, Youtube, Linkedin, Facebook, type LucideProps } from "lucide-react";
+import { Instagram, Youtube, Linkedin, Facebook, type LucideProps } from "lucide-react";
 
 export type SocialPlatform = "instagram" | "twitter" | "tiktok" | "youtube" | "linkedin" | "threads" | "bluesky" | "facebook";
 
-const socialIcons: Partial<Record<SocialPlatform, React.ForwardRefExoticComponent<Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>>>> = {
+const XIcon = ({ size = 24, className }: { size?: number; className?: string }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} className={className} fill="currentColor">
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+  </svg>
+);
+
+type IconComponent = React.ForwardRefExoticComponent<Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>> | (({ size, className }: { size?: number; className?: string }) => JSX.Element);
+
+const socialIcons: Partial<Record<SocialPlatform, IconComponent>> = {
   instagram: Instagram,
-  twitter: Twitter,
+  twitter: XIcon,
   youtube: Youtube,
   linkedin: Linkedin,
   facebook: Facebook,

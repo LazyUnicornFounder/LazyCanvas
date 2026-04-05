@@ -50,7 +50,7 @@ import { EMOJI_CATEGORIES } from "@/data/emojis";
 
 const SOCIAL_PLATFORMS = [
   { value: "instagram", label: "Instagram", prefix: "@" },
-  { value: "twitter", label: "X / Twitter", prefix: "@" },
+  { value: "twitter", label: "X", prefix: "@" },
   { value: "tiktok", label: "TikTok", prefix: "@" },
   { value: "youtube", label: "YouTube", prefix: "@" },
   { value: "linkedin", label: "LinkedIn", prefix: "" },
