@@ -226,7 +226,7 @@ const Index = () => {
               </p>
             </div>
             <div className="flex-1 min-h-0">
-              <QuoteEditor state={editorState} onChange={setEditorState} />
+              <QuoteEditor state={editorState} onChange={setEditorState} isPro={isPro} />
             </div>
           </div>
           {/* Phone — right */}

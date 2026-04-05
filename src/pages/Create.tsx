@@ -19,7 +19,7 @@ import type { UserQuote } from "@/hooks/useUserQuotes";
 const DRAFT_KEY = "lazy-quotes-draft";
 
 const Create = () => {
-  const { user, signOut } = useAuth();
+  const { user, signOut, isPro } = useAuth();
   const navigate = useNavigate();
   const [editorState, setEditorState] = useState<QuoteEditorState>(() => {
     try {
@@ -36,7 +36,7 @@ const Create = () => {
   const [showAuthModal, setShowAuthModal] = useState(false);
   const previewRef = useRef<HTMLDivElement>(null);
 
-  const isFreeUser = true;
+  const isFreeUser = !isPro;
 
   const handleDownload = useCallback(async () => {
     if (!previewRef.current) return;
