@@ -1,14 +1,48 @@
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { LogOut, User } from "lucide-react";
+import { LogOut, User, Download } from "lucide-react";
 import HeroPhoneMockup from "@/components/HeroPhoneMockup";
 import AuthModal from "@/components/AuthModal";
 import { useAuth } from "@/hooks/useAuth";
+import QuoteEditor, { type QuoteEditorState, DEFAULT_EDITOR_STATE, SOCIAL_PLATFORMS } from "@/components/QuoteEditor";
+import QuotePreview, { type SocialPlatform } from "@/components/QuotePreview";
+import html2canvas from "html2canvas";
 
 const Index = () => {
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [editorState, setEditorState] = useState<QuoteEditorState>(DEFAULT_EDITOR_STATE);
+  const [downloading, setDownloading] = useState(false);
+  const previewRef = useRef<HTMLDivElement>(null);
+
+  const handleDownload = useCallback(async () => {
+    if (!user) {
+      setShowAuthModal(true);
+      return;
+    }
+    if (!previewRef.current) return;
+    setDownloading(true);
+    try {
+      const canvas = await html2canvas(previewRef.current, {
+        scale: 3, useCORS: true, logging: false, backgroundColor: null,
+      });
+      const link = document.createElement("a");
+      link.download = `quote-${Date.now()}.png`;
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    } catch { console.error("Failed to export"); }
+    finally { setDownloading(false); }
+  }, [user]);
+
+  const socials = [
+    editorState.socialUsername
+      ? `${SOCIAL_PLATFORMS.find((p) => p.value === editorState.socialPlatform)?.prefix || ""}${editorState.socialUsername}`
+      : "",
+    editorState.website,
+  ].filter(Boolean).join(" · ");
+
+  const isFreeUser = true;
 
   return (
     <div className="min-h-screen bg-background">
@@ -54,16 +88,21 @@ const Index = () => {
         </div>
       </header>
 
-      <section className="h-[calc(100vh-4rem)] flex items-center px-4 sm:px-6 overflow-hidden">
-        <div className="max-w-[1200px] mx-auto w-full flex items-center gap-12 lg:gap-20">
-          {/* Text — left */}
-          <div className="flex-1 space-y-4 min-w-0">
-            <h2 className="font-playfair text-3xl md:text-4xl lg:text-5xl font-normal tracking-tight text-foreground leading-tight">
-              Create awesome quotes for your socials.
-            </h2>
-            <p className="text-muted-foreground text-base max-w-md">
-              Design beautiful, shareable quote images in seconds. Pick fonts, colors, layouts — download and post.
-            </p>
+      <section className="min-h-[calc(100vh-4rem)] flex px-4 sm:px-6 overflow-hidden">
+        <div className="max-w-[1400px] mx-auto w-full flex gap-8 lg:gap-12 py-6">
+          {/* Left — text + editor */}
+          <div className="flex-1 min-w-0 flex flex-col">
+            <div className="space-y-2 mb-6">
+              <h2 className="font-playfair text-2xl md:text-3xl lg:text-4xl font-normal tracking-tight text-foreground leading-tight">
+                Create awesome quotes for your socials.
+              </h2>
+              <p className="text-muted-foreground text-sm max-w-md">
+                Design beautiful, shareable quote images in seconds. Pick fonts, colors, layouts — download and post.
+              </p>
+            </div>
+            <div className="flex-1 min-h-0">
+              <QuoteEditor state={editorState} onChange={setEditorState} />
+            </div>
             <p className="text-[11px] text-muted-foreground/60 pt-4">
               Built with{" "}
               <a href="https://lovable.dev" target="_blank" rel="noopener noreferrer" className="underline hover:text-muted-foreground transition-colors">Lovable</a>
@@ -72,9 +111,50 @@ const Index = () => {
               .
             </p>
           </div>
-          {/* Phone — right, extending from just below nav to bottom */}
-          <div className="hidden md:flex flex-shrink-0 items-start justify-center" style={{ height: "calc(100vh - 5rem)", marginTop: "0.5rem" }}>
-            <HeroPhoneMockup />
+          {/* Phone — right */}
+          <div className="hidden lg:flex flex-shrink-0 flex-col gap-3" style={{ width: "clamp(260px, 25vw, 320px)" }}>
+            <div className="relative border border-foreground/20 rounded-[2.8rem] py-12 px-1 flex items-center" style={{ aspectRatio: "71.5 / 149.6" }}>
+              <div className="absolute top-0 left-0 right-0 h-14 bg-gradient-to-b from-background to-transparent z-10 pointer-events-none rounded-t-[2.8rem]" />
+              <div className="w-full">
+                <QuotePreview
+                  ref={previewRef}
+                  quote={editorState.quote}
+                  authorName={editorState.authorName}
+                  authorPhoto={editorState.authorPhoto}
+                  socialPlatform={editorState.socialUsername ? editorState.socialPlatform as SocialPlatform : undefined}
+                  socials={socials}
+                  aspectRatio="square"
+                  font={editorState.font}
+                  theme={editorState.theme}
+                  backgroundImage={editorState.backgroundImage}
+                  backgroundOpacity={editorState.backgroundOpacity}
+                  fontSize={editorState.fontSize}
+                  textAlign={editorState.textAlign}
+                  letterSpacing={editorState.letterSpacing}
+                  lineHeight={editorState.lineHeight}
+                  textColor={editorState.textColor}
+                  authorFontSize={editorState.authorFontSize}
+                  authorColor={editorState.authorColor}
+                  authorFont={editorState.authorFont}
+                  textShadow={editorState.textShadow}
+                  authorPosition={editorState.authorPosition}
+                  backgroundColor={editorState.backgroundColor}
+                  isBold={editorState.isBold}
+                  isItalic={editorState.isItalic}
+                  coloredWords={editorState.coloredWords}
+                  showWatermark={isFreeUser}
+                />
+              </div>
+              <div className="absolute bottom-0 left-0 right-0 h-14 bg-gradient-to-t from-background to-transparent z-10 pointer-events-none rounded-b-[2.8rem]" />
+            </div>
+            <button
+              onClick={handleDownload}
+              disabled={downloading}
+              className="flex items-center justify-center gap-2 w-full py-2.5 bg-primary text-primary-foreground font-heading text-sm font-medium rounded-md hover:opacity-90 transition-opacity disabled:opacity-50"
+            >
+              <Download className="w-4 h-4" />
+              {downloading ? "Exporting…" : user ? "Download PNG" : "Sign up to download"}
+            </button>
           </div>
         </div>
       </section>
