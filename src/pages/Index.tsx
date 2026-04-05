@@ -185,6 +185,7 @@ const Index = () => {
           {/* Controls - two columns */}
           <div className="flex-1 min-w-0 grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Quote */}
+            <div className="md:col-span-2">
             <ControlSection label="Quote">
               <div className="relative">
                 <textarea
