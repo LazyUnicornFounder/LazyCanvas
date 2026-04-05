@@ -45,24 +45,6 @@ const tiers = [
       { text: "API access", included: false },
     ],
   },
-  {
-    name: "Business",
-    price: "$19",
-    period: "/month",
-    description: "For creators and brands who need it all.",
-    cta: "Go Business",
-    highlighted: false,
-    features: [
-      { text: "Everything in Pro", included: true },
-      { text: "Custom watermark / logo overlay", included: true },
-      { text: "Unlimited bulk exports", included: true },
-      { text: "Team collaboration (up to 5)", included: true },
-      { text: "API access for automation", included: true },
-      { text: "Custom fonts upload", included: true },
-      { text: "White-label embeds", included: true },
-      { text: "Dedicated support", included: true },
-    ],
-  },
 ];
 
 const Pricing = () => {
@@ -109,7 +91,7 @@ const Pricing = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
           {tiers.map((tier) => (
             <div
               key={tier.name}
