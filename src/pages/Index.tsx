@@ -161,7 +161,7 @@ const Index = () => {
             </h1>
             <div className="hidden md:block">
               <p className="font-playfair text-sm font-normal tracking-tight text-foreground leading-tight">
-                Create awesome quotes for your socials.
+                Create awesome content for anything.
               </p>
               <p className="text-muted-foreground text-xs">
                 Design beautiful, shareable quote images in seconds. Pick fonts, colors, layouts — download and post.
