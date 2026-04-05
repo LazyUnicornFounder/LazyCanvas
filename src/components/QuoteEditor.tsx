@@ -300,6 +300,17 @@ const QuoteEditor = ({ state, onChange }: QuoteEditorProps) => {
             >
               I
             </button>
+            <button
+              onClick={() => set("showQuotationMarks", !state.showQuotationMarks)}
+              className={`px-3 py-1.5 text-sm rounded-md border font-playfair transition-all ${
+                state.showQuotationMarks
+                  ? "bg-foreground text-background border-foreground"
+                  : "border-border text-muted-foreground hover:text-foreground hover:border-foreground/30"
+              }`}
+              title="Quotation marks"
+            >
+              &ldquo;&rdquo;
+            </button>
           </div>
           <div className="flex items-center gap-3 mt-3">
             <span className="text-[10px] font-heading text-muted-foreground uppercase tracking-widest w-10">Size</span>
