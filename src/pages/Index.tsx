@@ -47,13 +47,17 @@ const Index = () => {
   }, [user]);
 
   const handleDownloadClick = useCallback(() => {
-    if (user) {
-      setShowGalleryPrompt(true);
-    } else {
-      // For non-logged-in users, download immediately then prompt signup
+    if (!user) {
+      // Non-logged-in: download then prompt signup
       performDownloadOnly();
+    } else if (isPro) {
+      // Pro users: just download, no gallery
+      performDownloadOnly();
+    } else {
+      // Free logged-in users: offer gallery share
+      setShowGalleryPrompt(true);
     }
-  }, [user]);
+  }, [user, isPro]);
 
   const performDownloadOnly = useCallback(async () => {
     const target = previewRef.current || mobilePreviewRef.current;
