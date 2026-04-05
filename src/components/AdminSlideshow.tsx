@@ -173,6 +173,7 @@ const AdminSlideshow = () => {
                     backgroundColor={sq.background_color || ""}
                     isBold={sq.is_bold || false}
                     isItalic={sq.is_italic || false}
+                    coloredWords={Array.isArray(sq.colored_words) ? sq.colored_words as any : []}
                   />
                 </div>
                 <button
@@ -216,6 +217,7 @@ const AdminSlideshow = () => {
               backgroundColor={editorState.backgroundColor}
               isBold={editorState.isBold}
               isItalic={editorState.isItalic}
+              coloredWords={editorState.coloredWords}
             />
           </div>
         </div>
