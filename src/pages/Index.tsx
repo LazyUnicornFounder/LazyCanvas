@@ -6,6 +6,7 @@ import { useAuth } from "@/hooks/useAuth";
 import QuoteEditor, { type QuoteEditorState, DEFAULT_EDITOR_STATE, SOCIAL_PLATFORMS } from "@/components/QuoteEditor";
 import QuotePreview, { type SocialPlatform } from "@/components/QuotePreview";
 import html2canvas from "html2canvas";
+import QuoteGallery from "@/components/QuoteGallery";
 
 const DRAFT_KEY = "lazy-quotes-draft";
 
@@ -162,6 +163,8 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      <QuoteGallery />
 
       {/* About */}
       <section className="border-t border-border px-4 sm:px-6 py-8">
