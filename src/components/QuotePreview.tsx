@@ -110,6 +110,7 @@ const aspectClasses: Record<AspectRatio, string> = {
   "3:2": "aspect-[3/2]",
   "16:9": "aspect-[16/9]",
   "2:1": "aspect-[2/1]",
+  "a4": "aspect-[210/297]",
   "letter": "aspect-[8.5/11]",
   "legal": "aspect-[8.5/14]",
   "tabloid": "aspect-[11/17]",
