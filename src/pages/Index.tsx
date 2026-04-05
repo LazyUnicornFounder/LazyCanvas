@@ -610,7 +610,10 @@ const Index = () => {
                   quote={quote}
                   authorName={authorName}
                   authorPhoto={authorPhoto}
-                  socials={socials}
+                  socials={[
+                    socialUsername ? `${SOCIAL_PLATFORMS.find(p => p.value === socialPlatform)?.prefix || ""}${socialUsername}` : "",
+                    website,
+                  ].filter(Boolean).join(" · ")}
                   aspectRatio={aspectRatio}
                   font={font}
                   theme={theme}
