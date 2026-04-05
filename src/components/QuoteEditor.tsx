@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Image as ImageIcon, X, Upload, Smile, Plus, Palette, Rainbow, LayoutGrid, Sparkles, Loader2 } from "lucide-react";
+import { Image as ImageIcon, X, Upload, Smile, Plus, Palette, Rainbow, LayoutGrid, Sparkles, Loader2, Eraser } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { EMOJI_CATEGORIES } from "@/data/emojis";
 import TemplateLibrary from "@/components/TemplateLibrary";
@@ -264,6 +264,28 @@ const QuoteEditor = ({ state: rawState, onChange, isPro = false }: QuoteEditorPr
   const bgInputRef = useRef<HTMLInputElement>(null);
   const [aiPrompt, setAiPrompt] = useState("");
   const [aiGenerating, setAiGenerating] = useState(false);
+  const [removingBg, setRemovingBg] = useState(false);
+
+  const handleRemoveBg = async () => {
+    if (!state.authorPhoto) return;
+    setRemovingBg(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("remove-background", {
+        body: { imageBase64: state.authorPhoto },
+      });
+      if (error) throw error;
+      if (data?.imageUrl) {
+        set("authorPhoto", data.imageUrl);
+      } else {
+        throw new Error("No image returned");
+      }
+    } catch (err) {
+      console.error("Remove bg error:", err);
+      import("sonner").then(({ toast }) => toast.error("Failed to remove background. Try again."));
+    } finally {
+      setRemovingBg(false);
+    }
+  };
 
   const set = <K extends keyof QuoteEditorState>(key: K, value: QuoteEditorState[K]) => {
     onChange({ ...state, [key]: value });
@@ -928,12 +950,22 @@ const QuoteEditor = ({ state: rawState, onChange, isPro = false }: QuoteEditorPr
               </button>
             )}
             {state.authorPhoto && (
-              <button
-                onClick={() => fileInputRef.current?.click()}
-                className="text-xs font-heading text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Change
-              </button>
+              <div className="flex flex-col gap-1">
+                <button
+                  onClick={() => fileInputRef.current?.click()}
+                  className="text-xs font-heading text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Change
+                </button>
+                <button
+                  onClick={handleRemoveBg}
+                  disabled={removingBg}
+                  className="flex items-center gap-1 text-xs font-heading text-muted-foreground hover:text-foreground transition-colors disabled:opacity-50"
+                >
+                  {removingBg ? <Loader2 className="w-3 h-3 animate-spin" /> : <Eraser className="w-3 h-3" />}
+                  {removingBg ? "Removing…" : "Remove BG"}
+                </button>
+              </div>
             )}
           </div>
           <div>
