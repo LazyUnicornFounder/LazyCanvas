@@ -681,24 +681,25 @@ const QuoteEditor = ({ state, onChange, isPro = false }: QuoteEditorProps) => {
         </div>
       </ControlSection>
 
-      {/* Format — PRO */}
-      <ControlSection label="Format" pro={!isPro} onProClick={goToPricing}>
-        <div className="flex flex-wrap gap-1.5">
-          {ASPECT_OPTIONS.map((opt) => (
-            <button
-              key={opt.value}
-              onClick={() => set("aspectRatio", opt.value)}
-              className={`px-3 py-1.5 text-xs font-heading font-medium rounded-md border transition-all ${
-                state.aspectRatio === opt.value
-                  ? "bg-foreground text-background border-foreground"
-                  : "border-border text-muted-foreground hover:text-foreground hover:border-foreground/30"
-              }`}
-            >
-              {opt.label}
-            </button>
-          ))}
-        </div>
-      </ControlSection>
+      {/* Format + Theme grouped */}
+      <div className="space-y-4">
+        <ControlSection label="Format" pro={!isPro} onProClick={goToPricing}>
+          <div className="flex flex-wrap gap-1.5">
+            {ASPECT_OPTIONS.map((opt) => (
+              <button
+                key={opt.value}
+                onClick={() => set("aspectRatio", opt.value)}
+                className={`px-3 py-1.5 text-xs font-heading font-medium rounded-md border transition-all ${
+                  state.aspectRatio === opt.value
+                    ? "bg-foreground text-background border-foreground"
+                    : "border-border text-muted-foreground hover:text-foreground hover:border-foreground/30"
+                }`}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+        </ControlSection>
 
       {/* Theme */}
       <ControlSection label="Theme">
@@ -722,8 +723,8 @@ const QuoteEditor = ({ state, onChange, isPro = false }: QuoteEditorProps) => {
           ))}
         </div>
       </ControlSection>
+      </div>
 
-      {/* Background — PRO */}
       <ControlSection label="Background" pro={!isPro} onProClick={goToPricing}>
         <input ref={bgInputRef} type="file" accept="image/*" onChange={handleBgUpload} className="hidden" />
         <div className="space-y-3">
