@@ -10,6 +10,8 @@ import Admin from "./pages/Admin.tsx";
 import Pricing from "./pages/Pricing.tsx";
 import Gallery from "./pages/Gallery.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import MarketingPage from "./pages/MarketingPage.tsx";
+import { MARKETING_PAGES } from "./pages/marketingConfigs.ts";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +28,13 @@ const App = () => (
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/pricing" element={<Pricing />} />
+            {MARKETING_PAGES.map((config) => (
+              <Route
+                key={config.slug}
+                path={`/${config.slug}`}
+                element={<MarketingPage config={config} />}
+              />
+            ))}
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
