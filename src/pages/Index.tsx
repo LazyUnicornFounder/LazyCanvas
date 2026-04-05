@@ -367,6 +367,26 @@ const Index = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {/* Pro signup prompt for guests using pro features */}
+      <AlertDialog open={showProSignupPrompt} onOpenChange={(o) => !o && setShowProSignupPrompt(false)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="font-heading">Nice design! 🎨</AlertDialogTitle>
+            <AlertDialogDescription className="text-sm text-muted-foreground">
+              You created a design with PRO features, but the first one is on us. Sign up for free to download it.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setShowProSignupPrompt(false)}>
+              Maybe later
+            </AlertDialogCancel>
+            <AlertDialogAction onClick={() => { setShowProSignupPrompt(false); setShowAuthModal(true); }}>
+              Sign up free
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };
