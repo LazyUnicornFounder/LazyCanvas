@@ -235,6 +235,15 @@ export const BG_FILTERS: { value: string; label: string; css: string }[] = [
   { value: "dramatic", label: "Dramatic", css: "contrast(1.4) brightness(0.85) saturate(1.2)" },
 ];
 
+const UNIT_OPTIONS = [
+  { value: "px", label: "Pixels" },
+  { value: "cm", label: "Centimeters" },
+  { value: "in", label: "Inches" },
+  { value: "mm", label: "Millimeters" },
+] as const;
+
+type Unit = typeof UNIT_OPTIONS[number]["value"];
+
 
 export const DEFAULT_EDITOR_STATE: QuoteEditorState = {
   quote: "",
