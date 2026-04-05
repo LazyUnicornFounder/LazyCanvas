@@ -83,37 +83,30 @@ const Index = () => {
     );
   }, []);
 
-  const handleDownloadClick = useCallback(() => {
+  const handleDownloadClick = useCallback((scale: number = 3) => {
     const hasPro = usesProFeatures(editorState);
 
     if (!user) {
       if (hasPro) {
-        // Not logged in + pro features → show pro signup prompt
         localStorage.setItem(DRAFT_KEY, JSON.stringify(editorState));
         setShowProSignupPrompt(true);
         return;
       }
-      // No pro features, not logged in → download then prompt signup
-      performDownloadOnly();
+      performDownloadOnly(scale);
     } else if (isPro) {
-      // Pro users: just download
-      performDownloadOnly();
+      performDownloadOnly(scale);
     } else if (hasPro) {
-      // Free logged-in user with pro features
       const trialUsed = localStorage.getItem("lazy-quotes-pro-trial-used");
       if (trialUsed) {
-        // Already used free pro trial → prompt to pay
         setShowProUpgradePrompt(true);
       } else {
-        // First time → allow download, mark trial used
         localStorage.setItem("lazy-quotes-pro-trial-used", "true");
-        performDownloadOnly();
+        performDownloadOnly(scale);
       }
     } else {
-      // Free logged-in user, no pro features → just download
-      performDownloadOnly();
+      performDownloadOnly(scale);
     }
-  }, [user, isPro, editorState, usesProFeatures]);
+  }, [user, isPro, editorState, usesProFeatures, performDownloadOnly]);
 
   const [downloadMenuOpen, setDownloadMenuOpen] = useState(false);
   const [mobileDownloadMenuOpen, setMobileDownloadMenuOpen] = useState(false);
