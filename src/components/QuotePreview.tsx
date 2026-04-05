@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import { forwardRef, useRef, useEffect, useState } from "react";
 
 export type AspectRatio = "vertical" | "square" | "landscape";
 export type QuoteFont = "playfair" | "cormorant" | "bebas" | "mono" | "heading";
