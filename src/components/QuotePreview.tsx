@@ -12,6 +12,8 @@ interface QuotePreviewProps {
   aspectRatio: AspectRatio;
   font: QuoteFont;
   theme: QuoteTheme;
+  backgroundImage: string | null;
+  backgroundOpacity: number;
 }
 
 const aspectClasses: Record<AspectRatio, string> = {
@@ -36,7 +38,7 @@ const themeStyles: Record<QuoteTheme, { bg: string; text: string; muted: string;
 };
 
 const QuotePreview = forwardRef<HTMLDivElement, QuotePreviewProps>(
-  ({ quote, authorName, authorPhoto, socials, aspectRatio, font, theme }, ref) => {
+  ({ quote, authorName, authorPhoto, socials, aspectRatio, font, theme, backgroundImage, backgroundOpacity }, ref) => {
     const t = themeStyles[theme];
     const displayQuote = quote || "Type your quote here...";
     const isPlaceholder = !quote;
@@ -47,8 +49,20 @@ const QuotePreview = forwardRef<HTMLDivElement, QuotePreviewProps>(
         className={`${aspectClasses[aspectRatio]} w-full max-w-lg relative overflow-hidden flex flex-col justify-between`}
         style={{ backgroundColor: t.bg, color: t.text, borderRadius: "2px" }}
       >
+        {backgroundImage && (
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{
+              backgroundImage: `url(${backgroundImage})`,
+              opacity: backgroundOpacity,
+            }}
+          />
+        )}
+        {backgroundImage && (
+          <div className="absolute inset-0" style={{ backgroundColor: t.bg, opacity: 1 - backgroundOpacity }} />
+        )}
         {/* Quote content */}
-        <div className="flex-1 flex items-center justify-center p-8 sm:p-12">
+        <div className="flex-1 flex items-center justify-center p-8 sm:p-12 relative z-10">
           <div className="text-center max-w-[85%]">
             <span
               style={{ color: t.muted, fontSize: "2.5rem", lineHeight: 1, fontFamily: "Georgia, serif" }}
@@ -74,7 +88,7 @@ const QuotePreview = forwardRef<HTMLDivElement, QuotePreviewProps>(
 
         {/* Author section */}
         <div
-          className="flex items-center gap-3 px-8 pb-6 sm:px-12 sm:pb-8"
+          className="flex items-center gap-3 px-8 pb-6 sm:px-12 sm:pb-8 relative z-10"
           style={{ borderTop: `1px solid ${t.border}`, paddingTop: "1.25rem" }}
         >
           {authorPhoto && (

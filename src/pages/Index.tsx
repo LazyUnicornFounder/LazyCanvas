@@ -1,6 +1,6 @@
 import { useState, useRef, useCallback } from "react";
 import { toPng } from "html-to-image";
-import { Download, Image as ImageIcon, X } from "lucide-react";
+import { Download, Image as ImageIcon, X, Upload } from "lucide-react";
 import QuotePreview, {
   type AspectRatio,
   type QuoteFont,
@@ -37,9 +37,20 @@ const Index = () => {
   const [font, setFont] = useState<QuoteFont>("playfair");
   const [theme, setTheme] = useState<QuoteTheme>("light");
   const [downloading, setDownloading] = useState(false);
+  const [backgroundImage, setBackgroundImage] = useState<string | null>(null);
+  const [backgroundOpacity, setBackgroundOpacity] = useState(0.4);
 
   const previewRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const bgInputRef = useRef<HTMLInputElement>(null);
+
+  const handleBgUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => setBackgroundImage(ev.target?.result as string);
+    reader.readAsDataURL(file);
+  };
 
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -217,6 +228,50 @@ const Index = () => {
                 ))}
               </div>
             </ControlSection>
+
+            {/* Background */}
+            <ControlSection label="Background">
+              <input
+                ref={bgInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handleBgUpload}
+                className="hidden"
+              />
+              <div className="space-y-3">
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => bgInputRef.current?.click()}
+                    className="flex items-center gap-2 px-4 py-2 text-xs font-heading font-medium rounded-md border border-border text-muted-foreground hover:text-foreground hover:border-foreground/30 transition-all"
+                  >
+                    <Upload className="w-3.5 h-3.5" />
+                    {backgroundImage ? "Change image" : "Upload image"}
+                  </button>
+                  {backgroundImage && (
+                    <button
+                      onClick={() => setBackgroundImage(null)}
+                      className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      Remove
+                    </button>
+                  )}
+                </div>
+                {backgroundImage && (
+                  <div className="flex items-center gap-3">
+                    <span className="text-[10px] font-heading text-muted-foreground uppercase tracking-widest w-14">Opacity</span>
+                    <input
+                      type="range"
+                      min={0.1}
+                      max={1}
+                      step={0.05}
+                      value={backgroundOpacity}
+                      onChange={(e) => setBackgroundOpacity(parseFloat(e.target.value))}
+                      className="flex-1 accent-foreground h-1"
+                    />
+                  </div>
+                )}
+              </div>
+            </ControlSection>
           </div>
 
           {/* Preview */}
@@ -232,6 +287,8 @@ const Index = () => {
                   aspectRatio={aspectRatio}
                   font={font}
                   theme={theme}
+                  backgroundImage={backgroundImage}
+                  backgroundOpacity={backgroundOpacity}
                 />
               </div>
             </div>
