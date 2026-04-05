@@ -887,7 +887,7 @@ const QuoteEditor = ({ state: rawState, onChange, isPro = false }: QuoteEditorPr
           <span className="text-[10px] font-heading text-muted-foreground uppercase tracking-widest w-14">Position</span>
           <div className="flex flex-wrap gap-1.5">
             {([
-              { value: "below-quote" as const, label: "Below Quote" },
+              { value: "below-quote" as const, label: "Below Text" },
               { value: "bottom-left" as const, label: "Bottom Left" },
               { value: "bottom-center" as const, label: "Bottom Center" },
               { value: "bottom-right" as const, label: "Bottom Right" },
