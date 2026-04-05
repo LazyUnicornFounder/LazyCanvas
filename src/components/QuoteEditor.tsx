@@ -116,6 +116,7 @@ export const DEFAULT_EDITOR_STATE: QuoteEditorState = {
   authorPosition: "below-quote",
   isBold: false,
   isItalic: false,
+  coloredWords: [],
 };
 
 interface QuoteEditorProps {
