@@ -220,6 +220,30 @@ const QuoteEditor = ({ state, onChange, isPro = false }: QuoteEditorProps) => {
     reader.readAsDataURL(file);
   };
 
+  const handleAiGenerate = async () => {
+    if (!aiPrompt.trim() || aiGenerating) return;
+    setAiGenerating(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("generate-background", {
+        body: { prompt: aiPrompt.trim() },
+      });
+      if (error) throw error;
+      if (data?.imageUrl) {
+        set("backgroundImage", data.imageUrl);
+        set("backgroundOpacity", 0.4);
+        setAiPrompt("");
+      } else {
+        throw new Error("No image returned");
+      }
+    } catch (err: any) {
+      console.error("AI generation error:", err);
+      const { toast } = await import("sonner");
+      toast.error("Failed to generate background. Try again.");
+    } finally {
+      setAiGenerating(false);
+    }
+  };
+
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
