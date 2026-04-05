@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
@@ -11,48 +11,13 @@ import QuotePreview, {
   type AuthorPosition,
   type SocialPlatform,
 } from "@/components/QuotePreview";
-import { Download, Trash2, LogOut, Plus, ArrowLeft } from "lucide-react";
+import QuoteEditor, {
+  type QuoteEditorState,
+  DEFAULT_EDITOR_STATE,
+  SOCIAL_PLATFORMS,
+} from "@/components/QuoteEditor";
+import { Trash2, LogOut, Plus, ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
-
-const FONT_OPTIONS: { value: QuoteFont; label: string; preview: string }[] = [
-  { value: "playfair", label: "Playfair", preview: "font-playfair" },
-  { value: "cormorant", label: "Cormorant", preview: "font-cormorant" },
-  { value: "lora", label: "Lora", preview: "font-lora" },
-  { value: "merriweather", label: "Merriweather", preview: "font-merriweather" },
-  { value: "crimson", label: "Crimson", preview: "font-crimson" },
-  { value: "bebas", label: "Bebas", preview: "font-bebas" },
-  { value: "oswald", label: "Oswald", preview: "font-oswald" },
-  { value: "archivo", label: "Archivo", preview: "font-archivo" },
-  { value: "heading", label: "Grotesk", preview: "font-heading" },
-  { value: "inter", label: "Inter", preview: "font-inter" },
-  { value: "raleway", label: "Raleway", preview: "font-raleway" },
-  { value: "montserrat", label: "Montserrat", preview: "font-montserrat" },
-  { value: "poppins", label: "Poppins", preview: "font-poppins" },
-  { value: "dancing", label: "Dancing", preview: "font-dancing" },
-  { value: "mono", label: "Mono", preview: "font-mono" },
-];
-
-const THEME_OPTIONS: { value: QuoteTheme; label: string; swatch: string }[] = [
-  { value: "light", label: "Light", swatch: "#FFFFFF" },
-  { value: "dark", label: "Dark", swatch: "#1a1a1a" },
-  { value: "cream", label: "Cream", swatch: "#F5F0E8" },
-  { value: "ink", label: "Ink", swatch: "#0d1117" },
-];
-
-const ASPECT_OPTIONS: { value: AspectRatio; label: string }[] = [
-  { value: "square", label: "1:1" },
-  { value: "3:4", label: "3:4" },
-  { value: "9:16", label: "9:16" },
-];
-
-const SHADOW_OPTIONS: { value: TextShadow; label: string }[] = [
-  { value: "none", label: "None" },
-  { value: "soft", label: "Soft" },
-  { value: "hard", label: "Hard" },
-  { value: "glow", label: "Glow" },
-  { value: "outline", label: "Outline" },
-  { value: "neon", label: "Neon" },
-];
 
 interface SlideshowQuote {
   id: string;
@@ -87,38 +52,13 @@ const Admin = () => {
   const { user, isAdmin, loading, signOut } = useAuth();
   const navigate = useNavigate();
 
-  // Quote editor state
-  const [quote, setQuote] = useState("");
-  const [authorName, setAuthorName] = useState("");
-  const [font, setFont] = useState<QuoteFont>("playfair");
-  const [theme, setTheme] = useState<QuoteTheme>("dark");
-  const [fontSize, setFontSize] = useState(1.4);
-  const [textAlign, setTextAlign] = useState<"left" | "center" | "right">("center");
-  const [textColor, setTextColor] = useState("");
-  const [backgroundColor, setBackgroundColor] = useState("");
-  const [textShadow, setTextShadow] = useState<TextShadow>("none");
-  const [isBold, setIsBold] = useState(false);
-  const [isItalic, setIsItalic] = useState(false);
-  const [letterSpacing, setLetterSpacing] = useState(0);
-  const [lineHeight, setLineHeight] = useState(1.6);
-  const [authorFontSize, setAuthorFontSize] = useState(0.875);
-  const [authorColor, setAuthorColor] = useState("");
-  const [authorFont, setAuthorFont] = useState<QuoteFont>("playfair");
-  const [authorPosition, setAuthorPosition] = useState<AuthorPosition>("below-quote");
-  const [aspectRatio, setAspectRatio] = useState<AspectRatio>("square");
-  const [backgroundOpacity, setBackgroundOpacity] = useState(0.4);
-
-  // Saved quotes
+  const [editorState, setEditorState] = useState<QuoteEditorState>(DEFAULT_EDITOR_STATE);
   const [savedQuotes, setSavedQuotes] = useState<SlideshowQuote[]>([]);
   const [saving, setSaving] = useState(false);
-
   const previewRef = useRef<HTMLDivElement>(null);
 
-  // Load saved quotes
   useEffect(() => {
-    if (isAdmin) {
-      loadQuotes();
-    }
+    if (isAdmin) loadQuotes();
   }, [isAdmin]);
 
   const loadQuotes = async () => {
@@ -130,31 +70,42 @@ const Admin = () => {
   };
 
   const handleSave = async () => {
-    if (!quote.trim()) {
+    if (!editorState.quote.trim()) {
       toast.error("Please enter a quote");
       return;
     }
     setSaving(true);
+
+    const socials = [
+      editorState.socialUsername
+        ? `${SOCIAL_PLATFORMS.find((p) => p.value === editorState.socialPlatform)?.prefix || ""}${editorState.socialUsername}`
+        : "",
+      editorState.website,
+    ].filter(Boolean).join(" · ");
+
     const { error } = await supabase.from("slideshow_quotes").insert({
-      quote,
-      author_name: authorName,
-      font,
-      theme,
-      font_size: fontSize,
-      text_align: textAlign,
-      text_color: textColor,
-      background_color: backgroundColor,
-      text_shadow: textShadow,
-      is_bold: isBold,
-      is_italic: isItalic,
-      letter_spacing: letterSpacing,
-      line_height: lineHeight,
-      author_font_size: authorFontSize,
-      author_color: authorColor,
-      author_font: authorFont,
-      author_position: authorPosition,
-      aspect_ratio: aspectRatio,
-      background_opacity: backgroundOpacity,
+      quote: editorState.quote,
+      author_name: editorState.authorName,
+      font: editorState.font,
+      theme: editorState.theme,
+      font_size: editorState.fontSize,
+      text_align: editorState.textAlign,
+      text_color: editorState.textColor,
+      background_color: editorState.backgroundColor,
+      text_shadow: editorState.textShadow,
+      is_bold: editorState.isBold,
+      is_italic: editorState.isItalic,
+      letter_spacing: editorState.letterSpacing,
+      line_height: editorState.lineHeight,
+      author_font_size: editorState.authorFontSize,
+      author_color: editorState.authorColor,
+      author_font: editorState.authorFont,
+      author_position: editorState.authorPosition,
+      aspect_ratio: editorState.aspectRatio,
+      background_opacity: editorState.backgroundOpacity,
+      socials,
+      social_platform: editorState.socialPlatform,
+      website: editorState.website,
       display_order: savedQuotes.length,
     });
     setSaving(false);
@@ -163,8 +114,7 @@ const Admin = () => {
       console.error(error);
     } else {
       toast.success("Quote saved to slideshow!");
-      setQuote("");
-      setAuthorName("");
+      setEditorState(DEFAULT_EDITOR_STATE);
       loadQuotes();
     }
   };
@@ -182,9 +132,7 @@ const Admin = () => {
       redirect_uri: window.location.origin + "/admin",
       extraParams: { prompt: "select_account" },
     });
-    if (result.error) {
-      toast.error("Sign in failed");
-    }
+    if (result.error) toast.error("Sign in failed");
   };
 
   if (loading) {
@@ -208,9 +156,7 @@ const Admin = () => {
             Sign in with Google
           </button>
           <div className="pt-4">
-            <button onClick={() => navigate("/")} className="text-xs text-muted-foreground hover:text-foreground">
-              ← Back to home
-            </button>
+            <button onClick={() => navigate("/")} className="text-xs text-muted-foreground hover:text-foreground">← Back to home</button>
           </div>
         </div>
       </div>
@@ -223,13 +169,18 @@ const Admin = () => {
         <div className="text-center space-y-4">
           <h1 className="text-xl font-heading font-semibold text-foreground">Access Denied</h1>
           <p className="text-muted-foreground text-sm">You don't have admin privileges.</p>
-          <button onClick={signOut} className="text-xs text-muted-foreground hover:text-foreground">
-            Sign out
-          </button>
+          <button onClick={signOut} className="text-xs text-muted-foreground hover:text-foreground">Sign out</button>
         </div>
       </div>
     );
   }
+
+  const socials = [
+    editorState.socialUsername
+      ? `${SOCIAL_PLATFORMS.find((p) => p.value === editorState.socialPlatform)?.prefix || ""}${editorState.socialUsername}`
+      : "",
+    editorState.website,
+  ].filter(Boolean).join(" · ");
 
   return (
     <div className="min-h-screen bg-background">
@@ -256,112 +207,7 @@ const Admin = () => {
         <div className="flex gap-6 items-start">
           {/* Editor */}
           <div className="flex-1 min-w-0 space-y-4">
-            <ControlSection label="Quote">
-              <textarea
-                value={quote}
-                onChange={(e) => setQuote(e.target.value)}
-                placeholder="Enter your quote..."
-                rows={3}
-                className="w-full bg-transparent border border-border rounded-md px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-foreground/20 resize-none font-body"
-              />
-              <input
-                value={authorName}
-                onChange={(e) => setAuthorName(e.target.value)}
-                placeholder="Author name"
-                className="w-full bg-transparent border border-border rounded-md px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-foreground/20 font-body"
-              />
-            </ControlSection>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <ControlSection label="Font">
-                <div className="flex flex-wrap gap-1.5">
-                  {FONT_OPTIONS.map((opt) => (
-                    <button
-                      key={opt.value}
-                      onClick={() => setFont(opt.value)}
-                      className={`px-3 py-1.5 text-xs rounded-md border transition-all ${opt.preview} ${
-                        font === opt.value
-                          ? "bg-foreground text-background border-foreground"
-                          : "border-border text-muted-foreground hover:text-foreground"
-                      }`}
-                    >
-                      {opt.label}
-                    </button>
-                  ))}
-                </div>
-                <div className="flex items-center gap-2 mt-2">
-                  <button
-                    onClick={() => setIsBold(!isBold)}
-                    className={`px-2.5 py-1 text-xs rounded-md border font-bold ${
-                      isBold ? "bg-foreground text-background border-foreground" : "border-border text-muted-foreground"
-                    }`}
-                  >B</button>
-                  <button
-                    onClick={() => setIsItalic(!isItalic)}
-                    className={`px-2.5 py-1 text-xs rounded-md border italic ${
-                      isItalic ? "bg-foreground text-background border-foreground" : "border-border text-muted-foreground"
-                    }`}
-                  >I</button>
-                </div>
-                <div className="flex items-center gap-3 mt-2">
-                  <span className="text-[10px] font-heading text-muted-foreground uppercase tracking-widest w-8">Size</span>
-                  <input type="range" min={0.8} max={6} step={0.05} value={fontSize} onChange={(e) => setFontSize(parseFloat(e.target.value))} className="flex-1 accent-foreground h-1" />
-                  <span className="text-[10px] font-mono text-muted-foreground w-8 text-right">{fontSize.toFixed(1)}</span>
-                </div>
-              </ControlSection>
-
-              <ControlSection label="Style">
-                <div className="space-y-3">
-                  <div className="flex gap-2">
-                    {THEME_OPTIONS.map((opt) => (
-                      <button
-                        key={opt.value}
-                        onClick={() => setTheme(opt.value)}
-                        className={`flex flex-col items-center gap-1 ${theme === opt.value ? "opacity-100" : "opacity-40 hover:opacity-70"}`}
-                      >
-                        <div className="w-8 h-8 rounded-full border border-border" style={{ backgroundColor: opt.swatch }} />
-                        <span className="text-[9px] text-muted-foreground">{opt.label}</span>
-                      </button>
-                    ))}
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-heading text-muted-foreground uppercase tracking-widest">Shadow</span>
-                    <div className="flex gap-1">
-                      {SHADOW_OPTIONS.map((s) => (
-                        <button
-                          key={s.value}
-                          onClick={() => setTextShadow(s.value)}
-                          className={`px-2 py-1 text-[10px] rounded border ${
-                            textShadow === s.value ? "bg-foreground text-background border-foreground" : "border-border text-muted-foreground"
-                          }`}
-                        >
-                          {s.label}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-heading text-muted-foreground uppercase tracking-widest">Color</span>
-                    <input type="color" value={textColor || "#000000"} onChange={(e) => setTextColor(e.target.value)} className="w-6 h-6 rounded border border-border cursor-pointer" />
-                    <input type="color" value={backgroundColor || "#ffffff"} onChange={(e) => setBackgroundColor(e.target.value)} className="w-6 h-6 rounded border border-border cursor-pointer" />
-                    <span className="text-[9px] text-muted-foreground">text / bg</span>
-                  </div>
-                  <div className="flex gap-2">
-                    {ASPECT_OPTIONS.map((opt) => (
-                      <button
-                        key={opt.value}
-                        onClick={() => setAspectRatio(opt.value)}
-                        className={`px-2.5 py-1 text-xs rounded border ${
-                          aspectRatio === opt.value ? "bg-foreground text-background border-foreground" : "border-border text-muted-foreground"
-                        }`}
-                      >
-                        {opt.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </ControlSection>
-            </div>
+            <QuoteEditor state={editorState} onChange={setEditorState} />
 
             <button
               onClick={handleSave}
@@ -424,28 +270,29 @@ const Admin = () => {
               <div className="shadow-xl w-full">
                 <QuotePreview
                   ref={previewRef}
-                  quote={quote}
-                  authorName={authorName}
-                  authorPhoto={null}
-                  socials=""
-                  aspectRatio={aspectRatio}
-                  font={font}
-                  theme={theme}
-                  backgroundImage={null}
-                  backgroundOpacity={backgroundOpacity}
-                  fontSize={fontSize}
-                  textAlign={textAlign}
-                  letterSpacing={letterSpacing}
-                  lineHeight={lineHeight}
-                  textColor={textColor}
-                  authorFontSize={authorFontSize}
-                  authorColor={authorColor}
-                  authorFont={authorFont}
-                  textShadow={textShadow}
-                  authorPosition={authorPosition}
-                  backgroundColor={backgroundColor}
-                  isBold={isBold}
-                  isItalic={isItalic}
+                  quote={editorState.quote}
+                  authorName={editorState.authorName}
+                  authorPhoto={editorState.authorPhoto}
+                  socialPlatform={editorState.socialUsername ? editorState.socialPlatform as SocialPlatform : undefined}
+                  socials={socials}
+                  aspectRatio={editorState.aspectRatio}
+                  font={editorState.font}
+                  theme={editorState.theme}
+                  backgroundImage={editorState.backgroundImage}
+                  backgroundOpacity={editorState.backgroundOpacity}
+                  fontSize={editorState.fontSize}
+                  textAlign={editorState.textAlign}
+                  letterSpacing={editorState.letterSpacing}
+                  lineHeight={editorState.lineHeight}
+                  textColor={editorState.textColor}
+                  authorFontSize={editorState.authorFontSize}
+                  authorColor={editorState.authorColor}
+                  authorFont={editorState.authorFont}
+                  textShadow={editorState.textShadow}
+                  authorPosition={editorState.authorPosition}
+                  backgroundColor={editorState.backgroundColor}
+                  isBold={editorState.isBold}
+                  isItalic={editorState.isItalic}
                 />
               </div>
             </div>
@@ -455,12 +302,5 @@ const Admin = () => {
     </div>
   );
 };
-
-const ControlSection = ({ label, children }: { label: string; children: React.ReactNode }) => (
-  <div className="border border-border rounded-lg p-4 space-y-2.5 bg-card">
-    <label className="text-sm font-heading font-semibold uppercase tracking-widest text-foreground">{label}</label>
-    {children}
-  </div>
-);
 
 export default Admin;
