@@ -88,6 +88,7 @@ export interface QuoteEditorState {
   authorPosition: AuthorPosition;
   isBold: boolean;
   isItalic: boolean;
+  coloredWords: ColoredWord[];
 }
 
 export const DEFAULT_EDITOR_STATE: QuoteEditorState = {
