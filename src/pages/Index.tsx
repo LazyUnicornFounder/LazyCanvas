@@ -231,7 +231,7 @@ const Index = () => {
           className="flex items-center justify-center gap-2 w-full mt-2 py-2 bg-primary text-primary-foreground font-heading text-xs font-medium rounded-md hover:opacity-90 transition-opacity disabled:opacity-50"
         >
           <Download className="w-3.5 h-3.5" />
-          {downloading ? "Exporting…" : "Download PNG"}
+{downloading ? "Exporting…" : "Download"}
         </button>
       </div>
 
@@ -295,7 +295,7 @@ const Index = () => {
               className="flex items-center justify-center gap-2 w-full py-2.5 bg-primary text-primary-foreground font-heading text-sm font-medium rounded-md hover:opacity-90 transition-opacity disabled:opacity-50"
             >
               <Download className="w-4 h-4" />
-              {downloading ? "Exporting…" : "Download PNG"}
+              {downloading ? "Exporting…" : "Download"}
             </button>
           </div>
         </div>
