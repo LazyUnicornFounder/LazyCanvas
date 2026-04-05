@@ -1,4 +1,14 @@
 import { useState, useRef, useCallback, useEffect } from "react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { useNavigate } from "react-router-dom";
 import { LogOut, User, Download } from "lucide-react";
 import AuthModal from "@/components/AuthModal";
