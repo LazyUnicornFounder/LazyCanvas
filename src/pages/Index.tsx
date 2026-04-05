@@ -37,6 +37,7 @@ const Index = () => {
   const [showGalleryPrompt, setShowGalleryPrompt] = useState(false);
   const [showSignupPrompt, setShowSignupPrompt] = useState(false);
   const [showProUpgradePrompt, setShowProUpgradePrompt] = useState(false);
+  const [showProSignupPrompt, setShowProSignupPrompt] = useState(false);
   const previewRef = useRef<HTMLDivElement>(null);
   const mobilePreviewRef = useRef<HTMLDivElement>(null);
 
@@ -60,9 +61,9 @@ const Index = () => {
 
     if (!user) {
       if (hasPro) {
-        // Not logged in + pro features → must sign up first
+        // Not logged in + pro features → show pro signup prompt
         localStorage.setItem(DRAFT_KEY, JSON.stringify(editorState));
-        setShowAuthModal(true);
+        setShowProSignupPrompt(true);
         return;
       }
       // No pro features, not logged in → download then prompt signup
@@ -362,6 +363,26 @@ const Index = () => {
             </AlertDialogCancel>
             <AlertDialogAction onClick={() => { setShowProUpgradePrompt(false); navigate("/pricing"); }}>
               Upgrade to Pro
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Pro signup prompt for guests using pro features */}
+      <AlertDialog open={showProSignupPrompt} onOpenChange={(o) => !o && setShowProSignupPrompt(false)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="font-heading">Nice design! 🎨</AlertDialogTitle>
+            <AlertDialogDescription className="text-sm text-muted-foreground">
+              You created a design with PRO features, but the first one is on us. Sign up for free to download it.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setShowProSignupPrompt(false)}>
+              Maybe later
+            </AlertDialogCancel>
+            <AlertDialogAction onClick={() => { setShowProSignupPrompt(false); setShowAuthModal(true); }}>
+              Sign up free
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
