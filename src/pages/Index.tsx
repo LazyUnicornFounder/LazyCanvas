@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback, useEffect } from "react";
-import { toPng } from "html-to-image";
+import html2canvas from "html2canvas";
 import { Download, Image as ImageIcon, X, Upload, Smile } from "lucide-react";
 import QuotePreview, {
   type AspectRatio,
@@ -143,11 +143,13 @@ const Index = () => {
     if (!previewRef.current) return;
     setDownloading(true);
     try {
-      const scale = 3;
-      const dataUrl = await toPng(previewRef.current, {
-        pixelRatio: scale,
-        cacheBust: true,
+      const canvas = await html2canvas(previewRef.current, {
+        scale: 3,
+        useCORS: true,
+        logging: false,
+        backgroundColor: null,
       });
+      const dataUrl = canvas.toDataURL("image/png");
       const link = document.createElement("a");
       link.download = `quote-${Date.now()}.png`;
       link.href = dataUrl;
