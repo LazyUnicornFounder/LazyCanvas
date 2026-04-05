@@ -156,10 +156,10 @@ const Index = () => {
         </div>
       </header>
 
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           {/* Controls */}
-          <div className="space-y-8 order-2 lg:order-1">
+          <div className="space-y-4 order-2 lg:order-1 lg:max-h-[calc(100vh-5rem)] lg:overflow-y-auto lg:pr-2 lg:scrollbar-thin">
             {/* Quote */}
             <ControlSection label="Quote">
               <div className="relative">
@@ -168,7 +168,7 @@ const Index = () => {
                   value={quote}
                   onChange={(e) => setQuote(e.target.value)}
                   placeholder="The only way to do great work is to love what you do."
-                  rows={4}
+                  rows={3}
                   className="w-full bg-transparent border border-border rounded-md px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-foreground/20 resize-none font-body"
                 />
                 <div className="absolute bottom-2 right-2">
@@ -575,7 +575,7 @@ const ControlSection = ({
   label: string;
   children: React.ReactNode;
 }) => (
-  <div className="border border-border rounded-lg p-5 space-y-3 bg-card">
+  <div className="border border-border rounded-lg p-4 space-y-2.5 bg-card">
     <label className="text-sm font-heading font-semibold uppercase tracking-widest text-foreground">
       {label}
     </label>

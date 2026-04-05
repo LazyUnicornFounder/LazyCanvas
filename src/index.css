@@ -115,3 +115,19 @@
     font-family: var(--font-heading);
   }
 }
+
+/* Slim scrollbar for controls panel */
+.lg\:scrollbar-thin::-webkit-scrollbar {
+  width: 4px;
+}
+.lg\:scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+.lg\:scrollbar-thin::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 2px;
+}
+.lg\:scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--border)) transparent;
+}
