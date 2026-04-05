@@ -272,6 +272,7 @@ const Index = () => {
                   I
                 </button>
               </div>
+              <div className="flex items-center gap-3 mt-3">
                 <span className="text-[10px] font-heading text-muted-foreground uppercase tracking-widest w-10">Size</span>
                 <input
                   type="range"
