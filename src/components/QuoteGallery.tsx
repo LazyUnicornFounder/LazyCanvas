@@ -115,7 +115,22 @@ const QuoteGallery = ({ hideWrapper = false }: { hideWrapper?: boolean }) => {
     fetchAll();
   }, []);
 
-  if (quotes.length === 0) return null;
+  if (quotes.length === 0) {
+    const empty = (
+      <div className="flex flex-col items-center justify-center py-20 text-center">
+        <p className="text-muted-foreground text-sm">Coming soon — be the first to share a quote!</p>
+      </div>
+    );
+    if (hideWrapper) return empty;
+    return (
+      <section className="border-t border-border px-4 sm:px-6 py-12">
+        <div className="max-w-[1400px] mx-auto">
+          <h2 className="font-heading text-xl font-semibold tracking-tight text-foreground mb-8">Gallery</h2>
+          {empty}
+        </div>
+      </section>
+    );
+  }
 
   const grid = (
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
