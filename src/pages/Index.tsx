@@ -42,11 +42,10 @@ const getPreviewWidth = (aspectRatio: string, customW?: number, customH?: number
   let ratio = ASPECT_RATIOS[aspectRatio];
   if (aspectRatio === "custom" && customW && customH) ratio = customW / customH;
   if (!ratio) ratio = 1;
-  if (ratio >= 2) return "clamp(320px, 35vw, 450px)";
-  if (ratio >= 1.5) return "clamp(300px, 30vw, 400px)";
-  if (ratio >= 1) return "clamp(260px, 25vw, 340px)";
-  if (ratio >= 0.6) return "clamp(240px, 22vw, 300px)";
-  return "clamp(200px, 18vw, 260px)";
+  // Calculate width from available height: target ~calc(100vh - 160px) for the preview
+  // width = height * ratio, but we cap it so it doesn't get too wide
+  const heightExpr = "calc(100vh - 180px)";
+  return `min(${heightExpr} * ${ratio}, 500px)`;
 };
 
 const Index = () => {
