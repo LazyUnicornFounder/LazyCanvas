@@ -83,31 +83,6 @@ const Index = () => {
     );
   }, []);
 
-  const handleDownloadClick = useCallback((scale: number = 3) => {
-    const hasPro = usesProFeatures(editorState);
-
-    if (!user) {
-      if (hasPro) {
-        localStorage.setItem(DRAFT_KEY, JSON.stringify(editorState));
-        setShowProSignupPrompt(true);
-        return;
-      }
-      performDownloadOnly(scale);
-    } else if (isPro) {
-      performDownloadOnly(scale);
-    } else if (hasPro) {
-      const trialUsed = localStorage.getItem("lazy-quotes-pro-trial-used");
-      if (trialUsed) {
-        setShowProUpgradePrompt(true);
-      } else {
-        localStorage.setItem("lazy-quotes-pro-trial-used", "true");
-        performDownloadOnly(scale);
-      }
-    } else {
-      performDownloadOnly(scale);
-    }
-  }, [user, isPro, editorState, usesProFeatures, performDownloadOnly]);
-
   const [downloadMenuOpen, setDownloadMenuOpen] = useState(false);
   const [mobileDownloadMenuOpen, setMobileDownloadMenuOpen] = useState(false);
 
@@ -132,6 +107,31 @@ const Index = () => {
       }
     }
   }, [user]);
+
+  const handleDownloadClick = useCallback((scale: number = 3) => {
+    const hasPro = usesProFeatures(editorState);
+
+    if (!user) {
+      if (hasPro) {
+        localStorage.setItem(DRAFT_KEY, JSON.stringify(editorState));
+        setShowProSignupPrompt(true);
+        return;
+      }
+      performDownloadOnly(scale);
+    } else if (isPro) {
+      performDownloadOnly(scale);
+    } else if (hasPro) {
+      const trialUsed = localStorage.getItem("lazy-quotes-pro-trial-used");
+      if (trialUsed) {
+        setShowProUpgradePrompt(true);
+      } else {
+        localStorage.setItem("lazy-quotes-pro-trial-used", "true");
+        performDownloadOnly(scale);
+      }
+    } else {
+      performDownloadOnly(scale);
+    }
+  }, [user, isPro, editorState, usesProFeatures, performDownloadOnly]);
 
   const performDownload = useCallback(async (shareToGallery: boolean) => {
     setShowGalleryPrompt(false);
