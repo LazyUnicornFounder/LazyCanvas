@@ -62,7 +62,7 @@ const QuotePreview = forwardRef<HTMLDivElement, QuotePreviewProps>(
           <div className="absolute inset-0" style={{ backgroundColor: t.bg, opacity: 1 - backgroundOpacity }} />
         )}
         {/* Quote content */}
-        <div className="flex-1 flex items-center justify-center p-8 sm:p-12">
+        <div className="flex-1 flex items-center justify-center p-8 sm:p-12 relative z-10">
           <div className="text-center max-w-[85%]">
             <span
               style={{ color: t.muted, fontSize: "2.5rem", lineHeight: 1, fontFamily: "Georgia, serif" }}
@@ -88,7 +88,7 @@ const QuotePreview = forwardRef<HTMLDivElement, QuotePreviewProps>(
 
         {/* Author section */}
         <div
-          className="flex items-center gap-3 px-8 pb-6 sm:px-12 sm:pb-8"
+          className="flex items-center gap-3 px-8 pb-6 sm:px-12 sm:pb-8 relative z-10"
           style={{ borderTop: `1px solid ${t.border}`, paddingTop: "1.25rem" }}
         >
           {authorPhoto && (
