@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Image as ImageIcon, X, Upload, Smile, Plus, Palette, Rainbow } from "lucide-react";
 import { EMOJI_CATEGORIES } from "@/data/emojis";
 import type {
@@ -139,6 +140,8 @@ interface QuoteEditorProps {
 }
 
 const QuoteEditor = ({ state, onChange, isPro = false }: QuoteEditorProps) => {
+  const navigate = useNavigate();
+  const goToPricing = () => navigate("/pricing");
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [emojiCategory, setEmojiCategory] = useState(0);
   const quoteTextareaRef = useRef<HTMLTextAreaElement>(null);
@@ -412,7 +415,7 @@ const QuoteEditor = ({ state, onChange, isPro = false }: QuoteEditorProps) => {
 
       {/* Word Colors — PRO */}
       <div className="md:col-span-2">
-        <ControlSection label="Word Colors" pro={!isPro}>
+        <ControlSection label="Word Colors" pro={!isPro} onProClick={goToPricing}>
           <p className="text-[10px] text-muted-foreground mb-2">
             Color specific words or phrases in your quote.
           </p>
@@ -635,7 +638,7 @@ const QuoteEditor = ({ state, onChange, isPro = false }: QuoteEditorProps) => {
       </ControlSection>
 
       {/* Format — PRO */}
-      <ControlSection label="Format" pro={!isPro}>
+      <ControlSection label="Format" pro={!isPro} onProClick={goToPricing}>
         <div className="grid grid-cols-5 gap-1.5">
           {ASPECT_OPTIONS.map((opt) => (
             <button
@@ -677,7 +680,7 @@ const QuoteEditor = ({ state, onChange, isPro = false }: QuoteEditorProps) => {
       </ControlSection>
 
       {/* Background — PRO */}
-      <ControlSection label="Background" pro={!isPro}>
+      <ControlSection label="Background" pro={!isPro} onProClick={goToPricing}>
         <input ref={bgInputRef} type="file" accept="image/*" onChange={handleBgUpload} className="hidden" />
         <div className="space-y-3">
           <div className="flex items-center gap-3">
@@ -711,8 +714,11 @@ const QuoteEditor = ({ state, onChange, isPro = false }: QuoteEditorProps) => {
   );
 };
 
-const ControlSection = ({ label, children, pro = false }: { label: string; children: React.ReactNode; pro?: boolean }) => (
-  <div className="border border-border rounded-lg p-4 space-y-2.5 bg-card">
+const ControlSection = ({ label, children, pro = false, onProClick }: { label: string; children: React.ReactNode; pro?: boolean; onProClick?: () => void }) => (
+  <div
+    className={`border border-border rounded-lg p-4 space-y-2.5 bg-card ${pro ? "cursor-pointer" : ""}`}
+    onClick={pro ? onProClick : undefined}
+  >
     <div className="flex items-center gap-2">
       <label className="text-sm font-heading font-semibold uppercase tracking-widest text-foreground">{label}</label>
       {pro && (
@@ -721,7 +727,11 @@ const ControlSection = ({ label, children, pro = false }: { label: string; child
         </span>
       )}
     </div>
-    {children}
+    {pro ? (
+      <div className="opacity-40 pointer-events-none select-none">{children}</div>
+    ) : (
+      children
+    )}
   </div>
 );
 
