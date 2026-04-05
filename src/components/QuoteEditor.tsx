@@ -1189,6 +1189,7 @@ const QuoteEditor = ({ state: rawState, onChange, isPro = false }: QuoteEditorPr
                           "ios-screenshot": [1290, 2796], "ios-ipad": [2048, 2732], "android-phone": [1080, 1920],
                           "android-tablet": [1920, 1200], "mac-screenshot": [2880, 1800], "app-icon": [1, 1],
                           "iphone-wallpaper": [1179, 2556], "android-wallpaper": [1080, 2400], "lock-screen": [1170, 2532],
+                          "business-card": [3.5, 2],
                         };
                         const sizeMap: Record<string, string> = {
                           square: "1080 × 1080 px",
@@ -1224,6 +1225,7 @@ const QuoteEditor = ({ state: rawState, onChange, isPro = false }: QuoteEditorPr
                           "iphone-wallpaper": "1179 × 2556 px",
                           "android-wallpaper": "1080 × 2400 px",
                           "lock-screen": "1170 × 2532 px",
+                          "business-card": "3.5 × 2 in",
                         };
                         const [w, h] = ratioMap[opt.value] || opt.value.split(":").map(Number);
                         // For A-series, vary the icon size to reflect physical size differences
