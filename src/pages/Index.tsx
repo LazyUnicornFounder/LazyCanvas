@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import html2canvas from "html2canvas";
 import { Download, LogOut, User } from "lucide-react";
 import HeroSlideshow from "@/components/HeroSlideshow";
+import PhoneMockup from "@/components/PhoneMockup";
 import QuotePreview, {
   type SocialPlatform,
 } from "@/components/QuotePreview";
