@@ -115,16 +115,20 @@ const Index = () => {
     }
   }, [user, isPro, editorState, usesProFeatures]);
 
-  const performDownloadOnly = useCallback(async () => {
+  const [downloadMenuOpen, setDownloadMenuOpen] = useState(false);
+  const [mobileDownloadMenuOpen, setMobileDownloadMenuOpen] = useState(false);
+
+  const performDownloadOnly = useCallback(async (scale: number = 3) => {
     const target = previewRef.current || mobilePreviewRef.current;
     if (!target) return;
     setDownloading(true);
     try {
       const canvas = await html2canvas(target, {
-        scale: 3, useCORS: true, logging: false, backgroundColor: null,
+        scale, useCORS: true, logging: false, backgroundColor: null,
       });
       const link = document.createElement("a");
-      link.download = `quote-${Date.now()}.png`;
+      const suffix = scale > 3 ? "-print" : "";
+      link.download = `quote${suffix}-${Date.now()}.png`;
       link.href = canvas.toDataURL("image/png");
       link.click();
     } catch { console.error("Failed to export"); }
