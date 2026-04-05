@@ -24,7 +24,7 @@ serve(async (req) => {
     }
 
     // Use Gemini image model via Lovable AI proxy
-    const response = await fetch("https://ai-proxy.lovable.dev/v1/chat/completions", {
+    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${LOVABLE_API_KEY}`,
@@ -38,37 +38,40 @@ serve(async (req) => {
             content: `Generate a beautiful, high-quality background image for a quote card. The image should be atmospheric, slightly abstract, and work well as a backdrop for overlaid text. Style: ${prompt}. Do NOT include any text in the image.`,
           },
         ],
-        // Request image generation
-        response_modalities: ["image", "text"],
+        modalities: ["image", "text"],
       }),
     });
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error("AI proxy error:", response.status, errorText);
-      throw new Error(`AI proxy returned ${response.status}: ${errorText}`);
+      console.error("AI gateway error:", response.status, errorText);
+      throw new Error(`AI gateway returned ${response.status}: ${errorText}`);
     }
 
     const data = await response.json();
 
-    // Extract the image from the response
-    // Gemini image models return inline_data in the content parts
     const message = data.choices?.[0]?.message;
     let imageData: string | null = null;
 
-    if (message?.content) {
-      // Check if content is an array of parts (multimodal response)
-      if (Array.isArray(message.content)) {
-        for (const part of message.content) {
-          if (part.type === "image_url" && part.image_url?.url) {
-            imageData = part.image_url.url;
-            break;
-          }
+    // Check message.images array (Lovable AI gateway format)
+    if (message?.images && Array.isArray(message.images)) {
+      for (const img of message.images) {
+        if (img.image_url?.url) {
+          imageData = img.image_url.url;
+          break;
         }
       }
     }
 
-    if (!imageData) {
+    // Fallback: check content array
+    if (!imageData && Array.isArray(message?.content)) {
+      for (const part of message.content) {
+        if (part.type === "image_url" && part.image_url?.url) {
+          imageData = part.image_url.url;
+          break;
+        }
+      }
+    }
       console.error("Full response:", JSON.stringify(data));
       throw new Error("No image was generated. The model may not have returned an image.");
     }
