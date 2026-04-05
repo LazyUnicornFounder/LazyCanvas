@@ -72,6 +72,8 @@ serve(async (req) => {
         }
       }
     }
+
+    if (!imageData) {
       console.error("Full response:", JSON.stringify(data));
       throw new Error("No image was generated. The model may not have returned an image.");
     }
