@@ -7,7 +7,7 @@ interface PhoneMockupProps {
   className?: string;
 }
 
-const PhoneMockup = ({ children, authorName = "lazyquotes", className = "" }: PhoneMockupProps) => {
+const PhoneMockup = ({ children, authorName = "lazyfaceless", className = "" }: PhoneMockupProps) => {
   return (
     <div className={`relative ${className}`}>
       {/* Phone frame */}

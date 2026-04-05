@@ -397,7 +397,7 @@ const QuotePreview = forwardRef<HTMLDivElement, QuotePreviewProps>(
               }}
             >
               <span>Made with </span>
-              <span style={{ fontWeight: 600 }}>Lazy Quotes</span>
+              <span style={{ fontWeight: 600 }}>Lazy Faceless</span>
             </div>
           )}
         </div>
