@@ -126,7 +126,7 @@ const Create = () => {
       <main className="max-w-[1600px] mx-auto px-4 sm:px-6 py-4 sm:py-6">
         <div className="flex gap-6 items-start">
           <div className="flex-1 min-w-0">
-            <QuoteEditor state={editorState} onChange={setEditorState} />
+            <QuoteEditor state={editorState} onChange={setEditorState} isPro={isPro} />
           </div>
 
           <div className="hidden lg:flex sticky top-4 flex-shrink-0 flex-col gap-3" style={{ width: "clamp(260px, 25vw, 320px)" }}>
