@@ -410,6 +410,24 @@ const Index = () => {
       </AlertDialog>
     </div>
   );
+
+  if (user) {
+    return (
+      <SidebarProvider>
+        <div className="min-h-screen flex w-full">
+          <AppSidebar
+            activeQuoteId={activeQuoteId}
+            onSelectQuote={handleSelectQuote}
+            onNewQuote={handleNewQuote}
+            currentEditorState={editorState}
+          />
+          {pageContent}
+        </div>
+      </SidebarProvider>
+    );
+  }
+
+  return pageContent;
 };
 
 export default Index;
