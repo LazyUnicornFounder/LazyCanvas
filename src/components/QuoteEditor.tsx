@@ -1,6 +1,6 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { Image as ImageIcon, X, Upload, Smile, Plus, Palette, Rainbow, LayoutGrid, Eraser, Loader2 } from "lucide-react";
+import { Image as ImageIcon, X, Upload, Smile, Plus, Palette, Rainbow, LayoutGrid, Eraser, Loader2, Search } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { EMOJI_CATEGORIES } from "@/data/emojis";
 import TemplateLibrary from "@/components/TemplateLibrary";
@@ -290,6 +290,27 @@ const QuoteEditor = ({ state: rawState, onChange, isPro = false }: QuoteEditorPr
   const bgInputRef = useRef<HTMLInputElement>(null);
   const [removingBg, setRemovingBg] = useState(false);
   const [removingBgImage, setRemovingBgImage] = useState(false);
+  const [pexelsQuery, setPexelsQuery] = useState("");
+  const [pexelsResults, setPexelsResults] = useState<{ src: { large: string; medium: string }; photographer: string; id: number }[]>([]);
+  const [pexelsLoading, setPexelsLoading] = useState(false);
+  const [showPexelsSearch, setShowPexelsSearch] = useState(false);
+
+  const searchPexels = useCallback(async (query: string) => {
+    if (!query.trim()) return;
+    setPexelsLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("pexels-search", {
+        body: { query: query.trim(), per_page: 12 },
+      });
+      if (error) throw error;
+      setPexelsResults(data?.photos || []);
+    } catch (err) {
+      console.error("Pexels search error:", err);
+      import("sonner").then(({ toast }) => toast.error("Search failed. Try again."));
+    } finally {
+      setPexelsLoading(false);
+    }
+  }, []);
 
   const imageToBase64 = async (src: string): Promise<string> => {
     if (src.startsWith("data:")) return src;
