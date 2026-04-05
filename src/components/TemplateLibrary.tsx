@@ -1134,6 +1134,21 @@ export default function TemplateLibrary({ onApply, backgroundOpacity, onOpacityC
         })}
       </div>
 
+      {/* Opacity slider */}
+      <div className="flex items-center gap-3">
+        <span className="text-xs text-muted-foreground whitespace-nowrap">Opacity</span>
+        <input
+          type="range"
+          min={0}
+          max={1}
+          step={0.05}
+          value={backgroundOpacity}
+          onChange={(e) => onOpacityChange(parseFloat(e.target.value))}
+          className="flex-1 h-1.5 accent-foreground"
+        />
+        <span className="text-xs text-muted-foreground w-8 text-right">{Math.round(backgroundOpacity * 100)}%</span>
+      </div>
+
       {filtered.length === 0 && (
         <p className="text-xs text-muted-foreground text-center py-6">
           No templates in this category yet.
