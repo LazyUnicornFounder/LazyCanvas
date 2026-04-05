@@ -86,6 +86,8 @@ const BUILTIN_TEMPLATES: Template[] = [
       textShadow: "none",
       backgroundFilter: "none",
       showQuotationMarks: false,
+      backgroundImage: imgWhisper,
+      backgroundOpacity: 0.3,
     },
   },
   {
@@ -108,6 +110,8 @@ const BUILTIN_TEMPLATES: Template[] = [
       backgroundColor: "#0a0a0a",
       textShadow: "none",
       showQuotationMarks: false,
+      backgroundImage: imgMonochrome,
+      backgroundOpacity: 0.3,
     },
   },
   {
@@ -130,6 +134,8 @@ const BUILTIN_TEMPLATES: Template[] = [
       backgroundColor: "#f5f0e8",
       textShadow: "none",
       showQuotationMarks: true,
+      backgroundImage: imgPaper,
+      backgroundOpacity: 0.3,
     },
   },
 
@@ -154,6 +160,8 @@ const BUILTIN_TEMPLATES: Template[] = [
       backgroundColor: "#78350f",
       textShadow: "soft",
       showQuotationMarks: false,
+      backgroundImage: imgGoldenHour,
+      backgroundOpacity: 0.3,
     },
   },
   {
@@ -176,6 +184,8 @@ const BUILTIN_TEMPLATES: Template[] = [
       backgroundColor: "#fdf2f8",
       textShadow: "none",
       showQuotationMarks: false,
+      backgroundImage: imgBlush,
+      backgroundOpacity: 0.3,
     },
   },
   {
@@ -198,6 +208,8 @@ const BUILTIN_TEMPLATES: Template[] = [
       backgroundColor: "#ecfdf5",
       textShadow: "none",
       showQuotationMarks: false,
+      backgroundImage: imgMatcha,
+      backgroundOpacity: 0.3,
     },
   },
   {
@@ -220,6 +232,8 @@ const BUILTIN_TEMPLATES: Template[] = [
       backgroundColor: "#f3e8ff",
       textShadow: "none",
       showQuotationMarks: false,
+      backgroundImage: imgLavender,
+      backgroundOpacity: 0.3,
     },
   },
   {
@@ -242,6 +256,8 @@ const BUILTIN_TEMPLATES: Template[] = [
       backgroundColor: "#0c4a6e",
       textShadow: "soft",
       showQuotationMarks: true,
+      backgroundImage: imgOcean,
+      backgroundOpacity: 0.3,
     },
   },
 
@@ -266,6 +282,8 @@ const BUILTIN_TEMPLATES: Template[] = [
       backgroundColor: "#000000",
       textShadow: "none",
       showQuotationMarks: false,
+      backgroundImage: imgImpact,
+      backgroundOpacity: 0.3,
     },
   },
   {
@@ -288,6 +306,8 @@ const BUILTIN_TEMPLATES: Template[] = [
       backgroundColor: "#020617",
       textShadow: "glow",
       showQuotationMarks: false,
+      backgroundImage: imgElectric,
+      backgroundOpacity: 0.3,
     },
   },
   {
@@ -310,6 +330,8 @@ const BUILTIN_TEMPLATES: Template[] = [
       backgroundColor: "#1c1917",
       textShadow: "soft",
       showQuotationMarks: false,
+      backgroundImage: imgFire,
+      backgroundOpacity: 0.3,
     },
   },
   {
@@ -332,6 +354,8 @@ const BUILTIN_TEMPLATES: Template[] = [
       backgroundColor: "#0a0a0a",
       textShadow: "glow",
       showQuotationMarks: false,
+      backgroundImage: imgAcid,
+      backgroundOpacity: 0.3,
     },
   },
 
@@ -357,6 +381,8 @@ const BUILTIN_TEMPLATES: Template[] = [
       textShadow: "none",
       backgroundFilter: "vintage",
       showQuotationMarks: false,
+      backgroundImage: imgPolaroid,
+      backgroundOpacity: 0.3,
     },
   },
   {
@@ -379,6 +405,8 @@ const BUILTIN_TEMPLATES: Template[] = [
       backgroundColor: "#f5f0e1",
       textShadow: "none",
       showQuotationMarks: false,
+      backgroundImage: imgTypewriter,
+      backgroundOpacity: 0.3,
     },
   },
   {
@@ -402,6 +430,8 @@ const BUILTIN_TEMPLATES: Template[] = [
       textShadow: "soft",
       backgroundFilter: "film",
       showQuotationMarks: true,
+      backgroundImage: imgCinema,
+      backgroundOpacity: 0.3,
     },
   },
   {
@@ -425,6 +455,8 @@ const BUILTIN_TEMPLATES: Template[] = [
       textShadow: "none",
       backgroundFilter: "vintage",
       showQuotationMarks: true,
+      backgroundImage: imgSepia,
+      backgroundOpacity: 0.3,
     },
   },
 
@@ -449,6 +481,8 @@ const BUILTIN_TEMPLATES: Template[] = [
       backgroundColor: "#0c0a09",
       textShadow: "soft",
       showQuotationMarks: false,
+      backgroundImage: imgGoldNoir,
+      backgroundOpacity: 0.3,
     },
   },
   {
@@ -471,6 +505,8 @@ const BUILTIN_TEMPLATES: Template[] = [
       backgroundColor: "#f5f5f4",
       textShadow: "none",
       showQuotationMarks: true,
+      backgroundImage: imgMarble,
+      backgroundOpacity: 0.3,
     },
   },
   {
@@ -493,6 +529,8 @@ const BUILTIN_TEMPLATES: Template[] = [
       backgroundColor: "#fef3c7",
       textShadow: "none",
       showQuotationMarks: true,
+      backgroundImage: imgChampagne,
+      backgroundOpacity: 0.3,
     },
   },
   {
@@ -515,6 +553,8 @@ const BUILTIN_TEMPLATES: Template[] = [
       backgroundColor: "#0f0720",
       textShadow: "glow",
       showQuotationMarks: false,
+      backgroundImage: imgMidnight,
+      backgroundOpacity: 0.3,
     },
   },
 
@@ -539,6 +579,8 @@ const BUILTIN_TEMPLATES: Template[] = [
       backgroundColor: "#fff1f2",
       textShadow: "none",
       showQuotationMarks: false,
+      backgroundImage: imgMarker,
+      backgroundOpacity: 0.3,
     },
   },
   {
@@ -561,6 +603,8 @@ const BUILTIN_TEMPLATES: Template[] = [
       backgroundColor: "#fae8ff",
       textShadow: "none",
       showQuotationMarks: false,
+      backgroundImage: imgBubblegum,
+      backgroundOpacity: 0.3,
     },
   },
   {
@@ -583,6 +627,8 @@ const BUILTIN_TEMPLATES: Template[] = [
       backgroundColor: "#fffbeb",
       textShadow: "none",
       showQuotationMarks: false,
+      backgroundImage: imgSunshine,
+      backgroundOpacity: 0.3,
     },
   },
 ];
