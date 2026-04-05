@@ -26,6 +26,7 @@ interface QuotePreviewProps {
   authorFont: QuoteFont;
   textShadow: TextShadow;
   authorPosition: AuthorPosition;
+  backgroundColor: string;
 }
 
 const aspectClasses: Record<AspectRatio, string> = {
@@ -71,7 +72,7 @@ const shadowStyles: Record<TextShadow, string> = {
 };
 
 const QuotePreview = forwardRef<HTMLDivElement, QuotePreviewProps>(
-  ({ quote, authorName, authorPhoto, socials, aspectRatio, font, theme, backgroundImage, backgroundOpacity, fontSize, textAlign, letterSpacing, lineHeight, textColor, authorFontSize, authorColor, authorFont, textShadow, authorPosition }, ref) => {
+  ({ quote, authorName, authorPhoto, socials, aspectRatio, font, theme, backgroundImage, backgroundOpacity, fontSize, textAlign, letterSpacing, lineHeight, textColor, authorFontSize, authorColor, authorFont, textShadow, authorPosition, backgroundColor }, ref) => {
     const t = themeStyles[theme];
     const displayQuote = quote;
     const isPlaceholder = !quote;
@@ -150,7 +151,7 @@ const QuotePreview = forwardRef<HTMLDivElement, QuotePreviewProps>(
       <div
         ref={ref}
         className={`${aspectClasses[aspectRatio]} w-full max-w-lg max-h-full relative overflow-hidden`}
-        style={{ backgroundColor: t.bg, color: t.text, borderRadius: "2px" }}
+        style={{ backgroundColor: backgroundColor || t.bg, color: t.text, borderRadius: "2px" }}
       >
         {backgroundImage && (
           <div
@@ -162,7 +163,7 @@ const QuotePreview = forwardRef<HTMLDivElement, QuotePreviewProps>(
           />
         )}
         {backgroundImage && (
-          <div className="absolute inset-0" style={{ backgroundColor: t.bg, opacity: 1 - backgroundOpacity }} />
+          <div className="absolute inset-0" style={{ backgroundColor: backgroundColor || t.bg, opacity: 1 - backgroundOpacity }} />
         )}
         {/* Inner padding — nothing goes beyond this */}
         <div className="absolute inset-0 flex flex-col" style={{ padding: "clamp(12px, 4%, 32px)" }}>
