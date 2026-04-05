@@ -1,6 +1,6 @@
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { toPng } from "html-to-image";
-import { Download, Image as ImageIcon, X, Upload } from "lucide-react";
+import { Download, Image as ImageIcon, X, Upload, Smile } from "lucide-react";
 import QuotePreview, {
   type AspectRatio,
   type QuoteFont,
@@ -36,6 +36,14 @@ const THEME_OPTIONS: { value: QuoteTheme; label: string; swatch: string }[] = [
   { value: "ink", label: "Ink", swatch: "#0d1117" },
 ];
 
+const EMOJI_LIST = [
+  "✨", "🔥", "💡", "❤️", "💪", "🎯", "🚀", "⭐",
+  "🌟", "💎", "🏆", "👑", "🎨", "📚", "🌈", "☀️",
+  "🌙", "⚡", "🍀", "🦋", "🌸", "🎶", "💫", "🌊",
+  "🤔", "😊", "😎", "🥰", "😤", "💀", "🙏", "👏",
+  "✅", "❌", "⬆️", "➡️", "💬", "📌", "🔑", "🎉",
+];
+
 const Index = () => {
   const [quote, setQuote] = useState("");
   const [authorName, setAuthorName] = useState("");
@@ -57,10 +65,40 @@ const Index = () => {
   const [authorFont, setAuthorFont] = useState<QuoteFont>("playfair");
   const [textShadow, setTextShadow] = useState<TextShadow>("none");
   const [authorPosition, setAuthorPosition] = useState<AuthorPosition>("below-quote");
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
   const previewRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const bgInputRef = useRef<HTMLInputElement>(null);
+  const quoteTextareaRef = useRef<HTMLTextAreaElement>(null);
+  const emojiPickerRef = useRef<HTMLDivElement>(null);
+
+  const insertEmoji = (emoji: string) => {
+    const textarea = quoteTextareaRef.current;
+    if (textarea) {
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const newValue = quote.slice(0, start) + emoji + quote.slice(end);
+      setQuote(newValue);
+      setTimeout(() => {
+        textarea.selectionStart = textarea.selectionEnd = start + emoji.length;
+        textarea.focus();
+      }, 0);
+    } else {
+      setQuote(quote + emoji);
+    }
+    setShowEmojiPicker(false);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (emojiPickerRef.current && !emojiPickerRef.current.contains(e.target as Node)) {
+        setShowEmojiPicker(false);
+      }
+    };
+    if (showEmojiPicker) document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [showEmojiPicker]);
 
   const handleBgUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -123,13 +161,41 @@ const Index = () => {
           <div className="space-y-8 order-2 lg:order-1">
             {/* Quote */}
             <ControlSection label="Quote">
-              <textarea
-                value={quote}
-                onChange={(e) => setQuote(e.target.value)}
-                placeholder="The only way to do great work is to love what you do."
-                rows={4}
-                className="w-full bg-transparent border border-border rounded-md px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-foreground/20 resize-none font-body"
-              />
+              <div className="relative">
+                <textarea
+                  ref={quoteTextareaRef}
+                  value={quote}
+                  onChange={(e) => setQuote(e.target.value)}
+                  placeholder="The only way to do great work is to love what you do."
+                  rows={4}
+                  className="w-full bg-transparent border border-border rounded-md px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-foreground/20 resize-none font-body"
+                />
+                <div className="absolute bottom-2 right-2">
+                  <button
+                    onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+                    className="p-1.5 rounded-md hover:bg-accent transition-colors"
+                    type="button"
+                  >
+                    <Smile className="w-4 h-4 text-muted-foreground" />
+                  </button>
+                  {showEmojiPicker && (
+                    <div ref={emojiPickerRef} className="absolute bottom-8 right-0 bg-card border border-border rounded-lg shadow-xl p-3 z-50 w-64">
+                      <div className="grid grid-cols-8 gap-1 max-h-48 overflow-y-auto">
+                        {EMOJI_LIST.map((emoji) => (
+                          <button
+                            key={emoji}
+                            onClick={() => insertEmoji(emoji)}
+                            className="w-7 h-7 flex items-center justify-center text-base hover:bg-accent rounded transition-colors"
+                            type="button"
+                          >
+                            {emoji}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
             </ControlSection>
 
             {/* Font */}
