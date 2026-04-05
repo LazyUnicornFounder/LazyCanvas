@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Image as ImageIcon, X, Upload, Smile, Plus, Palette, Rainbow, LayoutGrid, Sparkles, Loader2, Eraser } from "lucide-react";
+import { Image as ImageIcon, X, Upload, Smile, Plus, Palette, Rainbow, LayoutGrid, Eraser, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { EMOJI_CATEGORIES } from "@/data/emojis";
 import TemplateLibrary from "@/components/TemplateLibrary";
@@ -288,8 +288,6 @@ const QuoteEditor = ({ state: rawState, onChange, isPro = false }: QuoteEditorPr
   const emojiPickerRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const bgInputRef = useRef<HTMLInputElement>(null);
-  const [aiPrompt, setAiPrompt] = useState("");
-  const [aiGenerating, setAiGenerating] = useState(false);
   const [removingBg, setRemovingBg] = useState(false);
 
   const handleRemoveBg = async () => {
@@ -352,29 +350,6 @@ const QuoteEditor = ({ state: rawState, onChange, isPro = false }: QuoteEditorPr
     reader.readAsDataURL(file);
   };
 
-  const handleAiGenerate = async () => {
-    if (!aiPrompt.trim() || aiGenerating) return;
-    setAiGenerating(true);
-    try {
-      const { data, error } = await supabase.functions.invoke("generate-background", {
-        body: { prompt: aiPrompt.trim() },
-      });
-      if (error) throw error;
-      if (data?.imageUrl) {
-        set("backgroundImage", data.imageUrl);
-        set("backgroundOpacity", 0.4);
-        setAiPrompt("");
-      } else {
-        throw new Error("No image returned");
-      }
-    } catch (err: any) {
-      console.error("AI generation error:", err);
-      const { toast } = await import("sonner");
-      toast.error("Failed to generate background. Try again.");
-    } finally {
-      setAiGenerating(false);
-    }
-  };
 
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -429,31 +404,6 @@ const QuoteEditor = ({ state: rawState, onChange, isPro = false }: QuoteEditorPr
             {state.backgroundImage && (
               <button onClick={() => set("backgroundImage", null)} className="text-xs text-muted-foreground hover:text-foreground transition-colors">Remove</button>
             )}
-          </div>
-          {/* AI Background Generator */}
-          <div className="space-y-2">
-            <span className="text-[10px] font-heading text-muted-foreground uppercase tracking-widest flex items-center gap-1.5">
-              <Sparkles className="w-3 h-3" /> AI Generate
-            </span>
-            <div className="flex gap-2">
-              <input
-                type="text"
-                value={aiPrompt}
-                onChange={(e) => setAiPrompt(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && handleAiGenerate()}
-                placeholder="e.g. sunset over ocean, neon city..."
-                className="flex-1 bg-transparent border border-border rounded-md px-3 py-2 text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-foreground/20"
-                disabled={aiGenerating}
-              />
-              <button
-                onClick={handleAiGenerate}
-                disabled={aiGenerating || !aiPrompt.trim()}
-                className="flex items-center gap-1.5 px-3 py-2 text-xs font-heading font-medium rounded-md bg-foreground text-background hover:opacity-90 transition-opacity disabled:opacity-50"
-              >
-                {aiGenerating ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Sparkles className="w-3.5 h-3.5" />}
-                {aiGenerating ? "Generating..." : "Generate"}
-              </button>
-            </div>
           </div>
           {state.backgroundImage && (
             <>
