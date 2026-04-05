@@ -156,10 +156,10 @@ const Index = () => {
         </div>
       </header>
 
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           {/* Controls */}
-          <div className="space-y-8 order-2 lg:order-1">
+          <div className="space-y-4 order-2 lg:order-1 lg:max-h-[calc(100vh-5rem)] lg:overflow-y-auto lg:pr-2 lg:scrollbar-thin">
             {/* Quote */}
             <ControlSection label="Quote">
               <div className="relative">
