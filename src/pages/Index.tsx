@@ -168,7 +168,7 @@ const Index = () => {
                   value={quote}
                   onChange={(e) => setQuote(e.target.value)}
                   placeholder="The only way to do great work is to love what you do."
-                  rows={4}
+                  rows={3}
                   className="w-full bg-transparent border border-border rounded-md px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-foreground/20 resize-none font-body"
                 />
                 <div className="absolute bottom-2 right-2">
