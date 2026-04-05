@@ -418,7 +418,7 @@ const QuotePreview = forwardRef<HTMLDivElement, QuotePreviewProps>(
                 backdropFilter: "blur(8px)",
               }}
             >
-              <span style={{ fontSize: "clamp(9px, 2.5%, 13px)", color: "#fbbf24", fontWeight: 600, whiteSpace: "nowrap" }}>
+              <span style={{ fontSize: "clamp(28px, 8%, 42px)", color: "#fbbf24", fontWeight: 600, whiteSpace: "nowrap" }}>
                 ⚠ Text too large or too much text.
               </span>
             </div>
