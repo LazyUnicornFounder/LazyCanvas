@@ -1049,21 +1049,6 @@ export default function TemplateLibrary({ onApply, backgroundOpacity, onOpacityC
         ))}
       </div>
 
-      {/* Opacity slider */}
-      <div className="flex items-center gap-3">
-        <span className="text-xs text-muted-foreground whitespace-nowrap">Opacity</span>
-        <input
-          type="range"
-          min={0}
-          max={1}
-          step={0.05}
-          value={backgroundOpacity}
-          onChange={(e) => onOpacityChange(parseFloat(e.target.value))}
-          className="flex-1 h-1.5 accent-foreground"
-        />
-        <span className="text-xs text-muted-foreground w-8 text-right">{Math.round(backgroundOpacity * 100)}%</span>
-      </div>
-
       <div className={category === "all" ? "flex gap-2.5 overflow-x-auto pb-2 scrollbar-none" : "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5"}>
         {filtered.map((template) => {
           const s = template.editorState;
