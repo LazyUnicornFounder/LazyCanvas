@@ -326,7 +326,7 @@ const Index = () => {
             </div>
           </div>
           {/* Preview — right */}
-          <div className="hidden lg:flex flex-shrink-0 flex-col gap-3 sticky top-6 self-start transition-all duration-300" style={{ width: getPreviewWidth(editorState.aspectRatio, editorState.customWidth, editorState.customHeight) }}>
+          <div className="hidden lg:flex flex-shrink-0 flex-col gap-3 sticky top-6 self-start transition-all duration-300" style={{ width: getPreviewWidth(editorState.aspectRatio, editorState.customWidth, editorState.customHeight), maxHeight: 'calc(100vh - 120px)' }}>
             <div className="w-full overflow-hidden">
                 <QuotePreview
                   ref={previewRef}
