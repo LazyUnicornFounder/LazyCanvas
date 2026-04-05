@@ -23,23 +23,28 @@ const ASPECT_OPTIONS: { value: AspectRatio; label: string; row: number }[] = [
   { value: "2:1", label: "2:1", row: 1 },
 ];
 
-const FONT_OPTIONS: { value: QuoteFont; label: string; preview: string }[] = [
+const SERIF_FONTS: { value: QuoteFont; label: string; preview: string }[] = [
   { value: "playfair", label: "Playfair", preview: "font-playfair" },
   { value: "cormorant", label: "Cormorant", preview: "font-cormorant" },
   { value: "lora", label: "Lora", preview: "font-lora" },
   { value: "merriweather", label: "Merriweather", preview: "font-merriweather" },
   { value: "crimson", label: "Crimson", preview: "font-crimson" },
-  { value: "bebas", label: "Bebas", preview: "font-bebas" },
-  { value: "oswald", label: "Oswald", preview: "font-oswald" },
-  { value: "archivo", label: "Archivo", preview: "font-archivo" },
+  { value: "dancing", label: "Dancing", preview: "font-dancing" },
+];
+
+const SANS_FONTS: { value: QuoteFont; label: string; preview: string }[] = [
   { value: "heading", label: "Grotesk", preview: "font-heading" },
   { value: "inter", label: "Inter", preview: "font-inter" },
   { value: "raleway", label: "Raleway", preview: "font-raleway" },
   { value: "montserrat", label: "Montserrat", preview: "font-montserrat" },
   { value: "poppins", label: "Poppins", preview: "font-poppins" },
-  { value: "dancing", label: "Dancing", preview: "font-dancing" },
+  { value: "oswald", label: "Oswald", preview: "font-oswald" },
+  { value: "bebas", label: "Bebas", preview: "font-bebas" },
+  { value: "archivo", label: "Archivo", preview: "font-archivo" },
   { value: "mono", label: "Mono", preview: "font-mono" },
 ];
+
+const FONT_OPTIONS = [...SERIF_FONTS, ...SANS_FONTS];
 
 const THEME_OPTIONS: { value: QuoteTheme; label: string; swatch: string }[] = [
   { value: "light", label: "Light", swatch: "#FFFFFF" },
@@ -237,20 +242,39 @@ const QuoteEditor = ({ state, onChange }: QuoteEditorProps) => {
       {/* Font */}
       <div className="md:col-span-2">
         <ControlSection label="Font">
-          <div className="flex flex-wrap gap-2">
-            {FONT_OPTIONS.map((opt) => (
-              <button
-                key={opt.value}
-                onClick={() => set("font", opt.value)}
-                className={`px-4 py-2 text-sm rounded-md border transition-all ${opt.preview} ${
-                  state.font === opt.value
-                    ? "bg-foreground text-background border-foreground"
-                    : "border-border text-muted-foreground hover:text-foreground hover:border-foreground/30"
-                }`}
-              >
-                {opt.label}
-              </button>
-            ))}
+          <div className="space-y-2">
+            <p className="text-[10px] text-muted-foreground/70 uppercase tracking-wider">Serif</p>
+            <div className="flex flex-wrap gap-2">
+              {SERIF_FONTS.map((opt) => (
+                <button
+                  key={opt.value}
+                  onClick={() => set("font", opt.value)}
+                  className={`px-4 py-2 text-sm rounded-md border transition-all ${opt.preview} ${
+                    state.font === opt.value
+                      ? "bg-foreground text-background border-foreground"
+                      : "border-border text-muted-foreground hover:text-foreground hover:border-foreground/30"
+                  }`}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+            <p className="text-[10px] text-muted-foreground/70 uppercase tracking-wider pt-1">Sans-serif</p>
+            <div className="flex flex-wrap gap-2">
+              {SANS_FONTS.map((opt) => (
+                <button
+                  key={opt.value}
+                  onClick={() => set("font", opt.value)}
+                  className={`px-4 py-2 text-sm rounded-md border transition-all ${opt.preview} ${
+                    state.font === opt.value
+                      ? "bg-foreground text-background border-foreground"
+                      : "border-border text-muted-foreground hover:text-foreground hover:border-foreground/30"
+                  }`}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
           </div>
           <div className="flex items-center gap-2 mt-3">
             <button
@@ -472,20 +496,39 @@ const QuoteEditor = ({ state, onChange }: QuoteEditorProps) => {
             )}
           </div>
         </div>
-        <div className="flex flex-wrap gap-2 mt-3">
-          {FONT_OPTIONS.map((opt) => (
-            <button
-              key={opt.value}
-              onClick={() => set("authorFont", opt.value)}
-              className={`px-3 py-1.5 text-xs rounded-md border transition-all ${opt.preview} ${
-                state.authorFont === opt.value
-                  ? "bg-foreground text-background border-foreground"
-                  : "border-border text-muted-foreground hover:text-foreground hover:border-foreground/30"
-              }`}
-            >
-              {opt.label}
-            </button>
-          ))}
+        <div className="space-y-2 mt-3">
+          <p className="text-[10px] text-muted-foreground/70 uppercase tracking-wider">Serif</p>
+          <div className="flex flex-wrap gap-2">
+            {SERIF_FONTS.map((opt) => (
+              <button
+                key={opt.value}
+                onClick={() => set("authorFont", opt.value)}
+                className={`px-3 py-1.5 text-xs rounded-md border transition-all ${opt.preview} ${
+                  state.authorFont === opt.value
+                    ? "bg-foreground text-background border-foreground"
+                    : "border-border text-muted-foreground hover:text-foreground hover:border-foreground/30"
+                }`}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+          <p className="text-[10px] text-muted-foreground/70 uppercase tracking-wider pt-1">Sans-serif</p>
+          <div className="flex flex-wrap gap-2">
+            {SANS_FONTS.map((opt) => (
+              <button
+                key={opt.value}
+                onClick={() => set("authorFont", opt.value)}
+                className={`px-3 py-1.5 text-xs rounded-md border transition-all ${opt.preview} ${
+                  state.authorFont === opt.value
+                    ? "bg-foreground text-background border-foreground"
+                    : "border-border text-muted-foreground hover:text-foreground hover:border-foreground/30"
+                }`}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
         </div>
         <div className="flex items-center gap-3 mt-3">
           <span className="text-[10px] font-heading text-muted-foreground uppercase tracking-widest w-10">Size</span>
