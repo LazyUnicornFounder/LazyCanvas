@@ -2,6 +2,7 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import html2canvas from "html2canvas";
 import { Download, LogOut, ArrowLeft } from "lucide-react";
+import { toast } from "sonner";
 import QuotePreview, {
   type SocialPlatform,
 } from "@/components/QuotePreview";
@@ -61,6 +62,10 @@ const Create = () => {
   }, [user]);
 
   const handleSelectQuote = (quote: UserQuote) => {
+    if (!isPro) {
+      toast.error("Re-editing saved quotes is a Pro feature. Upgrade to Pro to unlock!");
+      return;
+    }
     setActiveQuoteId(quote.id);
     setEditorState(quote.editor_state);
   };
