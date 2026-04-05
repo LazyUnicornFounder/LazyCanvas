@@ -1128,8 +1128,15 @@ const QuoteEditor = ({ state: rawState, onChange, isPro = false }: QuoteEditorPr
             </div>
           ))}
         </ControlSection>
+      </div>
 
-      {/* Theme */}
+      {/* Unit Calculator */}
+      <div className="md:col-span-2">
+        <ControlSection label="Calculator">
+          <UnitCalculator />
+        </ControlSection>
+      </div>
+
       <ControlSection label="Theme">
         <div className="flex gap-3">
           {THEME_OPTIONS.map((opt) => (
