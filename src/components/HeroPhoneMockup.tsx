@@ -2,16 +2,16 @@ import { ThumbsUp, MessageSquare, Repeat2, Send, MoreHorizontal, Globe, Bookmark
 
 const HeroPhoneMockup = () => {
   return (
-    <div className="relative mx-auto" style={{ width: "clamp(260px, 22vw, 320px)" }}>
+    <div className="relative mx-auto" style={{ width: "min(280px, 40vw)", maxHeight: "70vh" }}>
       {/* iPhone 17 Pro frame — tall 19.5:9 ratio */}
-      <div className="relative bg-[#2a2a2c] rounded-[3rem] p-[3px] shadow-[0_25px_60px_-12px_rgba(0,0,0,0.35)]">
+      <div className="relative bg-[#2a2a2c] rounded-[2.5rem] p-[2.5px] shadow-[0_25px_60px_-12px_rgba(0,0,0,0.35)] overflow-hidden" style={{ maxHeight: "70vh" }}>
         {/* Titanium side buttons */}
         <div className="absolute -left-[2px] top-[7rem] w-[3px] h-8 bg-[#3a3a3c] rounded-l-sm" />
         <div className="absolute -left-[2px] top-[10.5rem] w-[3px] h-14 bg-[#3a3a3c] rounded-l-sm" />
         <div className="absolute -left-[2px] top-[13rem] w-[3px] h-14 bg-[#3a3a3c] rounded-l-sm" />
         <div className="absolute -right-[2px] top-[9rem] w-[3px] h-16 bg-[#3a3a3c] rounded-r-sm" />
 
-        <div className="bg-[#000000] rounded-[2.8rem] overflow-hidden">
+        <div className="bg-[#000000] rounded-[2.3rem] overflow-hidden">
           {/* Dynamic Island */}
           <div className="relative bg-black flex justify-center pt-3 pb-1">
             <div className="w-[6rem] h-[1.5rem] bg-[#1a1a1a] rounded-full" />
