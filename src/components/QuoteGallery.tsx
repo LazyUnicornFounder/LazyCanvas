@@ -34,7 +34,7 @@ interface GalleryQuote {
   colored_words: any | null;
 }
 
-const QuoteGallery = () => {
+const QuoteGallery = ({ hideWrapper = false }: { hideWrapper?: boolean }) => {
   const [quotes, setQuotes] = useState<GalleryQuote[]>([]);
 
   useEffect(() => {
@@ -49,11 +49,9 @@ const QuoteGallery = () => {
 
   if (quotes.length === 0) return null;
 
-  return (
-    <section className="border-t border-border px-4 sm:px-6 py-12">
-      <div className="max-w-[1400px] mx-auto">
-        <h2 className="font-heading text-xl font-semibold tracking-tight text-foreground mb-8">
-          Gallery
+  const grid = (
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+      {quotes.map((q) => (
         </h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
           {quotes.map((q) => (
