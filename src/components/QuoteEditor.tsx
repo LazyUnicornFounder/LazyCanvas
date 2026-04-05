@@ -219,6 +219,8 @@ export interface QuoteEditorState {
   isItalic: boolean;
   coloredWords: ColoredWord[];
   showQuotationMarks: boolean;
+  customWidth: number;
+  customHeight: number;
 }
 
 export const BG_FILTERS: { value: string; label: string; css: string }[] = [
@@ -265,6 +267,8 @@ export const DEFAULT_EDITOR_STATE: QuoteEditorState = {
   isItalic: false,
   coloredWords: [],
   showQuotationMarks: false,
+  customWidth: 1080,
+  customHeight: 1080,
 };
 
 interface QuoteEditorProps {
