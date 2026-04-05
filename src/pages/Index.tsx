@@ -203,6 +203,19 @@ const Index = () => {
                   </button>
                 ))}
               </div>
+              <div className="flex items-center gap-3 mt-3">
+                <span className="text-[10px] font-heading text-muted-foreground uppercase tracking-widest w-10">Size</span>
+                <input
+                  type="range"
+                  min={0.8}
+                  max={3}
+                  step={0.05}
+                  value={fontSize}
+                  onChange={(e) => setFontSize(parseFloat(e.target.value))}
+                  className="flex-1 accent-foreground h-1"
+                />
+                <span className="text-[10px] font-mono text-muted-foreground w-10 text-right">{fontSize.toFixed(1)}</span>
+              </div>
             </ControlSection>
 
             {/* Theme */}
