@@ -516,7 +516,6 @@ const Index = () => {
                     </button>
                   )}
                 </div>
-              </div>
                 <div className="flex items-center gap-3">
                   <button
                     onClick={() => bgInputRef.current?.click()}
