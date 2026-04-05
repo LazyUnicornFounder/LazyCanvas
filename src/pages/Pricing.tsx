@@ -20,6 +20,7 @@ const tiers = [
       { text: "Unlimited quote designs", included: true },
       { text: "PNG download", included: true },
       { text: "Save unlimited quotes", included: true },
+      { text: "Premium templates", included: false },
       { text: "Word colors", included: false },
       { text: "Text formatting", included: false },
       { text: "Background image upload", included: false },
@@ -35,6 +36,7 @@ const tiers = [
     highlighted: false,
     features: [
       { text: "Everything in Free", included: true },
+      { text: "Premium templates", included: true },
       { text: "Word colors", included: true },
       { text: "Background image upload", included: true },
       { text: "No watermark", included: true },
