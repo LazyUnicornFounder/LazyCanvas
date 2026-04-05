@@ -346,8 +346,8 @@ const Index = () => {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={handleSignupDecline}>
-              No thanks
+            <AlertDialogCancel onClick={() => { setShowSignupPrompt(false); performDownloadOnly(); }}>
+              Download without signing up
             </AlertDialogCancel>
             <AlertDialogAction onClick={handleSignupAccept}>
               Sign up free
