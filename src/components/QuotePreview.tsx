@@ -99,6 +99,8 @@ interface QuotePreviewProps {
   coloredWords?: ColoredWord[];
   showWatermark?: boolean;
   showQuotationMarks?: boolean;
+  customWidth?: number;
+  customHeight?: number;
 }
 
 const aspectClasses: Record<AspectRatio, string> = {
@@ -135,6 +137,7 @@ const aspectClasses: Record<AspectRatio, string> = {
   "iphone-wallpaper": "aspect-[1179/2556]",
   "android-wallpaper": "aspect-[1080/2400]",
   "lock-screen": "aspect-[1170/2532]",
+  "custom": "",
 };
 
 const fontClasses: Record<QuoteFont, string> = {
