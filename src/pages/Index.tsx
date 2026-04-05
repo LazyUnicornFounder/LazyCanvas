@@ -60,9 +60,9 @@ const Index = () => {
 
     if (!user) {
       if (hasPro) {
-        // Not logged in + pro features → must sign up first
+        // Not logged in + pro features → show pro signup prompt
         localStorage.setItem(DRAFT_KEY, JSON.stringify(editorState));
-        setShowAuthModal(true);
+        setShowProSignupPrompt(true);
         return;
       }
       // No pro features, not logged in → download then prompt signup
