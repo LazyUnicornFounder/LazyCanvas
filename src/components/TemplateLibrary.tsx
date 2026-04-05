@@ -3,6 +3,31 @@ import { Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import type { QuoteEditorState } from "@/components/QuoteEditor";
 
+// Template background images
+import imgWhisper from "@/assets/templates/whisper.jpg";
+import imgMonochrome from "@/assets/templates/monochrome.jpg";
+import imgPaper from "@/assets/templates/paper.jpg";
+import imgGoldenHour from "@/assets/templates/golden-hour.jpg";
+import imgBlush from "@/assets/templates/blush.jpg";
+import imgMatcha from "@/assets/templates/matcha.jpg";
+import imgLavender from "@/assets/templates/lavender.jpg";
+import imgOcean from "@/assets/templates/ocean.jpg";
+import imgImpact from "@/assets/templates/impact.jpg";
+import imgElectric from "@/assets/templates/electric.jpg";
+import imgFire from "@/assets/templates/fire.jpg";
+import imgAcid from "@/assets/templates/acid.jpg";
+import imgPolaroid from "@/assets/templates/polaroid.jpg";
+import imgTypewriter from "@/assets/templates/typewriter.jpg";
+import imgCinema from "@/assets/templates/cinema.jpg";
+import imgSepia from "@/assets/templates/sepia.jpg";
+import imgGoldNoir from "@/assets/templates/gold-noir.jpg";
+import imgMarble from "@/assets/templates/marble.jpg";
+import imgChampagne from "@/assets/templates/champagne.jpg";
+import imgMidnight from "@/assets/templates/midnight.jpg";
+import imgMarker from "@/assets/templates/marker.jpg";
+import imgBubblegum from "@/assets/templates/bubblegum.jpg";
+import imgSunshine from "@/assets/templates/sunshine.jpg";
+
 interface Template {
   id: string;
   name: string;
