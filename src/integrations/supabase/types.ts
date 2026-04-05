@@ -38,6 +38,42 @@ export type Database = {
         }
         Relationships: []
       }
+      quote_templates: {
+        Row: {
+          category: string
+          created_at: string
+          description: string | null
+          display_order: number
+          editor_state: Json
+          id: string
+          is_featured: boolean
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          description?: string | null
+          display_order?: number
+          editor_state?: Json
+          id?: string
+          is_featured?: boolean
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          description?: string | null
+          display_order?: number
+          editor_state?: Json
+          id?: string
+          is_featured?: boolean
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       slideshow_quotes: {
         Row: {
           aspect_ratio: string | null
