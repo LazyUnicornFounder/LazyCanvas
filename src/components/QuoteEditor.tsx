@@ -78,6 +78,17 @@ const DIGITAL_FORMAT_GROUPS: { label: string; options: { value: AspectRatio; lab
       { value: "2:1", label: "2:1" },
     ],
   },
+  {
+    label: "App Store",
+    options: [
+      { value: "ios-screenshot", label: "iPhone" },
+      { value: "ios-ipad", label: "iPad" },
+      { value: "android-phone", label: "Android" },
+      { value: "android-tablet", label: "Tablet" },
+      { value: "mac-screenshot", label: "Mac" },
+      { value: "app-icon", label: "Icon" },
+    ],
+  },
 ];
 
 const PHYSICAL_FORMAT_GROUPS: { label: string; options: { value: AspectRatio; label: string }[] }[] = [
