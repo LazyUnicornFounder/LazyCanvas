@@ -357,6 +357,26 @@ const Index = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {/* Pro upgrade prompt for free users who already used their trial */}
+      <AlertDialog open={showProUpgradePrompt} onOpenChange={(o) => !o && setShowProUpgradePrompt(false)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="font-heading">You've selected Pro features</AlertDialogTitle>
+            <AlertDialogDescription className="text-sm text-muted-foreground">
+              Your quote uses Pro features like word colors, custom backgrounds, or custom formats. Upgrade to Pro to keep using these features on all your quotes.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setShowProUpgradePrompt(false)}>
+              Maybe later
+            </AlertDialogCancel>
+            <AlertDialogAction onClick={() => { setShowProUpgradePrompt(false); navigate("/pricing"); }}>
+              Upgrade to Pro
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };
