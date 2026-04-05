@@ -66,7 +66,7 @@ const Index = () => {
       <header className="border-b border-border">
         <div className="px-4 sm:px-6 py-4 flex items-center justify-between max-w-[1600px] mx-auto">
           <h1 className="font-heading text-lg font-semibold tracking-tight text-foreground">
-            Lazy Quotes
+            &ldquo;Lazy Quotes&rdquo;
           </h1>
           <div className="flex items-center gap-2 sm:gap-4">
             <button
