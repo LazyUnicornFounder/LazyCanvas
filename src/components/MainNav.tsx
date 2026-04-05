@@ -37,14 +37,19 @@ export function LogoWithTagline({ onClick }: { onClick?: () => void }) {
 
   return (
     <div
-      className="flex flex-col cursor-pointer"
+      className="flex items-center gap-2 cursor-pointer"
       onClick={onClick || (() => navigate("/"))}
     >
-      <span className="font-orbitron text-sm sm:text-lg font-bold text-foreground select-none uppercase tracking-widest leading-tight">
-        Lazy Faceless
-      </span>
-      <span className="text-[10px] text-muted-foreground font-heading tracking-wide">
-        Create content for anything.
+      <div className="flex flex-col">
+        <span className="font-orbitron text-sm sm:text-lg font-bold text-foreground select-none uppercase tracking-widest leading-tight">
+          Lazy Faceless
+        </span>
+        <span className="text-[10px] text-muted-foreground font-heading tracking-wide">
+          Create content for anything.
+        </span>
+      </div>
+      <span className="px-1.5 py-0.5 text-[9px] font-heading font-bold uppercase tracking-wider bg-red-500 text-white rounded-sm leading-none self-start mt-0.5">
+        Beta
       </span>
     </div>
   );
