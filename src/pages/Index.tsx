@@ -156,9 +156,12 @@ const Index = () => {
       <header className="border-b border-border">
         <div className="px-4 sm:px-6 py-4 flex items-center justify-between max-w-[1600px] mx-auto">
           <div className="flex items-center gap-6">
-            <h1 className="font-orbitron text-lg sm:text-xl font-bold text-foreground select-none uppercase tracking-widest">
-              Lazy Faceless
-            </h1>
+            <div className="flex flex-col">
+              <h1 className="font-orbitron text-lg sm:text-xl font-bold text-foreground select-none uppercase tracking-widest leading-tight">
+                Lazy Faceless
+              </h1>
+              <span className="text-[10px] text-muted-foreground font-heading tracking-wide">Create content for anything.</span>
+            </div>
             <nav className="hidden md:flex items-center gap-4">
               {[
                 { label: "Instagram", href: "/instagram" },
