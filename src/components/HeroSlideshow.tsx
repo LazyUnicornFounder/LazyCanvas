@@ -78,7 +78,7 @@ const HeroSlideshow = () => {
       className="w-full max-w-[280px] mx-auto transition-opacity duration-400"
       style={{ opacity: fade ? 1 : 0 }}
     >
-      <PhoneMockup authorName={q.author_name || "lazyquotes"}>
+      <PhoneMockup authorName={q.author_name || "lazyfaceless"}>
         <QuotePreview
           quote={q.quote}
           authorName={q.author_name || ""}

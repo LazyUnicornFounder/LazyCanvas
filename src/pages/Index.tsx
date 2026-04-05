@@ -157,7 +157,7 @@ const Index = () => {
         <div className="px-4 sm:px-6 py-4 flex items-center justify-between max-w-[1600px] mx-auto">
           <div className="flex items-center gap-6">
             <h1 className="font-shadows-into-light text-3xl sm:text-4xl font-bold text-foreground select-none" style={{ letterSpacing: "0.02em" }}>
-              Lazy Quotes
+              Lazy Faceless
             </h1>
             <div className="hidden md:block">
               <p className="font-playfair text-sm font-normal tracking-tight text-foreground leading-tight">
@@ -317,7 +317,7 @@ const Index = () => {
       <section className="border-t border-border px-4 sm:px-6 py-8">
         <div className="max-w-[1400px] mx-auto">
           <p className="text-xs text-muted-foreground">
-            Lazy Quotes is part of{" "}
+            Lazy Faceless is part of{" "}
             <a
               href="https://lazyfactoryventures.com/"
               target="_blank"
