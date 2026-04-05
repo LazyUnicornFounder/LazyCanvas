@@ -1131,6 +1131,54 @@ const QuoteEditor = ({ state: rawState, onChange, isPro = false }: QuoteEditorPr
               </div>
             </div>
           ))}
+
+          {/* Custom Size */}
+          <hr className="my-3 border-border" />
+          <p className="text-[11px] font-heading font-semibold text-foreground uppercase tracking-wider mb-2">Custom</p>
+          <div className="flex items-end gap-2">
+            <button
+              onClick={() => set("aspectRatio", "custom")}
+              className={`flex flex-col items-center gap-1 p-1.5 rounded-md border transition-all ${
+                state.aspectRatio === "custom"
+                  ? "border-foreground bg-foreground/5"
+                  : "border-border hover:border-foreground/30"
+              }`}
+              title={`Custom — ${state.customWidth} × ${state.customHeight} px`}
+            >
+              <div
+                className={`border ${state.aspectRatio === "custom" ? "border-foreground bg-foreground/10" : "border-muted-foreground/40"}`}
+                style={{
+                  width: Math.round((state.customWidth / Math.max(state.customWidth, state.customHeight)) * 36),
+                  height: Math.round((state.customHeight / Math.max(state.customWidth, state.customHeight)) * 36),
+                }}
+              />
+              <span className={`text-[9px] font-heading ${state.aspectRatio === "custom" ? "text-foreground font-semibold" : "text-muted-foreground"}`}>
+                Custom
+              </span>
+            </button>
+            <div className="flex-1 flex gap-2">
+              <div>
+                <label className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1 block">W (px)</label>
+                <input
+                  type="number"
+                  min={1}
+                  value={state.customWidth}
+                  onChange={(e) => { set("customWidth", Math.max(1, parseInt(e.target.value) || 1)); set("aspectRatio", "custom"); }}
+                  className="w-full px-2 py-1.5 text-sm bg-background border border-border rounded-md focus:outline-none focus:ring-1 focus:ring-foreground/20"
+                />
+              </div>
+              <div>
+                <label className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1 block">H (px)</label>
+                <input
+                  type="number"
+                  min={1}
+                  value={state.customHeight}
+                  onChange={(e) => { set("customHeight", Math.max(1, parseInt(e.target.value) || 1)); set("aspectRatio", "custom"); }}
+                  className="w-full px-2 py-1.5 text-sm bg-background border border-border rounded-md focus:outline-none focus:ring-1 focus:ring-foreground/20"
+                />
+              </div>
+            </div>
+          </div>
         </ControlSection>
       </div>
 
