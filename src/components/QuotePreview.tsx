@@ -1,9 +1,9 @@
 import { forwardRef, useRef, useEffect, useState } from "react";
-import { Instagram, Twitter, Youtube, Linkedin, Facebook } from "lucide-react";
+import { Instagram, Twitter, Youtube, Linkedin, Facebook, type LucideProps } from "lucide-react";
 
 export type SocialPlatform = "instagram" | "twitter" | "tiktok" | "youtube" | "linkedin" | "threads" | "bluesky" | "facebook";
 
-const socialIcons: Partial<Record<SocialPlatform, React.ComponentType<{ size?: number; className?: string }>>> = {
+const socialIcons: Partial<Record<SocialPlatform, React.ForwardRefExoticComponent<Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>>>> = {
   instagram: Instagram,
   twitter: Twitter,
   youtube: Youtube,

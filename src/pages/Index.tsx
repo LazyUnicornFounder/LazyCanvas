@@ -610,7 +610,7 @@ const Index = () => {
                   quote={quote}
                   authorName={authorName}
                   authorPhoto={authorPhoto}
-                  socialPlatform={socialUsername ? socialPlatform : undefined}
+                  socialPlatform={socialUsername ? socialPlatform as SocialPlatform : undefined}
                   socials={[
                     socialUsername ? `${SOCIAL_PLATFORMS.find(p => p.value === socialPlatform)?.prefix || ""}${socialUsername}` : "",
                     website,
