@@ -43,6 +43,7 @@ interface SlideshowQuote {
   website: string | null;
   author_photo_url: string | null;
   display_order: number | null;
+  colored_words: any | null;
 }
 
 const AdminSlideshow = () => {
