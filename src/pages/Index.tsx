@@ -10,7 +10,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { useNavigate } from "react-router-dom";
-import { LogOut, User, Download } from "lucide-react";
+import { LogOut, User, Download, Shield } from "lucide-react";
 import AuthModal from "@/components/AuthModal";
 import GalleryPromptDialog from "@/components/GalleryPromptDialog";
 import { useAuth } from "@/hooks/useAuth";
@@ -170,6 +170,15 @@ const Index = () => {
             </button>
             {user ? (
               <>
+                {isAdmin && (
+                  <button
+                    onClick={() => navigate("/admin")}
+                    className="p-2 hover:bg-accent rounded-md transition-colors"
+                    title="Admin"
+                  >
+                    <Shield className="w-4 h-4 text-muted-foreground" />
+                  </button>
+                )}
                 <span className="text-xs text-muted-foreground hidden sm:block">{user.email}</span>
                 <button
                   onClick={signOut}
