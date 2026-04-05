@@ -288,12 +288,33 @@ const Index = () => {
       <AuthModal
         open={showAuthModal}
         onClose={() => setShowAuthModal(false)}
+        onSuccess={() => navigate("/create")}
       />
       <GalleryPromptDialog
         open={showGalleryPrompt}
         onClose={() => setShowGalleryPrompt(false)}
         onConfirm={performDownload}
       />
+
+      {/* Signup prompt after download for non-logged-in users */}
+      <AlertDialog open={showSignupPrompt} onOpenChange={(o) => !o && setShowSignupPrompt(false)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="font-heading">Sign up free to save this quote and create more free quotes.</AlertDialogTitle>
+            <AlertDialogDescription className="text-sm text-muted-foreground">
+              Create a free account to save your quotes, edit them anytime, and create unlimited new ones from your personal dashboard.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={handleSignupDecline}>
+              No thanks
+            </AlertDialogCancel>
+            <AlertDialogAction onClick={handleSignupAccept}>
+              Sign up free
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };
