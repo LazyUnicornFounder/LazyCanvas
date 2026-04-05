@@ -3,51 +3,6 @@ import { Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import type { QuoteEditorState } from "@/components/QuoteEditor";
 
-// Template background images
-import imgWhisper from "@/assets/templates/whisper.jpg";
-import imgMonochrome from "@/assets/templates/monochrome.jpg";
-import imgPaper from "@/assets/templates/paper.jpg";
-import imgGoldenHour from "@/assets/templates/golden-hour.jpg";
-import imgBlush from "@/assets/templates/blush.jpg";
-import imgMatcha from "@/assets/templates/matcha.jpg";
-import imgLavender from "@/assets/templates/lavender.jpg";
-import imgOcean from "@/assets/templates/ocean.jpg";
-import imgImpact from "@/assets/templates/impact.jpg";
-import imgElectric from "@/assets/templates/electric.jpg";
-import imgFire from "@/assets/templates/fire.jpg";
-import imgAcid from "@/assets/templates/acid.jpg";
-import imgPolaroid from "@/assets/templates/polaroid.jpg";
-import imgTypewriter from "@/assets/templates/typewriter.jpg";
-import imgCinema from "@/assets/templates/cinema.jpg";
-import imgSepia from "@/assets/templates/sepia.jpg";
-import imgGoldNoir from "@/assets/templates/gold-noir.jpg";
-import imgMarble from "@/assets/templates/marble.jpg";
-import imgChampagne from "@/assets/templates/champagne.jpg";
-import imgMidnight from "@/assets/templates/midnight.jpg";
-import imgMarker from "@/assets/templates/marker.jpg";
-import imgBubblegum from "@/assets/templates/bubblegum.jpg";
-import imgSunshine from "@/assets/templates/sunshine.jpg";
-import imgFood from "@/assets/templates/food.jpg";
-import imgSports from "@/assets/templates/sports.jpg";
-import imgHome from "@/assets/templates/home.jpg";
-import imgGarden from "@/assets/templates/garden.jpg";
-import imgConstruction from "@/assets/templates/construction.jpg";
-import imgAiTech from "@/assets/templates/ai-tech.jpg";
-import imgFashion from "@/assets/templates/fashion.jpg";
-import imgFilm from "@/assets/templates/film.jpg";
-import imgGames from "@/assets/templates/games.jpg";
-import imgWeather from "@/assets/templates/weather.jpg";
-import imgTravel from "@/assets/templates/travel.jpg";
-import imgMusic from "@/assets/templates/music.jpg";
-import imgFitness from "@/assets/templates/fitness.jpg";
-import imgNature from "@/assets/templates/nature.jpg";
-import imgSpace from "@/assets/templates/space.jpg";
-import imgCoffee from "@/assets/templates/coffee.jpg";
-import imgPets from "@/assets/templates/pets.jpg";
-import imgBooks from "@/assets/templates/books.jpg";
-import imgArt from "@/assets/templates/art.jpg";
-import imgTech from "@/assets/templates/tech.jpg";
-
 interface Template {
   id: string;
   name: string;
@@ -57,50 +12,51 @@ interface Template {
   isDb?: boolean;
 }
 
-const TEMPLATE_IMAGES: Record<string, string> = {
-  whisper: imgWhisper,
-  monochrome: imgMonochrome,
-  paper: imgPaper,
-  "sunset-gradient": imgGoldenHour,
-  "aesthetic-pink": imgBlush,
-  matcha: imgMatcha,
-  "lavender-dream": imgLavender,
-  "ocean-mist": imgOcean,
-  impact: imgImpact,
-  electric: imgElectric,
-  fire: imgFire,
-  acid: imgAcid,
-  polaroid: imgPolaroid,
-  typewriter: imgTypewriter,
-  cinema: imgCinema,
-  sepia: imgSepia,
-  "gold-noir": imgGoldNoir,
-  marble: imgMarble,
-  champagne: imgChampagne,
-  midnight: imgMidnight,
-  marker: imgMarker,
-  bubblegum: imgBubblegum,
-  sunshine: imgSunshine,
-  "food-rustic": imgFood,
-  "sports-stadium": imgSports,
-  "home-cozy": imgHome,
-  "garden-bloom": imgGarden,
-  "construction-sunset": imgConstruction,
-  "ai-neural": imgAiTech,
-  "fashion-silk": imgFashion,
-  "film-set": imgFilm,
-  "games-arcade": imgGames,
-  "weather-storm": imgWeather,
-  "travel-paradise": imgTravel,
-  "music-stage": imgMusic,
-  "fitness-gym": imgFitness,
-  "nature-peaks": imgNature,
-  "space-nebula": imgSpace,
-  "coffee-latte": imgCoffee,
-  "pets-golden": imgPets,
-  "books-library": imgBooks,
-  "art-splash": imgArt,
-  "tech-setup": imgTech,
+// Pexels images (free to use, attribution: pexels.com)
+const PEXELS_IMAGES: Record<string, string> = {
+  whisper: "https://images.pexels.com/photos/9656153/pexels-photo-9656153.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  monochrome: "https://images.pexels.com/photos/19065667/pexels-photo-19065667.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  paper: "https://images.pexels.com/photos/17204370/pexels-photo-17204370.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "sunset-gradient": "https://images.pexels.com/photos/18255040/pexels-photo-18255040.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "aesthetic-pink": "https://images.pexels.com/photos/13092315/pexels-photo-13092315.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  matcha: "https://images.pexels.com/photos/8951881/pexels-photo-8951881.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "lavender-dream": "https://images.pexels.com/photos/655022/pexels-photo-655022.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "ocean-mist": "https://images.pexels.com/photos/10813428/pexels-photo-10813428.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  impact: "https://images.pexels.com/photos/4107337/pexels-photo-4107337.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  electric: "https://images.pexels.com/photos/1687516/pexels-photo-1687516.png?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  fire: "https://images.pexels.com/photos/11716838/pexels-photo-11716838.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  acid: "https://images.pexels.com/photos/1687516/pexels-photo-1687516.png?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  polaroid: "https://images.pexels.com/photos/6062850/pexels-photo-6062850.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  typewriter: "https://images.pexels.com/photos/102100/pexels-photo-102100.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  cinema: "https://images.pexels.com/photos/18647355/pexels-photo-18647355.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  sepia: "https://images.pexels.com/photos/15331248/pexels-photo-15331248.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "gold-noir": "https://images.pexels.com/photos/11631545/pexels-photo-11631545.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  marble: "https://images.pexels.com/photos/14583331/pexels-photo-14583331.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  champagne: "https://images.pexels.com/photos/33228105/pexels-photo-33228105.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  midnight: "https://images.pexels.com/photos/6807016/pexels-photo-6807016.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  marker: "https://images.pexels.com/photos/3357919/pexels-photo-3357919.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  bubblegum: "https://images.pexels.com/photos/30601009/pexels-photo-30601009.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  sunshine: "https://images.pexels.com/photos/7434242/pexels-photo-7434242.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "food-rustic": "https://images.pexels.com/photos/16620746/pexels-photo-16620746.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "sports-stadium": "https://images.pexels.com/photos/18780415/pexels-photo-18780415.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "home-cozy": "https://images.pexels.com/photos/6043981/pexels-photo-6043981.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "garden-bloom": "https://images.pexels.com/photos/28665325/pexels-photo-28665325.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "construction-sunset": "https://images.pexels.com/photos/16612657/pexels-photo-16612657.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "ai-neural": "https://images.pexels.com/photos/33596415/pexels-photo-33596415.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "fashion-silk": "https://images.pexels.com/photos/31034512/pexels-photo-31034512.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "film-set": "https://images.pexels.com/photos/28177107/pexels-photo-28177107.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "games-arcade": "https://images.pexels.com/photos/29702647/pexels-photo-29702647.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "weather-storm": "https://images.pexels.com/photos/12008659/pexels-photo-12008659.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "travel-paradise": "https://images.pexels.com/photos/34616717/pexels-photo-34616717.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "music-stage": "https://images.pexels.com/photos/2247678/pexels-photo-2247678.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "fitness-gym": "https://images.pexels.com/photos/10518845/pexels-photo-10518845.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "nature-peaks": "https://images.pexels.com/photos/16448010/pexels-photo-16448010.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "space-nebula": "https://images.pexels.com/photos/33931027/pexels-photo-33931027.png?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "coffee-latte": "https://images.pexels.com/photos/36848520/pexels-photo-36848520.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "pets-golden": "https://images.pexels.com/photos/11927589/pexels-photo-11927589.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "books-library": "https://images.pexels.com/photos/30618330/pexels-photo-30618330.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "art-splash": "https://images.pexels.com/photos/8603638/pexels-photo-8603638.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "tech-setup": "https://images.pexels.com/photos/12877898/pexels-photo-12877898.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
 };
 
 const BUILTIN_TEMPLATES: Template[] = [
