@@ -1,7 +1,7 @@
 const HeroPhoneMockup = () => {
   return (
     <div className="relative h-full" style={{ aspectRatio: "71.5 / 149.6" }}>
-      <div className="relative border border-foreground/20 rounded-[2.8rem] py-12 px-1 h-full flex items-center">
+      <div className="relative rounded-[2.8rem] py-12 px-1 h-full flex items-center">
         {/* Top blur fade */}
         <div className="absolute top-0 left-0 right-0 h-14 bg-gradient-to-b from-background to-transparent z-10 pointer-events-none rounded-t-[2.8rem]" />
 
