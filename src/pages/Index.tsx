@@ -46,7 +46,8 @@ const Index = () => {
 
   const performDownload = useCallback(async (shareToGallery: boolean) => {
     setShowGalleryPrompt(false);
-    if (!previewRef.current) return;
+    const target = previewRef.current || mobilePreviewRef.current;
+    if (!target) return;
     setDownloading(true);
     try {
       if (shareToGallery && user) {
@@ -55,7 +56,7 @@ const Index = () => {
           editor_state: editorState as any,
         });
       }
-      const canvas = await html2canvas(previewRef.current, {
+      const canvas = await html2canvas(target, {
         scale: 3, useCORS: true, logging: false, backgroundColor: null,
       });
       const link = document.createElement("a");
