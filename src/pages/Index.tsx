@@ -253,6 +253,8 @@ const Index = () => {
             coloredWords={editorState.coloredWords}
             showWatermark={isFreeUser}
             showQuotationMarks={editorState.showQuotationMarks}
+            customWidth={editorState.customWidth}
+            customHeight={editorState.customHeight}
           />
         </div>
         <div className="relative w-full mt-2">
@@ -335,6 +337,8 @@ const Index = () => {
                   coloredWords={editorState.coloredWords}
                   showWatermark={isFreeUser}
                   showQuotationMarks={editorState.showQuotationMarks}
+                  customWidth={editorState.customWidth}
+                  customHeight={editorState.customHeight}
                 />
             </div>
             <div className="relative w-full">
