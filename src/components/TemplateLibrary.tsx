@@ -1269,6 +1269,17 @@ const CATEGORIES = [
   { value: "books", label: "Books" },
   { value: "art", label: "Art" },
   { value: "tech", label: "Tech" },
+  { value: "cars", label: "Cars" },
+  { value: "crypto", label: "Crypto" },
+  { value: "science", label: "Science" },
+  { value: "architecture", label: "Architecture" },
+  { value: "education", label: "Education" },
+  { value: "parenting", label: "Parenting" },
+  { value: "real-estate", label: "Real Estate" },
+  { value: "wellness", label: "Wellness" },
+  { value: "motivation", label: "Motivation" },
+  { value: "business", label: "Business" },
+  { value: "photography", label: "Photography" },
 ];
 
 const FONT_CLASS_MAP: Record<string, string> = {
