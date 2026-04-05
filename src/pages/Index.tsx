@@ -2,7 +2,7 @@ import { useState, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import html2canvas from "html2canvas";
 import { Download, LogOut, User } from "lucide-react";
-import HeroSlideshow from "@/components/HeroSlideshow";
+import HeroPhoneMockup from "@/components/HeroPhoneMockup";
 import PhoneMockup from "@/components/PhoneMockup";
 import QuotePreview, {
   type SocialPlatform,
@@ -118,9 +118,9 @@ const Index = () => {
 
       {/* Hero Section - only for non-logged-in users */}
       {!user && (
-        <section className="min-h-[calc(100vh-4rem)] flex items-center justify-center border-b border-border">
-          <div className="max-w-[1600px] mx-auto px-4 sm:px-6 py-12 md:py-20 w-full">
-            <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16">
+        <section className="min-h-[calc(100vh-4rem)] flex items-center justify-center">
+          <div className="max-w-[1200px] mx-auto px-4 sm:px-6 py-10 w-full">
+            <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-20">
               <div className="flex-1 space-y-6">
                 <h2 className="font-playfair text-4xl md:text-5xl lg:text-6xl font-normal tracking-tight text-foreground leading-tight">
                   Create awesome quotes for your socials.
@@ -130,7 +130,7 @@ const Index = () => {
                 </p>
               </div>
               <div className="flex-shrink-0 flex items-center justify-center">
-                <HeroSlideshow />
+                <HeroPhoneMockup />
               </div>
             </div>
           </div>
