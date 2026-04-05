@@ -50,10 +50,13 @@ serve(async (req) => {
       throw new Error(`Remove.bg returned ${response.status}: ${errorText}`);
     }
 
-    const resultBuffer = await response.arrayBuffer();
-    const resultBase64 = btoa(
-      String.fromCharCode(...new Uint8Array(resultBuffer))
-    );
+    const resultBytes = new Uint8Array(resultBuffer);
+    let binary = "";
+    const chunkSize = 8192;
+    for (let i = 0; i < resultBytes.length; i += chunkSize) {
+      binary += String.fromCharCode(...resultBytes.subarray(i, i + chunkSize));
+    }
+    const resultBase64 = btoa(binary);
     const resultDataUrl = `data:image/png;base64,${resultBase64}`;
 
     return new Response(
