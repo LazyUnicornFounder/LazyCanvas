@@ -126,6 +126,12 @@ const PHYSICAL_FORMAT_GROUPS: { label: string; options: { value: AspectRatio; la
       { value: "banner-2x5", label: "Banner" },
     ],
   },
+  {
+    label: "Business",
+    options: [
+      { value: "business-card", label: "Card" },
+    ],
+  },
 ];
 
 const SERIF_FONTS: { value: QuoteFont; label: string; preview: string }[] = [
@@ -1168,10 +1174,10 @@ const QuoteEditor = ({ state: rawState, onChange, isPro = false }: QuoteEditorPr
             <div key={heading}>
               {sectionIdx > 0 && <hr className="my-3 border-border" />}
               <p className="text-[11px] font-heading font-semibold text-foreground uppercase tracking-wider mb-2">{heading}</p>
-              <div className="space-y-3">
+              <div className="flex flex-wrap gap-x-6 gap-y-3">
                 {groups.map((group) => (
-                  <div key={group.label}>
-                    <p className="text-[10px] text-muted-foreground/70 uppercase tracking-wider mb-1.5">{group.label}</p>
+                  <div key={group.label} className="min-w-fit">
+                    <p className="text-[10px] text-foreground/70 uppercase tracking-wider mb-1.5">{group.label}</p>
                     <div className="flex flex-wrap gap-2">
                       {group.options.map((opt) => {
                         const ratioMap: Record<string, [number, number]> = {
@@ -1183,6 +1189,7 @@ const QuoteEditor = ({ state: rawState, onChange, isPro = false }: QuoteEditorPr
                           "ios-screenshot": [1290, 2796], "ios-ipad": [2048, 2732], "android-phone": [1080, 1920],
                           "android-tablet": [1920, 1200], "mac-screenshot": [2880, 1800], "app-icon": [1, 1],
                           "iphone-wallpaper": [1179, 2556], "android-wallpaper": [1080, 2400], "lock-screen": [1170, 2532],
+                          "business-card": [3.5, 2],
                         };
                         const sizeMap: Record<string, string> = {
                           square: "1080 × 1080 px",
@@ -1218,6 +1225,7 @@ const QuoteEditor = ({ state: rawState, onChange, isPro = false }: QuoteEditorPr
                           "iphone-wallpaper": "1179 × 2556 px",
                           "android-wallpaper": "1080 × 2400 px",
                           "lock-screen": "1170 × 2532 px",
+                          "business-card": "3.5 × 2 in",
                         };
                         const [w, h] = ratioMap[opt.value] || opt.value.split(":").map(Number);
                         // For A-series, vary the icon size to reflect physical size differences
