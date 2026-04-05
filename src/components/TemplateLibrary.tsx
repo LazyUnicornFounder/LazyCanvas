@@ -734,19 +734,18 @@ export default function TemplateLibrary({ onApply }: TemplateLibraryProps) {
               {/* Dark overlay for readability */}
               <div className="absolute inset-0 bg-black/20" />
 
-              {/* Preview text */}
-              <div className="absolute inset-0 flex items-center justify-center p-3 z-10">
+              <div className="absolute inset-0 flex flex-col items-center justify-center p-3 z-10 gap-1">
                 <span
                   className={`${fontClass} text-center leading-tight drop-shadow-md`}
                   style={{
                     color: textCol,
-                    fontSize: "0.7rem",
+                    fontSize: "0.55rem",
                     fontWeight: s.isBold ? "bold" : "normal",
                     fontStyle: s.isItalic ? "italic" : "normal",
                     letterSpacing: s.letterSpacing
-                      ? `${Math.min(s.letterSpacing, 3)}px`
+                      ? `${Math.min(s.letterSpacing, 2)}px`
                       : undefined,
-                    lineHeight: s.lineHeight ? Math.min(s.lineHeight, 1.8) : undefined,
+                    lineHeight: s.lineHeight ? Math.min(s.lineHeight, 1.6) : undefined,
                     textAlign: (s.textAlign as CanvasTextAlign) || "center",
                     textShadow:
                       s.textShadow === "glow"
@@ -758,6 +757,18 @@ export default function TemplateLibrary({ onApply }: TemplateLibraryProps) {
                   {previewText}
                   {s.showQuotationMarks ? "\u201D" : ""}
                 </span>
+                {previewAuthor && (
+                  <span
+                    className="text-center drop-shadow-md"
+                    style={{
+                      color: s.authorColor || textCol,
+                      fontSize: "0.4rem",
+                      opacity: 0.8,
+                    }}
+                  >
+                    — {previewAuthor}
+                  </span>
+                )}
               </div>
 
               {/* Name label */}
