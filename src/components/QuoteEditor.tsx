@@ -178,6 +178,8 @@ const QuoteEditor = ({ state, onChange, isPro = false }: QuoteEditorProps) => {
   const emojiPickerRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const bgInputRef = useRef<HTMLInputElement>(null);
+  const [aiPrompt, setAiPrompt] = useState("");
+  const [aiGenerating, setAiGenerating] = useState(false);
 
   const set = <K extends keyof QuoteEditorState>(key: K, value: QuoteEditorState[K]) => {
     onChange({ ...state, [key]: value });
