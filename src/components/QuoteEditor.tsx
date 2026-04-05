@@ -289,13 +289,27 @@ const QuoteEditor = ({ state: rawState, onChange, isPro = false }: QuoteEditorPr
   const fileInputRef = useRef<HTMLInputElement>(null);
   const bgInputRef = useRef<HTMLInputElement>(null);
   const [removingBg, setRemovingBg] = useState(false);
+  const [removingBgImage, setRemovingBgImage] = useState(false);
+
+  const imageToBase64 = async (src: string): Promise<string> => {
+    if (src.startsWith("data:")) return src;
+    const response = await fetch(src);
+    const blob = await response.blob();
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result as string);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  };
 
   const handleRemoveBg = async () => {
     if (!state.authorPhoto) return;
     setRemovingBg(true);
     try {
+      const base64 = await imageToBase64(state.authorPhoto);
       const { data, error } = await supabase.functions.invoke("remove-background", {
-        body: { imageBase64: state.authorPhoto },
+        body: { imageBase64: base64 },
       });
       if (error) throw error;
       if (data?.imageUrl) {
@@ -308,6 +322,28 @@ const QuoteEditor = ({ state: rawState, onChange, isPro = false }: QuoteEditorPr
       import("sonner").then(({ toast }) => toast.error("Failed to remove background. Try again."));
     } finally {
       setRemovingBg(false);
+    }
+  };
+
+  const handleRemoveBgImage = async () => {
+    if (!state.backgroundImage) return;
+    setRemovingBgImage(true);
+    try {
+      const base64 = await imageToBase64(state.backgroundImage);
+      const { data, error } = await supabase.functions.invoke("remove-background", {
+        body: { imageBase64: base64 },
+      });
+      if (error) throw error;
+      if (data?.imageUrl) {
+        set("backgroundImage", data.imageUrl);
+      } else {
+        throw new Error("No image returned");
+      }
+    } catch (err) {
+      console.error("Remove bg image error:", err);
+      import("sonner").then(({ toast }) => toast.error("Failed to remove background. Try again."));
+    } finally {
+      setRemovingBgImage(false);
     }
   };
 
