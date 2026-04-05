@@ -49,9 +49,18 @@ const CURSIVE_FONTS: { value: QuoteFont; label: string; preview: string }[] = [
   { value: "pacifico", label: "Pacifico", preview: "font-pacifico" },
   { value: "great-vibes", label: "Great Vibes", preview: "font-great-vibes" },
   { value: "satisfy", label: "Satisfy", preview: "font-satisfy" },
+  { value: "caveat", label: "Caveat", preview: "font-caveat" },
+  { value: "permanent-marker", label: "Marker", preview: "font-permanent-marker" },
+  { value: "shadows-into-light", label: "Shadows", preview: "font-shadows-into-light" },
 ];
 
-const FONT_OPTIONS = [...SERIF_FONTS, ...SANS_FONTS, ...CURSIVE_FONTS];
+const FUTURISTIC_FONTS: { value: QuoteFont; label: string; preview: string }[] = [
+  { value: "orbitron", label: "Orbitron", preview: "font-orbitron" },
+  { value: "rajdhani", label: "Rajdhani", preview: "font-rajdhani" },
+  { value: "audiowide", label: "Audiowide", preview: "font-audiowide" },
+];
+
+const FONT_OPTIONS = [...SERIF_FONTS, ...SANS_FONTS, ...CURSIVE_FONTS, ...FUTURISTIC_FONTS];
 
 const THEME_OPTIONS: { value: QuoteTheme; label: string; swatch: string }[] = [
   { value: "light", label: "Light", swatch: "#FFFFFF" },
@@ -301,6 +310,22 @@ const QuoteEditor = ({ state, onChange, isPro = false }: QuoteEditorProps) => {
             <p className="text-[10px] text-muted-foreground/70 uppercase tracking-wider pt-1">Cursive</p>
             <div className="flex flex-wrap gap-2">
               {CURSIVE_FONTS.map((opt) => (
+                <button
+                  key={opt.value}
+                  onClick={() => set("font", opt.value)}
+                  className={`px-4 py-2 text-sm rounded-md border transition-all ${opt.preview} ${
+                    state.font === opt.value
+                      ? "bg-foreground text-background border-foreground"
+                      : "border-border text-muted-foreground hover:text-foreground hover:border-foreground/30"
+                  }`}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+            <p className="text-[10px] text-muted-foreground/70 uppercase tracking-wider pt-1">Futuristic</p>
+            <div className="flex flex-wrap gap-2">
+              {FUTURISTIC_FONTS.map((opt) => (
                 <button
                   key={opt.value}
                   onClick={() => set("font", opt.value)}
@@ -589,6 +614,22 @@ const QuoteEditor = ({ state, onChange, isPro = false }: QuoteEditorProps) => {
           <p className="text-[10px] text-muted-foreground/70 uppercase tracking-wider pt-1">Cursive</p>
           <div className="flex flex-wrap gap-2">
             {CURSIVE_FONTS.map((opt) => (
+              <button
+                key={opt.value}
+                onClick={() => set("authorFont", opt.value)}
+                className={`px-3 py-1.5 text-xs rounded-md border transition-all ${opt.preview} ${
+                  state.authorFont === opt.value
+                    ? "bg-foreground text-background border-foreground"
+                    : "border-border text-muted-foreground hover:text-foreground hover:border-foreground/30"
+                }`}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+          <p className="text-[10px] text-muted-foreground/70 uppercase tracking-wider pt-1">Futuristic</p>
+          <div className="flex flex-wrap gap-2">
+            {FUTURISTIC_FONTS.map((opt) => (
               <button
                 key={opt.value}
                 onClick={() => set("authorFont", opt.value)}
