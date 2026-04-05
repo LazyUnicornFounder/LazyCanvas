@@ -57,10 +57,40 @@ const Index = () => {
   const [authorFont, setAuthorFont] = useState<QuoteFont>("playfair");
   const [textShadow, setTextShadow] = useState<TextShadow>("none");
   const [authorPosition, setAuthorPosition] = useState<AuthorPosition>("below-quote");
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
   const previewRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const bgInputRef = useRef<HTMLInputElement>(null);
+  const quoteTextareaRef = useRef<HTMLTextAreaElement>(null);
+  const emojiPickerRef = useRef<HTMLDivElement>(null);
+
+  const insertEmoji = (emoji: string) => {
+    const textarea = quoteTextareaRef.current;
+    if (textarea) {
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const newValue = quote.slice(0, start) + emoji + quote.slice(end);
+      setQuote(newValue);
+      setTimeout(() => {
+        textarea.selectionStart = textarea.selectionEnd = start + emoji.length;
+        textarea.focus();
+      }, 0);
+    } else {
+      setQuote(quote + emoji);
+    }
+    setShowEmojiPicker(false);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (emojiPickerRef.current && !emojiPickerRef.current.contains(e.target as Node)) {
+        setShowEmojiPicker(false);
+      }
+    };
+    if (showEmojiPicker) document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [showEmojiPicker]);
 
   const handleBgUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
