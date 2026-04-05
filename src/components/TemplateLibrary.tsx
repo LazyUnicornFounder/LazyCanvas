@@ -3262,7 +3262,7 @@ export default function TemplateLibrary({ onApply, backgroundOpacity, onOpacityC
           step={0.05}
           value={backgroundOpacity}
           onChange={(e) => onOpacityChange(parseFloat(e.target.value))}
-          className="w-1/2 h-1.5 accent-foreground"
+          className="w-1/4 accent-foreground h-1"
         />
         <span className="text-xs text-muted-foreground w-8 text-right">{Math.round(backgroundOpacity * 100)}%</span>
       </div>
