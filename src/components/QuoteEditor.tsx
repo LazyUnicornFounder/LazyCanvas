@@ -235,6 +235,15 @@ export const BG_FILTERS: { value: string; label: string; css: string }[] = [
   { value: "dramatic", label: "Dramatic", css: "contrast(1.4) brightness(0.85) saturate(1.2)" },
 ];
 
+const UNIT_OPTIONS = [
+  { value: "px", label: "Pixels" },
+  { value: "cm", label: "Centimeters" },
+  { value: "in", label: "Inches" },
+  { value: "mm", label: "Millimeters" },
+] as const;
+
+type Unit = typeof UNIT_OPTIONS[number]["value"];
+
 
 export const DEFAULT_EDITOR_STATE: QuoteEditorState = {
   quote: "",
@@ -294,6 +303,24 @@ const QuoteEditor = ({ state: rawState, onChange, isPro = false }: QuoteEditorPr
   const [pexelsResults, setPexelsResults] = useState<{ src: { large: string; medium: string }; photographer: string; id: number }[]>([]);
   const [pexelsLoading, setPexelsLoading] = useState(false);
   const [showPexelsSearch, setShowPexelsSearch] = useState(false);
+  const [customUnit, setCustomUnit] = useState<Unit>("px");
+  const [customDpi, setCustomDpi] = useState(300);
+
+  const unitToPx = (value: number, unit: Unit, dpi: number): number => {
+    if (unit === "px") return value;
+    if (unit === "cm") return value * dpi / 2.54;
+    if (unit === "in") return value * dpi;
+    if (unit === "mm") return value * dpi / 25.4;
+    return value;
+  };
+
+  const pxToUnit = (px: number, unit: Unit, dpi: number): number => {
+    if (unit === "px") return px;
+    if (unit === "cm") return px * 2.54 / dpi;
+    if (unit === "in") return px / dpi;
+    if (unit === "mm") return px * 25.4 / dpi;
+    return px;
+  };
 
   const searchPexels = useCallback(async (query: string) => {
     if (!query.trim()) return;
@@ -1258,50 +1285,83 @@ const QuoteEditor = ({ state: rawState, onChange, isPro = false }: QuoteEditorPr
                 Custom
               </span>
             </button>
-            <div className="flex-1 flex gap-2">
-              <div>
-                <label className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1 block">W (px)</label>
-                <input
-                  type="number"
-                  min={1}
-                  defaultValue={state.customWidth}
-                  key={`w-${state.aspectRatio === "custom" ? "" : state.customWidth}`}
-                  onChange={(e) => {
-                    const val = parseInt(e.target.value);
-                    if (!isNaN(val) && val >= 1) {
-                      onChange({ ...state, customWidth: val, aspectRatio: "custom" });
-                    }
-                  }}
-                  onBlur={(e) => {
-                    const val = parseInt(e.target.value);
-                    if (isNaN(val) || val < 1) {
-                      e.target.value = String(state.customWidth);
-                    }
-                  }}
-                  className="w-full px-2 py-1.5 text-sm bg-background border border-border rounded-md focus:outline-none focus:ring-1 focus:ring-foreground/20"
-                />
+            <div className="flex-1 flex flex-col gap-2">
+              <div className="flex gap-2">
+                <div className="flex-1">
+                  <label className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1 block">W</label>
+                  <input
+                    type="number"
+                    min={0.01}
+                    step={customUnit === "px" ? 1 : 0.1}
+                    defaultValue={customUnit === "px" ? state.customWidth : Number(pxToUnit(state.customWidth, customUnit, customDpi).toFixed(2))}
+                    key={`w-${customUnit}-${state.aspectRatio === "custom" ? "" : state.customWidth}`}
+                    onChange={(e) => {
+                      const val = parseFloat(e.target.value);
+                      if (!isNaN(val) && val > 0) {
+                        const px = unitToPx(val, customUnit, customDpi);
+                        onChange({ ...state, customWidth: Math.round(px), aspectRatio: "custom" });
+                      }
+                    }}
+                    onBlur={(e) => {
+                      const val = parseFloat(e.target.value);
+                      if (isNaN(val) || val <= 0) {
+                        e.target.value = customUnit === "px" ? String(state.customWidth) : pxToUnit(state.customWidth, customUnit, customDpi).toFixed(2);
+                      }
+                    }}
+                    className="w-full px-2 py-1.5 text-sm bg-background border border-border rounded-md focus:outline-none focus:ring-1 focus:ring-foreground/20"
+                  />
+                </div>
+                <div className="flex-1">
+                  <label className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1 block">H</label>
+                  <input
+                    type="number"
+                    min={0.01}
+                    step={customUnit === "px" ? 1 : 0.1}
+                    defaultValue={customUnit === "px" ? state.customHeight : Number(pxToUnit(state.customHeight, customUnit, customDpi).toFixed(2))}
+                    key={`h-${customUnit}-${state.aspectRatio === "custom" ? "" : state.customHeight}`}
+                    onChange={(e) => {
+                      const val = parseFloat(e.target.value);
+                      if (!isNaN(val) && val > 0) {
+                        const px = unitToPx(val, customUnit, customDpi);
+                        onChange({ ...state, customHeight: Math.round(px), aspectRatio: "custom" });
+                      }
+                    }}
+                    onBlur={(e) => {
+                      const val = parseFloat(e.target.value);
+                      if (isNaN(val) || val <= 0) {
+                        e.target.value = customUnit === "px" ? String(state.customHeight) : pxToUnit(state.customHeight, customUnit, customDpi).toFixed(2);
+                      }
+                    }}
+                    className="w-full px-2 py-1.5 text-sm bg-background border border-border rounded-md focus:outline-none focus:ring-1 focus:ring-foreground/20"
+                  />
+                </div>
               </div>
-              <div>
-                <label className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1 block">H (px)</label>
-                <input
-                  type="number"
-                  min={1}
-                  defaultValue={state.customHeight}
-                  key={`h-${state.aspectRatio === "custom" ? "" : state.customHeight}`}
-                  onChange={(e) => {
-                    const val = parseInt(e.target.value);
-                    if (!isNaN(val) && val >= 1) {
-                      onChange({ ...state, customHeight: val, aspectRatio: "custom" });
-                    }
-                  }}
-                  onBlur={(e) => {
-                    const val = parseInt(e.target.value);
-                    if (isNaN(val) || val < 1) {
-                      e.target.value = String(state.customHeight);
-                    }
-                  }}
-                  className="w-full px-2 py-1.5 text-sm bg-background border border-border rounded-md focus:outline-none focus:ring-1 focus:ring-foreground/20"
-                />
+              <div className="flex gap-2">
+                <div className="flex-1">
+                  <label className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1 block">Unit</label>
+                  <select
+                    value={customUnit}
+                    onChange={(e) => setCustomUnit(e.target.value as Unit)}
+                    className="w-full px-2 py-1.5 text-sm bg-background border border-border rounded-md focus:outline-none focus:ring-1 focus:ring-foreground/20"
+                  >
+                    {UNIT_OPTIONS.map((u) => <option key={u.value} value={u.value}>{u.label}</option>)}
+                  </select>
+                </div>
+                {customUnit !== "px" && (
+                  <div className="w-20">
+                    <label className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1 block">DPI</label>
+                    <input
+                      type="number"
+                      min={1}
+                      value={customDpi}
+                      onChange={(e) => {
+                        const val = parseInt(e.target.value);
+                        if (!isNaN(val) && val >= 1) setCustomDpi(val);
+                      }}
+                      className="w-full px-2 py-1.5 text-sm bg-background border border-border rounded-md focus:outline-none focus:ring-1 focus:ring-foreground/20"
+                    />
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -1320,14 +1380,6 @@ const QuoteEditor = ({ state: rawState, onChange, isPro = false }: QuoteEditorPr
   );
 };
 
-const UNIT_OPTIONS = [
-  { value: "px", label: "Pixels" },
-  { value: "cm", label: "Centimeters" },
-  { value: "in", label: "Inches" },
-  { value: "mm", label: "Millimeters" },
-] as const;
-
-type Unit = typeof UNIT_OPTIONS[number]["value"];
 
 const convertUnit = (value: number, from: Unit, to: Unit, dpi: number): number => {
   // Convert to pixels first
