@@ -149,7 +149,7 @@ const QuotePreview = forwardRef<HTMLDivElement, QuotePreviewProps>(
     return (
       <div
         ref={ref}
-        className={`${aspectClasses[aspectRatio]} w-full max-w-lg max-h-full relative overflow-hidden flex flex-col`}
+        className={`${aspectClasses[aspectRatio]} w-full max-w-lg max-h-full relative overflow-hidden`}
         style={{ backgroundColor: t.bg, color: t.text, borderRadius: "2px" }}
       >
         {backgroundImage && (
@@ -164,30 +164,33 @@ const QuotePreview = forwardRef<HTMLDivElement, QuotePreviewProps>(
         {backgroundImage && (
           <div className="absolute inset-0" style={{ backgroundColor: t.bg, opacity: 1 - backgroundOpacity }} />
         )}
-        {/* Quote content */}
-        <div ref={containerRef} className="flex-1 flex items-center justify-center p-8 sm:p-12 relative z-10 overflow-hidden">
-          <div ref={contentRef} style={{ textAlign, maxWidth: "85%", transform: `scale(${scale})`, transformOrigin: "center center", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-            <p
-              className={`${fontClasses[font]} ${isPlaceholder ? "opacity-40" : ""} whitespace-pre-wrap break-words`}
-              style={{
-                fontSize: `${fontSize}rem`,
-                letterSpacing: `${letterSpacing}em`,
-                lineHeight,
-                color: textColor || undefined,
-                textShadow: shadowStyles[textShadow],
-              }}
-            >
-              &ldquo;{displayQuote}&rdquo;
-            </p>
-            {!isDetached && authorBlock}
+        {/* Inner padding — nothing goes beyond this */}
+        <div className="absolute inset-0 flex flex-col" style={{ padding: "clamp(12px, 4%, 32px)" }}>
+          {/* Quote content */}
+          <div ref={containerRef} className="flex-1 flex items-center justify-center relative z-10 overflow-hidden">
+            <div ref={contentRef} style={{ textAlign, maxWidth: "90%", transform: `scale(${scale})`, transformOrigin: "center center", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+              <p
+                className={`${fontClasses[font]} ${isPlaceholder ? "opacity-40" : ""} whitespace-pre-wrap break-words`}
+                style={{
+                  fontSize: `${fontSize}rem`,
+                  letterSpacing: `${letterSpacing}em`,
+                  lineHeight,
+                  color: textColor || undefined,
+                  textShadow: shadowStyles[textShadow],
+                }}
+              >
+                &ldquo;{displayQuote}&rdquo;
+              </p>
+              {!isDetached && authorBlock}
+            </div>
           </div>
+          {/* Detached author positions */}
+          {isDetached && authorBlock && (
+            <div className="relative z-10 pt-2">
+              {authorBlock}
+            </div>
+          )}
         </div>
-        {/* Detached author positions */}
-        {isDetached && authorBlock && (
-          <div className="px-8 pb-6 sm:px-12 sm:pb-8 relative z-10">
-            {authorBlock}
-          </div>
-        )}
       </div>
     );
   }
