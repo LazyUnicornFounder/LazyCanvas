@@ -107,32 +107,38 @@ const QuotePreview = forwardRef<HTMLDivElement, QuotePreviewProps>(
             >
               &ldquo;{displayQuote}&rdquo;
             </p>
-          </div>
-        </div>
-
-        {/* Author section */}
-        <div
-          className="flex items-center gap-3 px-8 pb-6 sm:px-12 sm:pb-8 relative z-10"
-          style={{ paddingTop: "1.25rem" }}
-        >
-          {authorPhoto && (
-            <img
-              src={authorPhoto}
-              alt={authorName}
-              className="w-10 h-10 rounded-full object-cover"
-              style={{ border: `1px solid ${t.border}` }}
-            />
-          )}
-          <div className="flex flex-col">
-            {authorName && (
-              <span className="font-heading text-sm font-medium tracking-wide">
-                {authorName}
-              </span>
-            )}
-            {socials && (
-              <span className="text-xs" style={{ color: t.muted }}>
-                {socials}
-              </span>
+            {(authorName || authorPhoto || socials) && (
+              <div
+                className="flex items-center gap-3 mt-6"
+                style={{ justifyContent: textAlign === "center" ? "center" : textAlign === "right" ? "flex-end" : "flex-start", width: "100%" }}
+              >
+                {authorPhoto && (
+                  <img
+                    src={authorPhoto}
+                    alt={authorName}
+                    className="w-10 h-10 rounded-full object-cover"
+                    style={{ border: `1px solid ${t.border}` }}
+                  />
+                )}
+                <div className="flex flex-col">
+                  {authorName && (
+                    <span
+                      className={`${fontClasses[font]} text-sm font-medium`}
+                      style={{
+                        letterSpacing: `${letterSpacing}em`,
+                        color: textColor || undefined,
+                      }}
+                    >
+                      {authorName}
+                    </span>
+                  )}
+                  {socials && (
+                    <span className="text-xs" style={{ color: t.muted }}>
+                      {socials}
+                    </span>
+                  )}
+                </div>
+              </div>
             )}
           </div>
         </div>
