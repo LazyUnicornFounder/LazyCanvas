@@ -47,7 +47,9 @@ import { EMOJI_CATEGORIES } from "@/data/emojis";
 const Index = () => {
   const [quote, setQuote] = useState("");
   const [authorName, setAuthorName] = useState("");
-  const [socials, setSocials] = useState("");
+  const [socialPlatform, setSocialPlatform] = useState<string>("instagram");
+  const [socialUsername, setSocialUsername] = useState("");
+  const [website, setWebsite] = useState("");
   const [authorPhoto, setAuthorPhoto] = useState<string | null>(null);
   const [aspectRatio, setAspectRatio] = useState<AspectRatio>("square");
   const [font, setFont] = useState<QuoteFont>("playfair");
