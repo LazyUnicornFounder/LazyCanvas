@@ -2,9 +2,10 @@ import { ThumbsUp, MessageSquare, Repeat2, Send, MoreHorizontal, Globe, Bookmark
 
 const HeroPhoneMockup = () => {
   return (
-    <div className="relative mx-auto" style={{ width: "min(280px, 40vw)", maxHeight: "70vh" }}>
-      {/* iPhone 17 Pro frame — tall 19.5:9 ratio */}
-      <div className="relative bg-[#2a2a2c] rounded-[2.5rem] p-[2.5px] shadow-[0_25px_60px_-12px_rgba(0,0,0,0.35)] overflow-hidden" style={{ maxHeight: "70vh" }}>
+    <div className="relative mx-auto flex items-center justify-center" style={{ height: "100%", maxHeight: "60vh" }}>
+      {/* Scale wrapper to maintain phone aspect ratio */}
+      <div className="relative h-full" style={{ aspectRatio: "9/19.5" }}>
+      <div className="relative bg-[#2a2a2c] rounded-[2.5rem] p-[2.5px] shadow-[0_25px_60px_-12px_rgba(0,0,0,0.35)] h-full overflow-hidden">
         {/* Titanium side buttons */}
         <div className="absolute -left-[2px] top-[7rem] w-[3px] h-8 bg-[#3a3a3c] rounded-l-sm" />
         <div className="absolute -left-[2px] top-[10.5rem] w-[3px] h-14 bg-[#3a3a3c] rounded-l-sm" />
