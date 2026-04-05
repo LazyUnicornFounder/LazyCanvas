@@ -825,6 +825,31 @@ const QuoteEditor = ({ state, onChange, isPro = false }: QuoteEditorProps) => {
               <button onClick={() => set("backgroundImage", null)} className="text-xs text-muted-foreground hover:text-foreground transition-colors">Remove</button>
             )}
           </div>
+          {/* AI Background Generator */}
+          <div className="space-y-2">
+            <span className="text-[10px] font-heading text-muted-foreground uppercase tracking-widest flex items-center gap-1.5">
+              <Sparkles className="w-3 h-3" /> AI Generate
+            </span>
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={aiPrompt}
+                onChange={(e) => setAiPrompt(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && handleAiGenerate()}
+                placeholder="e.g. sunset over ocean, neon city..."
+                className="flex-1 bg-transparent border border-border rounded-md px-3 py-2 text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-foreground/20"
+                disabled={aiGenerating}
+              />
+              <button
+                onClick={handleAiGenerate}
+                disabled={aiGenerating || !aiPrompt.trim()}
+                className="flex items-center gap-1.5 px-3 py-2 text-xs font-heading font-medium rounded-md bg-foreground text-background hover:opacity-90 transition-opacity disabled:opacity-50"
+              >
+                {aiGenerating ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Sparkles className="w-3.5 h-3.5" />}
+                {aiGenerating ? "Generating..." : "Generate"}
+              </button>
+            </div>
+          </div>
           {state.backgroundImage && (
             <>
               <div className="flex items-center gap-3">
