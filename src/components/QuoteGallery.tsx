@@ -1,50 +1,118 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import QuotePreview, {
+  type AspectRatio,
   type QuoteFont,
   type QuoteTheme,
   type TextShadow,
   type AuthorPosition,
+  type ColoredWord,
 } from "@/components/QuotePreview";
 
 interface GalleryQuote {
   id: string;
   quote: string;
-  author_name: string | null;
-  font: string | null;
-  theme: string | null;
-  aspect_ratio: string | null;
-  text_color: string | null;
-  background_color: string | null;
-  font_size: number | null;
-  text_align: string | null;
-  letter_spacing: number | null;
-  line_height: number | null;
-  author_font_size: number | null;
-  author_color: string | null;
-  author_font: string | null;
-  text_shadow: string | null;
-  author_position: string | null;
-  is_bold: boolean | null;
-  is_italic: boolean | null;
-  background_opacity: number | null;
+  author_name: string;
+  font: string;
+  theme: string;
+  aspect_ratio: string;
+  text_color: string;
+  background_color: string;
+  font_size: number;
+  text_align: string;
+  letter_spacing: number;
+  line_height: number;
+  author_font_size: number;
+  author_color: string;
+  author_font: string;
+  text_shadow: string;
+  author_position: string;
+  is_bold: boolean;
+  is_italic: boolean;
+  background_opacity: number;
   background_image_url: string | null;
-  socials: string | null;
+  socials: string;
   author_photo_url: string | null;
-  colored_words: any | null;
+  colored_words: ColoredWord[];
+  show_quotation_marks: boolean;
+}
+
+function editorStateToGalleryQuote(id: string, state: any): GalleryQuote {
+  return {
+    id,
+    quote: state.quote || "",
+    author_name: state.authorName || "",
+    font: state.font || "playfair",
+    theme: state.theme || "dark",
+    aspect_ratio: state.aspectRatio || "square",
+    text_color: state.textColor || "",
+    background_color: state.backgroundColor || "",
+    font_size: state.fontSize || 1.4,
+    text_align: state.textAlign || "center",
+    letter_spacing: state.letterSpacing || 0,
+    line_height: state.lineHeight || 1.6,
+    author_font_size: state.authorFontSize || 0.875,
+    author_color: state.authorColor || "",
+    author_font: state.authorFont || "playfair",
+    text_shadow: state.textShadow || "none",
+    author_position: state.authorPosition || "below-quote",
+    is_bold: state.isBold || false,
+    is_italic: state.isItalic || false,
+    background_opacity: state.backgroundOpacity || 0.4,
+    background_image_url: state.backgroundImage || null,
+    socials: "",
+    author_photo_url: state.authorPhoto || null,
+    colored_words: Array.isArray(state.coloredWords) ? state.coloredWords : [],
+    show_quotation_marks: state.showQuotationMarks || false,
+  };
 }
 
 const QuoteGallery = ({ hideWrapper = false }: { hideWrapper?: boolean }) => {
   const [quotes, setQuotes] = useState<GalleryQuote[]>([]);
 
   useEffect(() => {
-    supabase
-      .from("slideshow_quotes")
-      .select("*")
-      .order("display_order", { ascending: true })
-      .then(({ data }) => {
-        if (data) setQuotes(data);
-      });
+    const fetchAll = async () => {
+      const [slideshowRes, submissionsRes] = await Promise.all([
+        supabase.from("slideshow_quotes").select("*").order("display_order", { ascending: true }),
+        supabase.from("gallery_submissions").select("*").order("created_at", { ascending: false }),
+      ]);
+
+      const slideshowQuotes: GalleryQuote[] = (slideshowRes.data || []).map((q: any) => ({
+        id: q.id,
+        quote: q.quote,
+        author_name: q.author_name || "",
+        font: q.font || "playfair",
+        theme: q.theme || "dark",
+        aspect_ratio: q.aspect_ratio || "square",
+        text_color: q.text_color || "",
+        background_color: q.background_color || "",
+        font_size: q.font_size || 1.4,
+        text_align: q.text_align || "center",
+        letter_spacing: q.letter_spacing || 0,
+        line_height: q.line_height || 1.6,
+        author_font_size: q.author_font_size || 0.875,
+        author_color: q.author_color || "",
+        author_font: q.author_font || "playfair",
+        text_shadow: q.text_shadow || "none",
+        author_position: q.author_position || "below-quote",
+        is_bold: q.is_bold || false,
+        is_italic: q.is_italic || false,
+        background_opacity: q.background_opacity || 0.4,
+        background_image_url: q.background_image_url || null,
+        socials: q.socials || "",
+        author_photo_url: q.author_photo_url || null,
+        colored_words: Array.isArray(q.colored_words) ? q.colored_words : [],
+        show_quotation_marks: false,
+      }));
+
+      const communityQuotes: GalleryQuote[] = (submissionsRes.data || []).map((s: any) =>
+        editorStateToGalleryQuote(s.id, s.editor_state || {})
+      );
+
+      setQuotes([...slideshowQuotes, ...communityQuotes]);
+    };
+
+    fetchAll();
   }, []);
 
   if (quotes.length === 0) return null;
@@ -55,28 +123,29 @@ const QuoteGallery = ({ hideWrapper = false }: { hideWrapper?: boolean }) => {
         <div key={q.id} className="rounded-lg overflow-hidden border border-border">
           <QuotePreview
             quote={q.quote}
-            authorName={q.author_name || ""}
-            authorPhoto={q.author_photo_url || null}
-            socials={q.socials || ""}
+            authorName={q.author_name}
+            authorPhoto={q.author_photo_url}
+            socials={q.socials}
             aspectRatio="square"
             font={(q.font as QuoteFont) || "playfair"}
             theme={(q.theme as QuoteTheme) || "dark"}
-            backgroundImage={q.background_image_url || null}
-            backgroundOpacity={q.background_opacity || 0.4}
-            fontSize={q.font_size || 1.4}
+            backgroundImage={q.background_image_url}
+            backgroundOpacity={q.background_opacity}
+            fontSize={q.font_size}
             textAlign={(q.text_align as "left" | "center" | "right") || "center"}
-            letterSpacing={q.letter_spacing || 0}
-            lineHeight={q.line_height || 1.6}
-            textColor={q.text_color || ""}
-            authorFontSize={q.author_font_size || 0.875}
-            authorColor={q.author_color || ""}
+            letterSpacing={q.letter_spacing}
+            lineHeight={q.line_height}
+            textColor={q.text_color}
+            authorFontSize={q.author_font_size}
+            authorColor={q.author_color}
             authorFont={(q.author_font as QuoteFont) || "playfair"}
             textShadow={(q.text_shadow as TextShadow) || "none"}
             authorPosition={(q.author_position as AuthorPosition) || "below-quote"}
-            backgroundColor={q.background_color || ""}
-            isBold={q.is_bold || false}
-            isItalic={q.is_italic || false}
-            coloredWords={Array.isArray(q.colored_words) ? q.colored_words : []}
+            backgroundColor={q.background_color}
+            isBold={q.is_bold}
+            isItalic={q.is_italic}
+            coloredWords={q.colored_words}
+            showQuotationMarks={q.show_quotation_marks}
           />
         </div>
       ))}

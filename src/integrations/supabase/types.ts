@@ -14,6 +14,27 @@ export type Database = {
   }
   public: {
     Tables: {
+      gallery_submissions: {
+        Row: {
+          created_at: string
+          editor_state: Json
+          id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          editor_state?: Json
+          id?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          editor_state?: Json
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       slideshow_quotes: {
         Row: {
           aspect_ratio: string | null
