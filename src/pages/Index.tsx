@@ -175,9 +175,10 @@ const Index = () => {
                   ) : (
                     <button
                       onClick={() => fileInputRef.current?.click()}
-                      className="w-[4.5rem] h-[4.5rem] rounded-full border border-dashed border-border flex items-center justify-center hover:border-foreground/30 transition-colors"
+                      className="w-[4.5rem] h-[4.5rem] rounded-full border-2 border-dashed border-muted-foreground/40 flex flex-col items-center justify-center hover:border-foreground/50 transition-colors gap-0.5"
                     >
-                      <ImageIcon className="w-5 h-5 text-muted-foreground" />
+                      <ImageIcon className="w-4 h-4 text-muted-foreground" />
+                      <span className="text-[8px] font-heading text-muted-foreground uppercase tracking-wider">Photo</span>
                     </button>
                   )}
                 </div>
