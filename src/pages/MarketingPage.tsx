@@ -26,6 +26,11 @@ const DRAFT_KEY = "lazy-quotes-draft";
 const MarketingPage = ({ config }: { config: MarketingPageConfig }) => {
   const navigate = useNavigate();
 
+  useEffect(() => {
+    document.title = config.title;
+    return () => { document.title = "Lazy Faceless — Create content for anything."; };
+  }, [config.title]);
+
   const handleApplyTemplate = (partial: Partial<QuoteEditorState>) => {
     localStorage.setItem(DRAFT_KEY, JSON.stringify(partial));
     navigate("/");
