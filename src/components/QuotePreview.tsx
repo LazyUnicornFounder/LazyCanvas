@@ -134,13 +134,20 @@ const themeStyles: Record<QuoteTheme, { bg: string; text: string; muted: string;
   ink: { bg: "#0d1117", text: "#c9d1d9", muted: "#6e7681", border: "#21262d" },
 };
 
-const shadowStyles: Record<TextShadow, string> = {
+const shadowStylesBase: Record<TextShadow, string> = {
   none: "none",
-  soft: "0 2px 8px rgba(0,0,0,0.3)",
-  hard: "2px 2px 0px rgba(0,0,0,0.5)",
-  glow: "0 0 12px rgba(255,255,255,0.6), 0 0 24px rgba(255,255,255,0.3)",
-  outline: "-1px -1px 0 rgba(0,0,0,0.4), 1px -1px 0 rgba(0,0,0,0.4), -1px 1px 0 rgba(0,0,0,0.4), 1px 1px 0 rgba(0,0,0,0.4)",
-  neon: "0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff, 0 0 42px #0fa, 0 0 82px #0fa, 0 0 92px #0fa",
+  soft: "0 2px 8px rgba(0,0,0,{o0.3})",
+  hard: "2px 2px 0px rgba(0,0,0,{o0.5})",
+  glow: "0 0 12px rgba(255,255,255,{o0.6}), 0 0 24px rgba(255,255,255,{o0.3})",
+  outline: "-1px -1px 0 rgba(0,0,0,{o0.4}), 1px -1px 0 rgba(0,0,0,{o0.4}), -1px 1px 0 rgba(0,0,0,{o0.4}), 1px 1px 0 rgba(0,0,0,{o0.4})",
+  neon: "0 0 7px rgba(255,255,255,{o1}), 0 0 10px rgba(255,255,255,{o1}), 0 0 21px rgba(255,255,255,{o1}), 0 0 42px rgba(0,255,170,{o1}), 0 0 82px rgba(0,255,170,{o1}), 0 0 92px rgba(0,255,170,{o1})",
+};
+
+const getShadowStyle = (shadow: TextShadow, opacity: number): string => {
+  if (shadow === "none") return "none";
+  return shadowStylesBase[shadow].replace(/\{o([\d.]+)\}/g, (_, base) =>
+    String(parseFloat(base) * opacity)
+  );
 };
 
 // Render quote text with colored words
