@@ -2,11 +2,13 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { LogOut, User, Download } from "lucide-react";
 import AuthModal from "@/components/AuthModal";
+import GalleryPromptDialog from "@/components/GalleryPromptDialog";
 import { useAuth } from "@/hooks/useAuth";
 import QuoteEditor, { type QuoteEditorState, DEFAULT_EDITOR_STATE, SOCIAL_PLATFORMS } from "@/components/QuoteEditor";
 import QuotePreview, { type SocialPlatform } from "@/components/QuotePreview";
 import html2canvas from "html2canvas";
 import QuoteGallery from "@/components/QuoteGallery";
+import { supabase } from "@/integrations/supabase/client";
 
 const DRAFT_KEY = "lazy-quotes-draft";
 
@@ -22,6 +24,7 @@ const Index = () => {
     return DEFAULT_EDITOR_STATE;
   });
   const [downloading, setDownloading] = useState(false);
+  const [showGalleryPrompt, setShowGalleryPrompt] = useState(false);
   const previewRef = useRef<HTMLDivElement>(null);
 
   // Clear draft from localStorage once user is logged in and state is restored
@@ -31,16 +34,26 @@ const Index = () => {
     }
   }, [user]);
 
-  const handleDownload = useCallback(async () => {
+  const handleDownloadClick = useCallback(() => {
     if (!user) {
-      // Save current design before showing auth modal
       localStorage.setItem(DRAFT_KEY, JSON.stringify(editorState));
       setShowAuthModal(true);
       return;
     }
+    setShowGalleryPrompt(true);
+  }, [user, editorState]);
+
+  const performDownload = useCallback(async (shareToGallery: boolean) => {
+    setShowGalleryPrompt(false);
     if (!previewRef.current) return;
     setDownloading(true);
     try {
+      if (shareToGallery && user) {
+        await supabase.from("gallery_submissions").insert({
+          user_id: user.id,
+          editor_state: editorState as any,
+        });
+      }
       const canvas = await html2canvas(previewRef.current, {
         scale: 3, useCORS: true, logging: false, backgroundColor: null,
       });
@@ -50,7 +63,7 @@ const Index = () => {
       link.click();
     } catch { console.error("Failed to export"); }
     finally { setDownloading(false); }
-  }, [user]);
+  }, [user, editorState]);
 
   const socials = [
     editorState.socialUsername
