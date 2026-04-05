@@ -23,7 +23,7 @@ import { supabase } from "@/integrations/supabase/client";
 const DRAFT_KEY = "lazy-quotes-draft";
 
 const Index = () => {
-  const { user, signOut } = useAuth();
+  const { user, signOut, isPro } = useAuth();
   const navigate = useNavigate();
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [editorState, setEditorState] = useState<QuoteEditorState>(() => {
@@ -47,13 +47,17 @@ const Index = () => {
   }, [user]);
 
   const handleDownloadClick = useCallback(() => {
-    if (user) {
-      setShowGalleryPrompt(true);
-    } else {
-      // For non-logged-in users, download immediately then prompt signup
+    if (!user) {
+      // Non-logged-in: download then prompt signup
       performDownloadOnly();
+    } else if (isPro) {
+      // Pro users: just download, no gallery
+      performDownloadOnly();
+    } else {
+      // Free logged-in users: offer gallery share
+      setShowGalleryPrompt(true);
     }
-  }, [user]);
+  }, [user, isPro]);
 
   const performDownloadOnly = useCallback(async () => {
     const target = previewRef.current || mobilePreviewRef.current;
@@ -116,7 +120,7 @@ const Index = () => {
     editorState.website,
   ].filter(Boolean).join(" · ");
 
-  const isFreeUser = true;
+  const isFreeUser = !isPro;
 
   return (
     <div className="min-h-screen bg-background">
@@ -222,7 +226,7 @@ const Index = () => {
               </p>
             </div>
             <div className="flex-1 min-h-0">
-              <QuoteEditor state={editorState} onChange={setEditorState} />
+              <QuoteEditor state={editorState} onChange={setEditorState} isPro={isPro} />
             </div>
           </div>
           {/* Phone — right */}
