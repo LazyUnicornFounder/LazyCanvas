@@ -152,7 +152,6 @@ const Pricing = () => {
                     )}
                     <span className={f.included ? "text-foreground" : "text-muted-foreground/50"}>
                       {f.text}
-                      {f.note && <span className="text-[10px] text-muted-foreground ml-1">({f.note})</span>}
                     </span>
                   </li>
                 ))}
