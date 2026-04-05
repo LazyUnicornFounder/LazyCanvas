@@ -142,7 +142,7 @@ const Index = () => {
         </section>
       )}
 
-      <main className="max-w-[1600px] mx-auto px-4 sm:px-6 py-4 sm:py-6">
+      <main id="editor-section" className="max-w-[1600px] mx-auto px-4 sm:px-6 py-4 sm:py-6">
         <div className="flex gap-6 items-start">
           {/* Controls */}
           <div className="flex-1 min-w-0">
