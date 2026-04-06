@@ -83,6 +83,7 @@ const Index = () => {
   const [showSignupPrompt, setShowSignupPrompt] = useState(false);
   const [showProUpgradePrompt, setShowProUpgradePrompt] = useState(false);
   const [proUpgradeSnapshot, setProUpgradeSnapshot] = useState<string | null>(null);
+  const [proWatermarkSnapshot, setProWatermarkSnapshot] = useState<string | null>(null);
   const [showProSignupPrompt, setShowProSignupPrompt] = useState(false);
   const [activeQuoteId, setActiveQuoteId] = useState<string | null>(null);
   const previewRef = useRef<HTMLDivElement>(null);
