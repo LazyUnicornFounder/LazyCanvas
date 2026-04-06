@@ -1465,7 +1465,7 @@ const QuoteEditor = ({ state: rawState, onChange, isPro = false }: QuoteEditorPr
                 <input
                   type="range"
                   min="1"
-                  max="6"
+                  max="9"
                   step="0.25"
                   value={state.logoSize}
                   onChange={(e) => set("logoSize", parseFloat(e.target.value))}
