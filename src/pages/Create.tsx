@@ -167,6 +167,7 @@ const Create = () => {
                     coloredWords={editorState.coloredWords}
                     showWatermark={isFreeUser}
                     showQuotationMarks={editorState.showQuotationMarks}
+                    photoStroke={editorState.photoStroke}
                   />
               </div>
               <button
