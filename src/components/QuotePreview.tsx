@@ -304,7 +304,6 @@ const QuotePreview = forwardRef<HTMLDivElement, QuotePreviewProps>(
     const containerRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLDivElement>(null);
     const [scale, setScale] = useState(1);
-    const [isOverflowing, setIsOverflowing] = useState(false);
     const [fontLoaded, setFontLoaded] = useState(0);
 
     // Force re-render when font finishes loading
@@ -325,7 +324,7 @@ const QuotePreview = forwardRef<HTMLDivElement, QuotePreviewProps>(
     useEffect(() => {
       const container = containerRef.current;
       const content = contentRef.current;
-      if (!container || !content) { setScale(1); setIsOverflowing(false); return; }
+      if (!container || !content) { setScale(1); return; }
 
       content.style.transform = "scale(1)";
       content.style.transformOrigin = "top left";
@@ -338,17 +337,16 @@ const QuotePreview = forwardRef<HTMLDivElement, QuotePreviewProps>(
       if (tW > 0 && tH > 0) {
         const s = Math.min(cW / tW, cH / tH, 1);
         setScale(s);
-        const overflow = s < 0.95;
-        setIsOverflowing(overflow);
 
-        // Auto-reduce font size when overflowing
-        if (overflow && onAutoFontSize && fontSize > 1.2) {
-          const reducedSize = Math.max(fontSize * s * 0.95, 1.2);
-          onAutoFontSize(reducedSize);
+        // If overflowing, clamp font size to max that fits (don't reduce below current)
+        if (s < 0.95 && onAutoFontSize) {
+          const maxSize = fontSize * s * 0.95;
+          if (maxSize < fontSize && maxSize >= 1.2) {
+            onAutoFontSize(maxSize);
+          }
         }
       } else {
         setScale(1);
-        setIsOverflowing(false);
       }
     }, [quote, fontSize, letterSpacing, lineHeight, font, aspectRatio, textAlign, authorFontSize, authorFont, authorName, authorPosition, socials, authorPhoto, fontLoaded]);
 
@@ -478,21 +476,6 @@ const QuotePreview = forwardRef<HTMLDivElement, QuotePreviewProps>(
           {isDetached && authorBlock && (
             <div className="relative z-10 pt-2">
               {authorBlock}
-            </div>
-          )}
-          {/* Overflow nudge */}
-          {isOverflowing && (
-            <div
-              data-export-exclude
-              className="absolute top-0 left-0 right-0 z-30 px-3 py-2 flex items-center justify-center gap-1.5 animate-fade-in"
-              style={{
-                backgroundColor: "rgba(220,38,38,0.92)",
-                backdropFilter: "blur(8px)",
-              }}
-            >
-              <span style={{ fontSize: "clamp(28px, 8%, 42px)", color: "#ffffff", fontWeight: 600, whiteSpace: "nowrap" }}>
-                ⚠ Text too large or too much text.
-              </span>
             </div>
           )}
           {/* Watermark */}
