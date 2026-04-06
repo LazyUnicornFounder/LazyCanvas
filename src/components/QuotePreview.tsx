@@ -304,7 +304,7 @@ const QuotePreview = forwardRef<HTMLDivElement, QuotePreviewProps>(
     const containerRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLDivElement>(null);
     const [scale, setScale] = useState(1);
-    const [isOverflowing, setIsOverflowing] = useState(false);
+    const [fontLoaded, setFontLoaded] = useState(0);
     const [fontLoaded, setFontLoaded] = useState(0);
 
     // Force re-render when font finishes loading
@@ -325,7 +325,7 @@ const QuotePreview = forwardRef<HTMLDivElement, QuotePreviewProps>(
     useEffect(() => {
       const container = containerRef.current;
       const content = contentRef.current;
-      if (!container || !content) { setScale(1); setIsOverflowing(false); return; }
+      if (!container || !content) { setScale(1); return; }
 
       content.style.transform = "scale(1)";
       content.style.transformOrigin = "top left";
@@ -477,21 +477,6 @@ const QuotePreview = forwardRef<HTMLDivElement, QuotePreviewProps>(
           {isDetached && authorBlock && (
             <div className="relative z-10 pt-2">
               {authorBlock}
-            </div>
-          )}
-          {/* Overflow nudge */}
-          {isOverflowing && (
-            <div
-              data-export-exclude
-              className="absolute top-0 left-0 right-0 z-30 px-3 py-2 flex items-center justify-center gap-1.5 animate-fade-in"
-              style={{
-                backgroundColor: "rgba(220,38,38,0.92)",
-                backdropFilter: "blur(8px)",
-              }}
-            >
-              <span style={{ fontSize: "clamp(28px, 8%, 42px)", color: "#ffffff", fontWeight: 600, whiteSpace: "nowrap" }}>
-                ⚠ Text too large or too much text.
-              </span>
             </div>
           )}
           {/* Watermark */}
