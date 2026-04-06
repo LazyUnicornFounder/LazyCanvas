@@ -245,12 +245,14 @@ const Index = () => {
 
   const handleSignupAccept = useCallback(() => {
     setShowSignupPrompt(false);
+    localStorage.setItem("lazy-quotes-signup-dismissed", "true");
     localStorage.setItem(DRAFT_KEY, JSON.stringify(editorState));
     setShowAuthModal(true);
   }, [editorState]);
 
   const handleSignupDownload = useCallback(() => {
     setShowSignupPrompt(false);
+    localStorage.setItem("lazy-quotes-signup-dismissed", "true");
     performDownloadOnly(3, false);
   }, [performDownloadOnly]);
 
