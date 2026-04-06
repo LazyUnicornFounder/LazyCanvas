@@ -198,7 +198,30 @@ const Index = () => {
     }
   }, [downloadBlob, renderPreviewBlob, user]);
 
-  const handleDownloadClick = useCallback((scale: number = 3) => {
+  const pendingFreeDownload = useRef(false);
+
+  const handleDownloadFreeVersion = useCallback(() => {
+    setShowProUpgradePrompt(false);
+    setProUpgradeSnapshot(null);
+    setEditorState((prev) => ({
+      ...prev,
+      coloredWords: [],
+      backgroundImage: null,
+      aspectRatio: "square" as const,
+    }));
+    pendingFreeDownload.current = true;
+  }, []);
+
+  useEffect(() => {
+    if (!pendingFreeDownload.current) return;
+    pendingFreeDownload.current = false;
+    const timer = setTimeout(() => {
+      performDownloadOnly(3, false);
+    }, 250);
+    return () => clearTimeout(timer);
+  }, [editorState, performDownloadOnly]);
+
+
     const hasPro = usesProFeatures(editorState);
 
     if (!user) {
