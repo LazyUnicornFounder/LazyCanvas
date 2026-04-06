@@ -460,7 +460,13 @@ const Index = () => {
             <button
               onClick={() => {
                 if (!isPro) {
-                  navigate("/pricing");
+                  toast("Pro Feature", {
+                    description: "Re-editing saved designs is a Pro feature. Upgrade to unlock!",
+                    action: {
+                      label: "Upgrade",
+                      onClick: () => navigate("/pricing"),
+                    },
+                  });
                   return;
                 }
               }}
@@ -585,7 +591,13 @@ const Index = () => {
                 <button
                   onClick={() => {
                     if (!isPro) {
-                      navigate("/pricing");
+                      toast("Pro Feature", {
+                        description: "Re-editing saved designs is a Pro feature. Upgrade to unlock!",
+                        action: {
+                          label: "Upgrade",
+                          onClick: () => navigate("/pricing"),
+                        },
+                      });
                       return;
                     }
                   }}
