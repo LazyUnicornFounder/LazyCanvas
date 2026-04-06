@@ -1271,7 +1271,7 @@ const QuoteEditor = ({ state: rawState, onChange, isPro = false }: QuoteEditorPr
 
           {/* Custom Size */}
           <hr className="my-3 border-border" />
-          <p className="text-[11px] font-heading font-semibold text-foreground uppercase tracking-wider mb-2">Custom</p>
+          <p className="text-[11px] font-heading font-semibold text-foreground uppercase tracking-wider mb-2">Custom Size</p>
           <div className="flex items-end gap-2">
             <button
               onClick={() => set("aspectRatio", "custom")}
