@@ -1,4 +1,4 @@
-import { Plus, FileText, Trash2, Crown, LogOut, CreditCard, Pencil } from "lucide-react";
+import { Plus, FileText, Trash2, Crown, LogOut, CreditCard, Pencil, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import type { UserDesign } from "@/hooks/useUserDesigns";
@@ -45,7 +45,7 @@ export function AppSidebar({
 }: AppSidebarProps) {
   const { user, signOut, isPro } = useAuth();
   const navigate = useNavigate();
-  const { state } = useSidebar();
+  const { state, toggleSidebar } = useSidebar();
   const collapsed = state === "collapsed";
 
   const currentTier = "Free"; // TODO: check actual subscription
@@ -70,7 +70,27 @@ export function AppSidebar({
   return (
     <Sidebar collapsible="icon" className="border-r border-border">
       <SidebarHeader className="p-3 space-y-3 overflow-hidden">
-        {!collapsed && <LogoWithTagline />}
+        {!collapsed && (
+          <div className="flex items-center justify-between">
+            <LogoWithTagline />
+            <button
+              onClick={() => toggleSidebar()}
+              className="p-1 hover:bg-accent rounded-md transition-colors flex-shrink-0"
+              title="Collapse sidebar"
+            >
+              <PanelLeftClose className="w-4 h-4 text-muted-foreground" />
+            </button>
+          </div>
+        )}
+        {collapsed && (
+          <button
+            onClick={() => toggleSidebar()}
+            className="p-1 hover:bg-accent rounded-md transition-colors mx-auto"
+            title="Expand sidebar"
+          >
+            <PanelLeftOpen className="w-4 h-4 text-muted-foreground" />
+          </button>
+        )}
         {!collapsed && (
           <h2 className="font-heading text-sm font-semibold tracking-tight text-foreground truncate">
             My Content
