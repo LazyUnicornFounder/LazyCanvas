@@ -403,6 +403,11 @@ const Index = () => {
 
   const isFreeUser = !isPro;
 
+  // Prevent layout shift: don't render until we know if user is logged in
+  if (authLoading) {
+    return <div className="min-h-screen bg-background" />;
+  }
+
   const pageContent = (
     <div className={user ? "flex-1 flex flex-col min-w-0 bg-background" : "min-h-screen bg-background"}>
       <header className="border-b border-border">
