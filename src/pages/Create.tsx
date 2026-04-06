@@ -62,10 +62,6 @@ const Create = () => {
   }, [user]);
 
   const handleSelectQuote = (quote: UserQuote) => {
-    if (!isPro) {
-      toast.error("Re-editing saved quotes is a Pro feature. Upgrade to Pro to unlock!");
-      return;
-    }
     setActiveQuoteId(quote.id);
     setEditorState(quote.editor_state);
   };
