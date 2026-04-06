@@ -1,4 +1,4 @@
-import { forwardRef, useRef, useEffect, useState } from "react";
+import { forwardRef, useRef, useEffect, useState, useCallback } from "react";
 import { Instagram, Youtube, Linkedin, Facebook, type LucideProps } from "lucide-react";
 import { BG_FILTERS } from "@/components/QuoteEditor";
 
