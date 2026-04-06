@@ -59,7 +59,7 @@ const socialIcons: Record<SocialPlatform, IconComponent> = {
 
 export type AspectRatio = "square" | "3:4" | "2:3" | "9:16" | "1:2" | "4:3" | "3:2" | "16:9" | "2:1" | "1.91:1" | "3:1" | "4:1" | "820:312" | "a0" | "a1" | "a2" | "a3" | "a4" | "letter" | "legal" | "tabloid" | "poster-18x24" | "poster-24x36" | "banner-2x5" | "ios-screenshot" | "ios-ipad" | "android-phone" | "android-tablet" | "mac-screenshot" | "app-icon" | "iphone-wallpaper" | "android-wallpaper" | "lock-screen" | "business-card" | "custom";
 export type QuoteFont = "playfair" | "cormorant" | "bebas" | "mono" | "heading" | "lora" | "inter" | "oswald" | "merriweather" | "raleway" | "dancing" | "archivo" | "crimson" | "montserrat" | "poppins" | "pacifico" | "great-vibes" | "satisfy" | "caveat" | "permanent-marker" | "shadows-into-light" | "orbitron" | "rajdhani" | "audiowide";
-export type QuoteTheme = "light" | "dark" | "cream" | "ink" | "glass-light" | "glass-dark" | "glass-frost" | "glass-aurora";
+export type QuoteTheme = "light" | "dark" | "cream" | "ink" | "glass-light" | "glass-dark" | "glass-frost" | "glass-aurora" | "glass-rose" | "glass-ocean" | "glass-amber" | "glass-emerald" | "glass-smoke" | "glass-prismatic";
 export type TextShadow = "none" | "soft" | "hard" | "glow" | "outline" | "neon";
 export type AuthorPosition = "below-quote" | "bottom-left" | "bottom-center" | "bottom-right";
 
@@ -221,6 +221,30 @@ const themeStyles: Record<QuoteTheme, { bg: string; text: string; muted: string;
   "glass-aurora": {
     bg: "rgba(120,60,200,0.15)", text: "#ffffff", muted: "#c4b5fd", border: "rgba(167,139,250,0.4)",
     glass: { blur: 22, opacity: 0.15, borderGlow: "rgba(167,139,250,0.5)", gradient: "linear-gradient(135deg, rgba(139,92,246,0.3) 0%, rgba(59,130,246,0.15) 50%, rgba(16,185,129,0.2) 100%)" },
+  },
+  "glass-rose": {
+    bg: "rgba(244,63,94,0.15)", text: "#ffffff", muted: "#fda4af", border: "rgba(251,113,133,0.4)",
+    glass: { blur: 22, opacity: 0.15, borderGlow: "rgba(251,113,133,0.5)", gradient: "linear-gradient(135deg, rgba(244,63,94,0.3) 0%, rgba(236,72,153,0.15) 50%, rgba(251,146,60,0.1) 100%)" },
+  },
+  "glass-ocean": {
+    bg: "rgba(6,182,212,0.15)", text: "#ffffff", muted: "#a5f3fc", border: "rgba(34,211,238,0.4)",
+    glass: { blur: 24, opacity: 0.15, borderGlow: "rgba(34,211,238,0.5)", gradient: "linear-gradient(135deg, rgba(6,182,212,0.3) 0%, rgba(59,130,246,0.2) 50%, rgba(8,145,178,0.15) 100%)" },
+  },
+  "glass-amber": {
+    bg: "rgba(245,158,11,0.15)", text: "#1a1a1a", muted: "#92400e", border: "rgba(251,191,36,0.4)",
+    glass: { blur: 20, opacity: 0.15, borderGlow: "rgba(251,191,36,0.5)", gradient: "linear-gradient(135deg, rgba(245,158,11,0.3) 0%, rgba(234,88,12,0.15) 50%, rgba(251,191,36,0.2) 100%)" },
+  },
+  "glass-emerald": {
+    bg: "rgba(16,185,129,0.15)", text: "#ffffff", muted: "#a7f3d0", border: "rgba(52,211,153,0.4)",
+    glass: { blur: 22, opacity: 0.15, borderGlow: "rgba(52,211,153,0.5)", gradient: "linear-gradient(135deg, rgba(16,185,129,0.3) 0%, rgba(5,150,105,0.15) 50%, rgba(20,184,166,0.2) 100%)" },
+  },
+  "glass-smoke": {
+    bg: "rgba(30,30,30,0.5)", text: "#e5e5e5", muted: "#a3a3a3", border: "rgba(82,82,82,0.4)",
+    glass: { blur: 28, opacity: 0.5, borderGlow: "rgba(82,82,82,0.3)", gradient: "linear-gradient(135deg, rgba(38,38,38,0.6) 0%, rgba(23,23,23,0.3) 100%)" },
+  },
+  "glass-prismatic": {
+    bg: "rgba(168,85,247,0.1)", text: "#ffffff", muted: "#d8b4fe", border: "rgba(217,70,239,0.4)",
+    glass: { blur: 20, opacity: 0.1, borderGlow: "rgba(217,70,239,0.5)", gradient: "linear-gradient(135deg, rgba(244,63,94,0.2) 0%, rgba(168,85,247,0.25) 25%, rgba(59,130,246,0.2) 50%, rgba(16,185,129,0.2) 75%, rgba(245,158,11,0.15) 100%)" },
   },
 };
 

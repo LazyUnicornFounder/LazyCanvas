@@ -181,6 +181,12 @@ const THEME_OPTIONS: { value: QuoteTheme; label: string; swatch: string; isGlass
   { value: "glass-dark", label: "Dark Glass", swatch: "linear-gradient(135deg, rgba(40,40,40,0.8), rgba(20,20,20,0.4))", isGlass: true },
   { value: "glass-frost", label: "Frost", swatch: "linear-gradient(135deg, rgba(200,220,240,0.6), rgba(180,200,230,0.2))", isGlass: true },
   { value: "glass-aurora", label: "Aurora", swatch: "linear-gradient(135deg, rgba(139,92,246,0.6), rgba(59,130,246,0.3), rgba(16,185,129,0.4))", isGlass: true },
+  { value: "glass-rose", label: "Rosé", swatch: "linear-gradient(135deg, rgba(244,63,94,0.6), rgba(236,72,153,0.3), rgba(251,146,60,0.2))", isGlass: true },
+  { value: "glass-ocean", label: "Ocean", swatch: "linear-gradient(135deg, rgba(6,182,212,0.6), rgba(59,130,246,0.4), rgba(8,145,178,0.3))", isGlass: true },
+  { value: "glass-amber", label: "Amber", swatch: "linear-gradient(135deg, rgba(245,158,11,0.6), rgba(234,88,12,0.3), rgba(251,191,36,0.4))", isGlass: true },
+  { value: "glass-emerald", label: "Emerald", swatch: "linear-gradient(135deg, rgba(16,185,129,0.6), rgba(5,150,105,0.3), rgba(20,184,166,0.4))", isGlass: true },
+  { value: "glass-smoke", label: "Smoke", swatch: "linear-gradient(135deg, rgba(38,38,38,0.8), rgba(23,23,23,0.5))", isGlass: true },
+  { value: "glass-prismatic", label: "Prismatic", swatch: "linear-gradient(135deg, rgba(244,63,94,0.5), rgba(168,85,247,0.5), rgba(59,130,246,0.5), rgba(16,185,129,0.5), rgba(245,158,11,0.4))", isGlass: true },
 ];
 
 const WALLPAPER_CATEGORIES = [
