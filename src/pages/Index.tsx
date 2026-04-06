@@ -10,10 +10,10 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { useNavigate } from "react-router-dom";
-import { LogOut, User, Download, Shield, ChevronDown, Printer } from "lucide-react";
+import { LogOut, User, Download, Shield, ChevronDown, Printer, Save } from "lucide-react";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
-import type { UserQuote } from "@/hooks/useUserQuotes";
+import { useUserQuotes, type UserQuote } from "@/hooks/useUserQuotes";
 import AuthModal from "@/components/AuthModal";
 import GalleryPromptDialog from "@/components/GalleryPromptDialog";
 import { MainNav, LogoWithTagline } from "@/components/MainNav";
