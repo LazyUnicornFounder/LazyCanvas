@@ -79,6 +79,7 @@ const Index = () => {
     return DEFAULT_EDITOR_STATE;
   });
   const [downloading, setDownloading] = useState(false);
+  const [showDownloadWatermark, setShowDownloadWatermark] = useState(false);
   const [showGalleryPrompt, setShowGalleryPrompt] = useState(false);
   const [showSignupPrompt, setShowSignupPrompt] = useState(false);
   const [showProUpgradePrompt, setShowProUpgradePrompt] = useState(false);
