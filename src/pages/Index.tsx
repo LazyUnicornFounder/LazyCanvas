@@ -210,13 +210,7 @@ const Index = () => {
     } else if (isPro) {
       performDownloadOnly(scale);
     } else if (hasPro) {
-      const trialUsed = localStorage.getItem("lazy-quotes-pro-trial-used");
-      if (trialUsed) {
-        setShowProUpgradePrompt(true);
-      } else {
-        localStorage.setItem("lazy-quotes-pro-trial-used", "true");
-        performDownloadOnly(scale);
-      }
+      setShowProUpgradePrompt(true);
     } else {
       performDownloadOnly(scale);
     }
@@ -521,14 +515,14 @@ const Index = () => {
       <AlertDialog open={showProUpgradePrompt} onOpenChange={(o) => !o && setShowProUpgradePrompt(false)}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle className="font-heading">You've selected Pro features</AlertDialogTitle>
+            <AlertDialogTitle className="font-heading">Your design uses Pro features</AlertDialogTitle>
             <AlertDialogDescription className="text-sm text-muted-foreground">
-              Your quote uses Pro features like word colors, custom backgrounds, or custom formats. Upgrade to Pro to keep using these features on all your quotes.
+              Upgrade to Pro to download this version, or switch to a free style to download now.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => { setShowProUpgradePrompt(false); performDownloadOnly(3); }}>
-              Download
+            <AlertDialogCancel onClick={() => setShowProUpgradePrompt(false)}>
+              Go back
             </AlertDialogCancel>
             <AlertDialogAction onClick={() => { setShowProUpgradePrompt(false); navigate("/pricing"); }}>
               Upgrade to Pro
