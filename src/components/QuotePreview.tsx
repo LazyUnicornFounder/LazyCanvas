@@ -105,6 +105,7 @@ interface QuotePreviewProps {
   borderWidth?: number;
   borderColor?: string;
   borderStyle?: "none" | "solid" | "dashed" | "dotted" | "double";
+  onAutoFontSize?: (newSize: number) => void;
 }
 
 const aspectClasses: Record<AspectRatio, string> = {
