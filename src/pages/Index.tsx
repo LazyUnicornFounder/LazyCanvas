@@ -67,7 +67,7 @@ const sanitizeExportStyles = (root: ParentNode) => {
 };
 
 const Index = () => {
-  const { user, signOut, isPro, isAdmin, proLoading, refreshProStatus } = useAuth();
+  const { user, loading: authLoading, signOut, isPro, isAdmin, proLoading, refreshProStatus } = useAuth();
   const { designs, loading: designsLoading, saveDesign, deleteDesign } = useUserDesigns();
   const navigate = useNavigate();
   const [showAuthModal, setShowAuthModal] = useState(false);
