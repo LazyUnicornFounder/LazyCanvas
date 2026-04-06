@@ -29,8 +29,9 @@ const featureRows: [string, boolean, boolean][] = [
 
 const Pricing = () => {
   const navigate = useNavigate();
-  const { user, isPro } = useAuth();
+  const { user, isPro, signOut } = useAuth();
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [authModalMode, setAuthModalMode] = useState<"login" | "signup">("signup");
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [billingInterval, setBillingInterval] = useState<"monthly" | "yearly">("monthly");
 
