@@ -23,7 +23,7 @@ const proFeatures = [
 const freeFeatures = [
   { text: "Unlimited quote designs", included: true },
   { text: "PNG download", included: true },
-  { text: "Save unlimited quotes", included: true },
+  { text: "Save unlimited quotes", included: false },
   { text: "Premium templates", included: false },
   { text: "Word colors", included: false },
   { text: "Text formatting", included: false },
