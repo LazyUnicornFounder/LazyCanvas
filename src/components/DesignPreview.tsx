@@ -1,6 +1,6 @@
 import { forwardRef, useRef, useEffect, useLayoutEffect, useState } from "react";
 import { Instagram, Youtube, Linkedin, Facebook, type LucideProps } from "lucide-react";
-import { BG_FILTERS } from "@/components/QuoteEditor";
+import { BG_FILTERS } from "@/components/DesignEditor";
 
 export type SocialPlatform = "instagram" | "twitter" | "tiktok" | "youtube" | "linkedin" | "threads" | "bluesky" | "facebook" | "pinterest" | "snapchat";
 
@@ -58,8 +58,8 @@ const socialIcons: Record<SocialPlatform, IconComponent> = {
 };
 
 export type AspectRatio = "square" | "3:4" | "2:3" | "9:16" | "1:2" | "4:3" | "3:2" | "16:9" | "2:1" | "1.91:1" | "3:1" | "4:1" | "820:312" | "a0" | "a1" | "a2" | "a3" | "a4" | "letter" | "legal" | "tabloid" | "poster-18x24" | "poster-24x36" | "banner-2x5" | "ios-screenshot" | "ios-ipad" | "android-phone" | "android-tablet" | "mac-screenshot" | "app-icon" | "iphone-wallpaper" | "android-wallpaper" | "lock-screen" | "business-card" | "custom";
-export type QuoteFont = "playfair" | "cormorant" | "bebas" | "mono" | "heading" | "lora" | "inter" | "oswald" | "merriweather" | "raleway" | "dancing" | "archivo" | "crimson" | "montserrat" | "poppins" | "pacifico" | "great-vibes" | "satisfy" | "caveat" | "permanent-marker" | "shadows-into-light" | "orbitron" | "rajdhani" | "audiowide";
-export type QuoteTheme = "light" | "dark" | "cream" | "ink" | "glass-light" | "glass-dark" | "glass-frost" | "glass-aurora" | "glass-rose" | "glass-ocean" | "glass-amber" | "glass-emerald" | "glass-smoke" | "glass-prismatic";
+export type DesignFont = "playfair" | "cormorant" | "bebas" | "mono" | "heading" | "lora" | "inter" | "oswald" | "merriweather" | "raleway" | "dancing" | "archivo" | "crimson" | "montserrat" | "poppins" | "pacifico" | "great-vibes" | "satisfy" | "caveat" | "permanent-marker" | "shadows-into-light" | "orbitron" | "rajdhani" | "audiowide";
+export type DesignTheme = "light" | "dark" | "cream" | "ink" | "glass-light" | "glass-dark" | "glass-frost" | "glass-aurora" | "glass-rose" | "glass-ocean" | "glass-amber" | "glass-emerald" | "glass-smoke" | "glass-prismatic";
 export type TextShadow = "none" | "soft" | "hard" | "glow" | "outline" | "neon";
 export type AuthorPosition = "below-quote" | "bottom-left" | "bottom-center" | "bottom-right";
 
@@ -68,7 +68,7 @@ export interface ColoredWord {
   color: string; // hex or "rainbow"
 }
 
-interface QuotePreviewProps {
+interface DesignPreviewProps {
   quote: string;
   authorName: string;
   authorPhoto: string | null;
@@ -76,8 +76,8 @@ interface QuotePreviewProps {
   socials: string;
   socialPlatform?: SocialPlatform;
   aspectRatio: AspectRatio;
-  font: QuoteFont;
-  theme: QuoteTheme;
+  font: DesignFont;
+  theme: DesignTheme;
   backgroundImage: string | null;
   backgroundOpacity: number;
   backgroundBlur?: number;
@@ -90,7 +90,7 @@ interface QuotePreviewProps {
   textColor: string;
   authorFontSize: number;
   authorColor: string;
-  authorFont: QuoteFont;
+  authorFont: DesignFont;
   textShadow: TextShadow;
   shadowOpacity?: number;
   authorPosition: AuthorPosition;
@@ -150,7 +150,7 @@ const aspectClasses: Record<AspectRatio, string> = {
   "custom": "",
 };
 
-const fontClasses: Record<QuoteFont, string> = {
+const fontClasses: Record<DesignFont, string> = {
   playfair: "font-playfair",
   cormorant: "font-cormorant",
   bebas: "font-bebas tracking-wider uppercase",
@@ -177,7 +177,7 @@ const fontClasses: Record<QuoteFont, string> = {
   audiowide: "font-audiowide uppercase tracking-wider",
 };
 
-const fontFamilies: Record<QuoteFont, string> = {
+const fontFamilies: Record<DesignFont, string> = {
   playfair: "'Playfair Display', serif",
   cormorant: "'Cormorant Garamond', serif",
   bebas: "'Bebas Neue', sans-serif",
@@ -204,7 +204,7 @@ const fontFamilies: Record<QuoteFont, string> = {
   audiowide: "'Audiowide', sans-serif",
 };
 
-const themeStyles: Record<QuoteTheme, { bg: string; text: string; muted: string; border: string; glass?: { blur: number; opacity: number; borderGlow: string; gradient: string } }> = {
+const themeStyles: Record<DesignTheme, { bg: string; text: string; muted: string; border: string; glass?: { blur: number; opacity: number; borderGlow: string; gradient: string } }> = {
   light: { bg: "#FFFFFF", text: "#1a1a1a", muted: "#888888", border: "#e5e5e5" },
   dark: { bg: "#1a1a1a", text: "#f5f5f0", muted: "#888888", border: "#333333" },
   cream: { bg: "#F5F0E8", text: "#2d2a26", muted: "#8a8477", border: "#e0d9cc" },
@@ -276,7 +276,7 @@ const clampFontSizeToStep = (value: number) => {
   return Number((Math.floor((clamped + Number.EPSILON) / FONT_SIZE_STEP) * FONT_SIZE_STEP).toFixed(2));
 };
 
-// Render quote text with colored words
+// Render design text with colored words
 const renderColoredQuote = (text: string, coloredWords: ColoredWord[] = [], showQuotes = false) => {
   const activeColoredWords = coloredWords
     .map((word) => ({ ...word, text: word.text.trim() }))
@@ -348,7 +348,7 @@ const renderColoredQuote = (text: string, coloredWords: ColoredWord[] = [], show
   );
 };
 
-const QuotePreview = forwardRef<HTMLDivElement, QuotePreviewProps>(
+const DesignPreview = forwardRef<HTMLDivElement, DesignPreviewProps>(
   ({ quote, authorName, authorPhoto, photoShape = "none", socials, socialPlatform, aspectRatio, font, theme, backgroundImage, backgroundOpacity, backgroundBlur = 0, backgroundFilter = "none", filterIntensity = 1, fontSize, textAlign, letterSpacing, lineHeight, textColor, authorFontSize, authorColor, authorFont, textShadow, shadowOpacity = 1, authorPosition, backgroundColor, isBold, isItalic, coloredWords, showWatermark, showQuotationMarks = false, photoStroke = false, customWidth, customHeight, borderWidth = 0, borderColor = "#000000", borderStyle = "none", logo, logoPosition = "bottom-right", logoSize = 2.5, onAutoFontSize }, ref) => {
     const t = themeStyles[theme];
     const isPlaceholder = !quote;
@@ -573,7 +573,7 @@ const QuotePreview = forwardRef<HTMLDivElement, QuotePreviewProps>(
         )}
         {/* Inner padding — nothing goes beyond this */}
         <div className="absolute inset-0 flex flex-col" style={{ padding: `clamp(${12 + (borderStyle !== "none" && borderWidth > 0 ? borderWidth * 1.5 : 0)}px, ${4 + (borderStyle !== "none" && borderWidth > 0 ? borderWidth * 0.8 : 0)}%, ${32 + (borderStyle !== "none" && borderWidth > 0 ? borderWidth * 1.5 : 0)}px)` }}>
-          {/* Quote content */}
+          {/* Design content */}
           <div ref={containerRef} className="flex-1 flex items-center justify-center relative z-10 overflow-hidden">
             <div ref={contentRef} style={{ textAlign, maxWidth: "90%", width: "90%", transform: `scale(${scale})`, transformOrigin: "center center", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", willChange: scale < 1 ? "transform" : undefined }}>
               <p
@@ -657,5 +657,5 @@ const QuotePreview = forwardRef<HTMLDivElement, QuotePreviewProps>(
   }
 );
 
-QuotePreview.displayName = "QuotePreview";
-export default QuotePreview;
+DesignPreview.displayName = "DesignPreview";
+export default DesignPreview;

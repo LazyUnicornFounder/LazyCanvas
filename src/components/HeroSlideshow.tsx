@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import PhoneMockup from "@/components/PhoneMockup";
-import QuotePreview, {
+import DesignPreview, {
   type AspectRatio,
-  type QuoteFont,
-  type QuoteTheme,
+  type DesignFont,
+  type DesignTheme,
   type TextShadow,
   type AuthorPosition,
-} from "@/components/QuotePreview";
+} from "@/components/DesignPreview";
 
 interface SlideshowQuote {
   id: string;
@@ -79,14 +79,14 @@ const HeroSlideshow = () => {
       style={{ opacity: fade ? 1 : 0 }}
     >
       <PhoneMockup authorName={q.author_name || "lazyfaceless"}>
-        <QuotePreview
+        <DesignPreview
           quote={q.quote}
           authorName={q.author_name || ""}
           authorPhoto={q.author_photo_url || null}
           socials={q.socials || ""}
           aspectRatio="square"
-          font={(q.font as QuoteFont) || "playfair"}
-          theme={(q.theme as QuoteTheme) || "dark"}
+          font={(q.font as DesignFont) || "playfair"}
+          theme={(q.theme as DesignTheme) || "dark"}
           backgroundImage={q.background_image_url || null}
           backgroundOpacity={q.background_opacity || 0.4}
           fontSize={q.font_size || 1.4}
@@ -96,7 +96,7 @@ const HeroSlideshow = () => {
           textColor={q.text_color || ""}
           authorFontSize={q.author_font_size || 0.875}
           authorColor={q.author_color || ""}
-          authorFont={(q.author_font as QuoteFont) || "playfair"}
+          authorFont={(q.author_font as DesignFont) || "playfair"}
           textShadow={(q.text_shadow as TextShadow) || "none"}
           authorPosition={(q.author_position as AuthorPosition) || "below-quote"}
           backgroundColor={q.background_color || ""}

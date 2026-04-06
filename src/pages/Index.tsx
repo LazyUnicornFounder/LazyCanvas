@@ -14,20 +14,20 @@ import { useNavigate } from "react-router-dom";
 import { LogOut, User, Download, Shield, ChevronDown, Printer, Save, Pencil } from "lucide-react";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
-import { useUserQuotes, type UserQuote } from "@/hooks/useUserQuotes";
+import { useUserDesigns, type UserDesign } from "@/hooks/useUserDesigns";
 import AuthModal from "@/components/AuthModal";
 import GalleryPromptDialog from "@/components/GalleryPromptDialog";
 import { MainNav, LogoWithTagline } from "@/components/MainNav";
 import { SiteFooter } from "@/components/SiteFooter";
 import { useAuth } from "@/hooks/useAuth";
-import QuoteEditor, { type QuoteEditorState, DEFAULT_EDITOR_STATE, SOCIAL_PLATFORMS } from "@/components/QuoteEditor";
-import QuotePreview, { type SocialPlatform } from "@/components/QuotePreview";
+import DesignEditor, { type DesignEditorState, DEFAULT_EDITOR_STATE, SOCIAL_PLATFORMS } from "@/components/DesignEditor";
+import DesignPreview, { type SocialPlatform } from "@/components/DesignPreview";
 import html2canvas from "html2canvas";
 import { toBlob as toImageBlob } from "html-to-image";
-import QuoteGallery from "@/components/QuoteGallery";
+import DesignGallery from "@/components/DesignGallery";
 import { supabase } from "@/integrations/supabase/client";
 
-const DRAFT_KEY = "lazy-quotes-draft";
+const DRAFT_KEY = "lazy-designs-draft";
 
 const ASPECT_RATIOS: Record<string, number> = {
   square: 1, "3:4": 3/4, "2:3": 2/3, "9:16": 9/16, "1:2": 1/2,
@@ -68,11 +68,11 @@ const sanitizeExportStyles = (root: ParentNode) => {
 
 const Index = () => {
   const { user, signOut, isPro, isAdmin } = useAuth();
-  const { quotes, loading: quotesLoading, saveQuote, deleteQuote } = useUserQuotes();
+  const { designs, loading: designsLoading, saveDesign, deleteDesign } = useUserDesigns();
   const navigate = useNavigate();
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [authModalMode, setAuthModalMode] = useState<"login" | "signup">("signup");
-  const [editorState, setEditorState] = useState<QuoteEditorState>(() => {
+  const [editorState, setEditorState] = useState<DesignEditorState>(() => {
     try {
       const saved = localStorage.getItem(DRAFT_KEY);
       if (saved) {
@@ -84,18 +84,18 @@ const Index = () => {
   });
   const [downloading, setDownloading] = useState(false);
   const [showDownloadWatermark, setShowDownloadWatermark] = useState(false);
-  const [freeEditorStateForSnapshot, setFreeEditorStateForSnapshot] = useState<QuoteEditorState | null>(null);
+  const [freeEditorStateForSnapshot, setFreeEditorStateForSnapshot] = useState<DesignEditorState | null>(null);
   const [showGalleryPrompt, setShowGalleryPrompt] = useState(false);
   const [showSignupPrompt, setShowSignupPrompt] = useState(false);
   const [showProUpgradePrompt, setShowProUpgradePrompt] = useState(false);
   const [proUpgradeSnapshot, setProUpgradeSnapshot] = useState<string | null>(null);
   const [proWatermarkSnapshot, setProWatermarkSnapshot] = useState<string | null>(null);
   const [showProSignupPrompt, setShowProSignupPrompt] = useState(false);
-  const [activeQuoteId, setActiveQuoteId] = useState<string | null>(null);
+  const [activeDesignId, setActiveQuoteId] = useState<string | null>(null);
   const previewRef = useRef<HTMLDivElement>(null);
   const mobilePreviewRef = useRef<HTMLDivElement>(null);
 
-  const handleSelectQuote = (quote: UserQuote) => {
+  const handleSelectDesign = (quote: UserDesign) => {
     if (!isPro) {
       import("sonner").then(({ toast }) => toast.error("Re-editing saved designs is a Pro feature."));
       return;
@@ -104,23 +104,23 @@ const Index = () => {
     setEditorState(quote.editor_state);
   };
 
-  const handleNewQuote = () => {
+  const handleNewDesign = () => {
     setActiveQuoteId(null);
     setEditorState(DEFAULT_EDITOR_STATE);
   };
 
-  const handleSaveQuote = useCallback(async () => {
+  const handleSaveDesign = useCallback(async () => {
     if (!user) return;
     const title = editorState.quote
       ? editorState.quote.slice(0, 40) + (editorState.quote.length > 40 ? "…" : "")
       : "Untitled";
-    const result = await saveQuote(activeQuoteId, title, editorState);
-    if (result && !activeQuoteId) {
+    const result = await saveDesign(activeDesignId, title, editorState);
+    if (result && !activeDesignId) {
       setActiveQuoteId(result.id);
     }
     const { toast } = await import("sonner");
-    toast.success(activeQuoteId ? "Changes saved!" : "Design saved!");
-  }, [user, editorState, activeQuoteId, saveQuote]);
+    toast.success(activeDesignId ? "Changes saved!" : "Design saved!");
+  }, [user, editorState, activeDesignId, saveDesign]);
 
   // Scroll to top on mount (e.g. when navigating from marketing pages)
   useEffect(() => {
@@ -134,7 +134,7 @@ const Index = () => {
     }
   }, [user]);
 
-  const usesProFeatures = useCallback((state: QuoteEditorState) => {
+  const usesProFeatures = useCallback((state: DesignEditorState) => {
     return (
       (state.coloredWords && state.coloredWords.length > 0) ||
       !!state.backgroundImage ||
@@ -216,7 +216,7 @@ const Index = () => {
       const suffix = scale > 3 ? "-print" : "";
       downloadBlob(blob, `design${suffix}-${Date.now()}.png`);
 
-      if (!user && showGuestPrompt && !localStorage.getItem("lazy-quotes-signup-dismissed")) {
+      if (!user && showGuestPrompt && !localStorage.getItem("lazy-designs-signup-dismissed")) {
         window.setTimeout(() => setShowSignupPrompt(true), 300);
       }
     } catch (err) {
@@ -331,14 +331,14 @@ const Index = () => {
 
   const handleSignupAccept = useCallback(() => {
     setShowSignupPrompt(false);
-    localStorage.setItem("lazy-quotes-signup-dismissed", "true");
+    localStorage.setItem("lazy-designs-signup-dismissed", "true");
     localStorage.setItem(DRAFT_KEY, JSON.stringify(editorState));
     setShowAuthModal(true);
   }, [editorState]);
 
   const handleSignupDownload = useCallback(() => {
     setShowSignupPrompt(false);
-    localStorage.setItem("lazy-quotes-signup-dismissed", "true");
+    localStorage.setItem("lazy-designs-signup-dismissed", "true");
     performDownloadOnly(3, false);
   }, [performDownloadOnly]);
 
@@ -404,7 +404,7 @@ const Index = () => {
       {/* Mobile sticky preview */}
       <div className="lg:hidden sticky top-0 z-20 bg-background border-b border-border px-4 py-3">
         <div className="max-w-[280px] mx-auto relative">
-          <QuotePreview
+          <DesignPreview
             key={`mobile-${editorState.font}-${editorState.authorFont}-${editorState.isBold}-${editorState.isItalic}`}
             ref={mobilePreviewRef}
             quote={editorState.quote}
@@ -473,7 +473,7 @@ const Index = () => {
           <button
             onClick={() => {
               if (!user) { setAuthModalMode("signup"); setShowAuthModal(true); return; }
-              handleSaveQuote();
+              handleSaveDesign();
             }}
             className="flex items-center justify-center gap-1.5 px-3 py-2 border border-border text-foreground font-heading text-xs font-medium rounded-md hover:bg-accent transition-colors"
           >
@@ -523,13 +523,13 @@ const Index = () => {
           {/* Left — editor */}
           <div className="flex-1 min-w-0 flex flex-col">
             <div className="flex-1 min-h-0">
-              <QuoteEditor state={editorState} onChange={setEditorState} isPro={isPro} />
+              <DesignEditor state={editorState} onChange={setEditorState} isPro={isPro} />
             </div>
           </div>
           {/* Preview — right */}
           <div className="hidden lg:flex flex-shrink-0 flex-col gap-3 sticky top-6 self-start transition-all duration-300" style={{ width: getPreviewContainerWidth(editorState.aspectRatio, editorState.customWidth, editorState.customHeight) }}>
             <div className="w-full overflow-hidden relative">
-                <QuotePreview
+                <DesignPreview
                   key={`desktop-${editorState.font}-${editorState.authorFont}-${editorState.isBold}-${editorState.isItalic}`}
                   ref={previewRef}
                   quote={editorState.quote}
@@ -598,7 +598,7 @@ const Index = () => {
               <button
                 onClick={() => {
                   if (!user) { setAuthModalMode("signup"); setShowAuthModal(true); return; }
-                  handleSaveQuote();
+                  handleSaveDesign();
                 }}
                 className="flex items-center justify-center gap-2 px-4 py-2 border border-border text-foreground font-heading text-sm font-medium rounded-md hover:bg-accent transition-colors"
               >
@@ -841,14 +841,14 @@ const Index = () => {
       <SidebarProvider>
         <div className="min-h-screen flex w-full">
           <AppSidebar
-            activeQuoteId={activeQuoteId}
-            onSelectQuote={handleSelectQuote}
-            onNewQuote={handleNewQuote}
+            activeDesignId={activeDesignId}
+            onSelectDesign={handleSelectDesign}
+            onNewDesign={handleNewDesign}
             currentEditorState={editorState}
-            quotes={quotes}
-            loading={quotesLoading}
-            saveQuote={saveQuote}
-            deleteQuote={deleteQuote}
+            designs={designs}
+            loading={designsLoading}
+            saveDesign={saveDesign}
+            deleteDesign={deleteDesign}
           />
           {pageContent}
         </div>

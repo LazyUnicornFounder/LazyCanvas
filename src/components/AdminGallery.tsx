@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Check, X } from "lucide-react";
-import QuotePreview, {
+import DesignPreview, {
   type AspectRatio,
-  type QuoteFont,
-  type QuoteTheme,
+  type DesignFont,
+  type DesignTheme,
   type TextShadow,
   type AuthorPosition,
   type ColoredWord,
   type SocialPlatform,
-} from "@/components/QuotePreview";
+} from "@/components/DesignPreview";
 import { toast } from "sonner";
 
 interface Submission {
@@ -88,13 +88,13 @@ const AdminGallery = () => {
               <div key={sub.id} className="border border-border rounded-lg overflow-hidden bg-card">
                 <div className="p-2">
                   <div className="max-w-[200px] mx-auto">
-                    <QuotePreview
+                    <DesignPreview
                       quote={s.quote || ""}
                       authorName={s.authorName || ""}
                       authorPhoto={s.authorPhoto || null}
                       aspectRatio={(s.aspectRatio || "square") as AspectRatio}
-                      font={(s.font || "playfair") as QuoteFont}
-                      theme={(s.theme || "dark") as QuoteTheme}
+                      font={(s.font || "playfair") as DesignFont}
+                      theme={(s.theme || "dark") as DesignTheme}
                       backgroundImage={s.backgroundImage || null}
                       backgroundOpacity={s.backgroundOpacity ?? 0.4}
                       fontSize={s.fontSize || 1.4}
@@ -104,7 +104,7 @@ const AdminGallery = () => {
                       textColor={s.textColor || ""}
                       authorFontSize={s.authorFontSize || 0.875}
                       authorColor={s.authorColor || ""}
-                      authorFont={(s.authorFont || "playfair") as QuoteFont}
+                      authorFont={(s.authorFont || "playfair") as DesignFont}
                       textShadow={(s.textShadow || "none") as TextShadow}
                       authorPosition={(s.authorPosition || "below-quote") as AuthorPosition}
                       backgroundColor={s.backgroundColor || ""}

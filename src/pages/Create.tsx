@@ -3,27 +3,27 @@ import { useNavigate } from "react-router-dom";
 import html2canvas from "html2canvas";
 import { Download, LogOut, ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
-import QuotePreview, {
+import DesignPreview, {
   type SocialPlatform,
-} from "@/components/QuotePreview";
-import QuoteEditor, {
-  type QuoteEditorState,
+} from "@/components/DesignPreview";
+import DesignEditor, {
+  type DesignEditorState,
   DEFAULT_EDITOR_STATE,
   SOCIAL_PLATFORMS,
-} from "@/components/QuoteEditor";
+} from "@/components/DesignEditor";
 import AuthModal from "@/components/AuthModal";
 import { useAuth } from "@/hooks/useAuth";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
-import { useUserQuotes, type UserQuote } from "@/hooks/useUserQuotes";
+import { useUserDesigns, type UserDesign } from "@/hooks/useUserDesigns";
 
-const DRAFT_KEY = "lazy-quotes-draft";
+const DRAFT_KEY = "lazy-designs-draft";
 
 const Create = () => {
   const { user, signOut, isPro } = useAuth();
-  const { quotes, loading: quotesLoading, saveQuote, deleteQuote } = useUserQuotes();
+  const { designs, loading: designsLoading, saveDesign, deleteDesign } = useUserDesigns();
   const navigate = useNavigate();
-  const [editorState, setEditorState] = useState<QuoteEditorState>(() => {
+  const [editorState, setEditorState] = useState<DesignEditorState>(() => {
     try {
       const saved = localStorage.getItem(DRAFT_KEY);
       if (saved) {
@@ -33,7 +33,7 @@ const Create = () => {
     } catch {}
     return DEFAULT_EDITOR_STATE;
   });
-  const [activeQuoteId, setActiveQuoteId] = useState<string | null>(null);
+  const [activeDesignId, setActiveQuoteId] = useState<string | null>(null);
   const [downloading, setDownloading] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const previewRef = useRef<HTMLDivElement>(null);
@@ -62,7 +62,7 @@ const Create = () => {
     }
   }, [user]);
 
-  const handleSelectQuote = (quote: UserQuote) => {
+  const handleSelectDesign = (quote: UserDesign) => {
     if (!isPro) {
       toast.error("Re-editing saved designs is a Pro feature. Upgrade to Pro to unlock!");
       return;
@@ -71,7 +71,7 @@ const Create = () => {
     setEditorState(quote.editor_state);
   };
 
-  const handleNewQuote = () => {
+  const handleNewDesign = () => {
     setActiveQuoteId(null);
     setEditorState(DEFAULT_EDITOR_STATE);
   };
@@ -132,12 +132,12 @@ const Create = () => {
       <main className="max-w-[1600px] mx-auto px-4 sm:px-6 py-4 sm:py-6">
         <div className="flex gap-6 items-start">
           <div className="flex-1 min-w-0">
-            <QuoteEditor state={editorState} onChange={setEditorState} isPro={isPro} />
+            <DesignEditor state={editorState} onChange={setEditorState} isPro={isPro} />
           </div>
 
           <div className="hidden lg:flex sticky top-4 flex-shrink-0 flex-col gap-3" style={{ width: "clamp(260px, 25vw, 320px)" }}>
               <div className="w-full">
-                  <QuotePreview
+                  <DesignPreview
                     ref={previewRef}
                     quote={editorState.quote}
                     authorName={editorState.authorName}
@@ -200,14 +200,14 @@ const Create = () => {
       <SidebarProvider>
         <div className="min-h-screen flex w-full">
           <AppSidebar
-            activeQuoteId={activeQuoteId}
-            onSelectQuote={handleSelectQuote}
-            onNewQuote={handleNewQuote}
+            activeDesignId={activeDesignId}
+            onSelectDesign={handleSelectDesign}
+            onNewDesign={handleNewDesign}
             currentEditorState={editorState}
-            quotes={quotes}
-            loading={quotesLoading}
-            saveQuote={saveQuote}
-            deleteQuote={deleteQuote}
+            designs={designs}
+            loading={designsLoading}
+            saveDesign={saveDesign}
+            deleteDesign={deleteDesign}
           />
           <div className="flex-1 flex flex-col min-w-0 bg-background">
             {mainContent}
