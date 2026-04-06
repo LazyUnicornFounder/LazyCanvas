@@ -190,6 +190,12 @@ const WALLPAPER_CATEGORIES = [
   { label: "Abstract", query: "abstract colorful gradient wallpaper", emoji: "🎨" },
   { label: "Minimal", query: "minimal texture clean wallpaper", emoji: "◻️" },
   { label: "Floral", query: "flowers floral aesthetic wallpaper", emoji: "🌸" },
+  { label: "Desert", query: "desert sand dunes wallpaper", emoji: "🏜️" },
+  { label: "Rain", query: "rain drops moody wallpaper", emoji: "🌧️" },
+  { label: "Neon", query: "neon lights urban night wallpaper", emoji: "💡" },
+  { label: "Snow", query: "snow winter frozen wallpaper", emoji: "❄️" },
+  { label: "Marble", query: "marble texture luxury wallpaper", emoji: "🪨" },
+  { label: "Tropical", query: "tropical palm beach wallpaper", emoji: "🌴" },
 ];
 
 const SOCIAL_PLATFORMS = [
