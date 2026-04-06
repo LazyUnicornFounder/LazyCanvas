@@ -95,15 +95,15 @@ const Index = () => {
   const previewRef = useRef<HTMLDivElement>(null);
   const mobilePreviewRef = useRef<HTMLDivElement>(null);
 
+  const openProEditPrompt = useCallback(() => {
+    setProUpgradeSnapshot(null);
+    setProWatermarkSnapshot(null);
+    setShowProUpgradePrompt(true);
+  }, []);
+
   const handleSelectDesign = (quote: UserDesign) => {
     if (!isPro) {
-      toast("Pro Feature", {
-        description: "Re-editing saved designs is a Pro feature. Upgrade to unlock!",
-        action: {
-          label: "Upgrade",
-          onClick: () => navigate("/pricing"),
-        },
-      });
+      openProEditPrompt();
       return;
     }
     setActiveQuoteId(quote.id);
@@ -469,13 +469,7 @@ const Index = () => {
             <button
               onClick={() => {
                 if (!isPro) {
-                  toast("Pro Feature", {
-                    description: "Re-editing saved designs is a Pro feature. Upgrade to unlock!",
-                    action: {
-                      label: "Upgrade",
-                      onClick: () => navigate("/pricing"),
-                    },
-                  });
+                  openProEditPrompt();
                   return;
                 }
               }}
@@ -600,13 +594,7 @@ const Index = () => {
                 <button
                   onClick={() => {
                     if (!isPro) {
-                      toast("Pro Feature", {
-                        description: "Re-editing saved designs is a Pro feature. Upgrade to unlock!",
-                        action: {
-                          label: "Upgrade",
-                          onClick: () => navigate("/pricing"),
-                        },
-                      });
+                      openProEditPrompt();
                       return;
                     }
                   }}
@@ -870,6 +858,7 @@ const Index = () => {
             loading={designsLoading}
             saveDesign={saveDesign}
             deleteDesign={deleteDesign}
+            onLockedEdit={openProEditPrompt}
           />
           {pageContent}
         </div>
