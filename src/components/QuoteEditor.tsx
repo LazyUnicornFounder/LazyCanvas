@@ -283,6 +283,7 @@ export const DEFAULT_EDITOR_STATE: QuoteEditorState = {
   isItalic: false,
   coloredWords: [],
   showQuotationMarks: false,
+  photoStroke: false,
   customWidth: 1080,
   customHeight: 1080,
 };
@@ -1074,7 +1075,7 @@ const QuoteEditor = ({ state: rawState, onChange, isPro = false }: QuoteEditorPr
                 <img
                   src={state.authorPhoto}
                   alt="Author"
-                  className={`border border-border ${
+                  className={`${
                     state.photoShape === "none" ? "max-w-[5rem] max-h-[5rem]" :
                     state.photoShape === "circle" ? "w-16 h-16 rounded-full object-cover" :
                     state.photoShape === "square" ? "w-16 h-16 rounded-none object-cover" :
