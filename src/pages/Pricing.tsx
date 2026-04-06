@@ -7,45 +7,29 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
-const POLAR_PRO_PRODUCT_ID = "5513f675-e192-4626-815d-375b75d84e43";
+const POLAR_PRO_MONTHLY_ID = "5513f675-e192-4626-815d-375b75d84e43";
+const POLAR_PRO_YEARLY_ID = "3652d762-6798-41e9-89d5-3603e0f5a6f5";
 
-const tiers = [
-  {
-    name: "Free",
-    price: "$0",
-    period: "",
-    description: "Create and save unlimited quotes.",
-    cta: "Get Started",
-    highlighted: false,
-    features: [
-      { text: "Unlimited quote designs", included: true },
-      { text: "PNG download", included: true },
-      { text: "Save unlimited quotes", included: true },
-      { text: "Premium templates", included: false },
-      { text: "Word colors", included: false },
-      { text: "Text formatting", included: false },
-      { text: "Background image upload", included: false },
-      { text: "Background image remover", included: false },
-      { text: "No watermark", included: false },
-    ],
-  },
-  {
-    name: "Pro",
-    price: "$5",
-    period: "/month",
-    description: "Everything in Free, plus premium tools.",
-    cta: "Upgrade to Pro",
-    highlighted: false,
-    features: [
-      { text: "Everything in Free", included: true },
-      { text: "Premium templates", included: true },
-      { text: "Word colors", included: true },
-      { text: "Background image upload", included: true },
-      { text: "Background image remover", included: true },
-      { text: "No watermark", included: true },
-      { text: "Save and re-edit your quotes", included: true },
-    ],
-  },
+const proFeatures = [
+  { text: "Everything in Free", included: true },
+  { text: "Premium templates", included: true },
+  { text: "Word colors", included: true },
+  { text: "Background image upload", included: true },
+  { text: "Background image remover", included: true },
+  { text: "No watermark", included: true },
+  { text: "Save and re-edit your quotes", included: true },
+];
+
+const freeFeatures = [
+  { text: "Unlimited quote designs", included: true },
+  { text: "PNG download", included: true },
+  { text: "Save unlimited quotes", included: true },
+  { text: "Premium templates", included: false },
+  { text: "Word colors", included: false },
+  { text: "Text formatting", included: false },
+  { text: "Background image upload", included: false },
+  { text: "Background image remover", included: false },
+  { text: "No watermark", included: false },
 ];
 
 const Pricing = () => {
@@ -53,6 +37,7 @@ const Pricing = () => {
   const { user, isPro } = useAuth();
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [checkoutLoading, setCheckoutLoading] = useState(false);
+  const [billingInterval, setBillingInterval] = useState<"monthly" | "yearly">("monthly");
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
@@ -75,9 +60,10 @@ const Pricing = () => {
 
     setCheckoutLoading(true);
     try {
+      const productId = billingInterval === "yearly" ? POLAR_PRO_YEARLY_ID : POLAR_PRO_MONTHLY_ID;
       const successUrl = `${window.location.origin}/pricing?checkout=success&checkout_id={CHECKOUT_ID}`;
       const { data, error } = await supabase.functions.invoke("polar-checkout", {
-        body: { productId: POLAR_PRO_PRODUCT_ID, successUrl },
+        body: { productId, successUrl },
       });
 
       if (error) throw error;
@@ -104,15 +90,16 @@ const Pricing = () => {
     }
   };
 
-  // Handle return from checkout
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     if (params.get("checkout") === "success") {
       toast.success("Welcome to Pro! 🎉 Your subscription is now active.");
-      // Clean URL
       window.history.replaceState({}, "", "/pricing");
     }
   }, []);
+
+  const proPrice = billingInterval === "yearly" ? "$4" : "$5";
+  const proPeriod = billingInterval === "yearly" ? "/mo" : "/month";
 
   return (
     <div className="min-h-screen bg-background">
@@ -126,7 +113,7 @@ const Pricing = () => {
       </header>
 
       <main className="max-w-[1200px] mx-auto px-4 sm:px-6 py-16 md:py-24">
-        <div className="text-center space-y-4 mb-16">
+        <div className="text-center space-y-4 mb-10">
           <h1 className="font-heading text-4xl md:text-5xl font-bold tracking-tight text-foreground">
             Simple, transparent pricing
           </h1>
@@ -141,66 +128,109 @@ const Pricing = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-          {tiers.map((tier) => (
-            <div
-              key={tier.name}
-              className={`relative rounded-xl border p-6 flex flex-col ${
-                tier.highlighted
-                  ? "border-foreground bg-card shadow-xl scale-[1.02]"
-                  : "border-border bg-card/50"
-              }`}
-            >
-              {tier.highlighted && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-heading font-semibold uppercase tracking-widest bg-foreground text-background">
-                    <Sparkles className="w-3 h-3" />
-                    Most Popular
-                  </span>
-                </div>
-              )}
-
-              <div className="space-y-3 mb-6">
-                <h3 className="font-heading text-sm font-semibold uppercase tracking-widest text-muted-foreground">
-                  {tier.name}
-                </h3>
-                <div className="flex items-baseline gap-1">
-                  <span className="font-heading text-4xl font-bold text-foreground">{tier.price}</span>
-                  <span className="text-sm text-muted-foreground">{tier.period}</span>
-                </div>
-                <p className="text-sm text-muted-foreground">{tier.description}</p>
-              </div>
-
-              <button
-                onClick={() => handleCta(tier.name)}
-                disabled={checkoutLoading && tier.name === "Pro"}
-                className="w-full py-2.5 rounded-md font-heading text-sm font-medium transition-opacity hover:opacity-90 mb-6 bg-foreground text-background disabled:opacity-50"
-              >
-                {(tier.name === "Pro" && isPro) || (tier.name === "Free" && user && !isPro)
-                  ? "Current Plan"
-                  : tier.name === "Pro" && checkoutLoading
-                  ? "Loading..."
-                  : tier.cta}
-              </button>
-
-              <ul className="space-y-2.5 flex-1">
-                {tier.features.map((f, i) => (
-                  <li key={i} className="flex items-start gap-2.5 text-sm">
-                    {f.included ? (
-                      <Check className="w-4 h-4 text-foreground flex-shrink-0 mt-0.5" />
-                    ) : (
-                      <X className="w-4 h-4 text-muted-foreground/40 flex-shrink-0 mt-0.5" />
-                    )}
-                    <span className={f.included ? "text-foreground" : "text-muted-foreground/50"}>
-                      {f.text}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+        {/* Billing toggle */}
+        <div className="flex items-center justify-center gap-3 mb-10">
+          <button
+            onClick={() => setBillingInterval("monthly")}
+            className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+              billingInterval === "monthly"
+                ? "bg-foreground text-background"
+                : "bg-muted text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            Monthly
+          </button>
+          <button
+            onClick={() => setBillingInterval("yearly")}
+            className={`px-4 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-2 ${
+              billingInterval === "yearly"
+                ? "bg-foreground text-background"
+                : "bg-muted text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            Yearly
+            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wide bg-primary text-primary-foreground">
+              Save 20%
+            </span>
+          </button>
         </div>
 
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+          {/* Free tier */}
+          <div className="relative rounded-xl border border-border bg-card/50 p-6 flex flex-col">
+            <div className="space-y-3 mb-6">
+              <h3 className="font-heading text-sm font-semibold uppercase tracking-widest text-muted-foreground">
+                Free
+              </h3>
+              <div className="flex items-baseline gap-1">
+                <span className="font-heading text-4xl font-bold text-foreground">$0</span>
+              </div>
+              <p className="text-sm text-muted-foreground">Create and save unlimited quotes.</p>
+            </div>
+
+            <button
+              onClick={() => handleCta("Free")}
+              className="w-full py-2.5 rounded-md font-heading text-sm font-medium transition-opacity hover:opacity-90 mb-6 bg-foreground text-background disabled:opacity-50"
+            >
+              {user && !isPro ? "Current Plan" : "Get Started"}
+            </button>
+
+            <ul className="space-y-2.5 flex-1">
+              {freeFeatures.map((f, i) => (
+                <li key={i} className="flex items-start gap-2.5 text-sm">
+                  {f.included ? (
+                    <Check className="w-4 h-4 text-foreground flex-shrink-0 mt-0.5" />
+                  ) : (
+                    <X className="w-4 h-4 text-muted-foreground/40 flex-shrink-0 mt-0.5" />
+                  )}
+                  <span className={f.included ? "text-foreground" : "text-muted-foreground/50"}>
+                    {f.text}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Pro tier */}
+          <div className="relative rounded-xl border border-border bg-card/50 p-6 flex flex-col">
+            <div className="space-y-3 mb-6">
+              <h3 className="font-heading text-sm font-semibold uppercase tracking-widest text-muted-foreground">
+                Pro
+              </h3>
+              <div className="flex items-baseline gap-1">
+                <span className="font-heading text-4xl font-bold text-foreground">{proPrice}</span>
+                <span className="text-sm text-muted-foreground">{proPeriod}</span>
+                {billingInterval === "yearly" && (
+                  <span className="text-xs text-muted-foreground ml-1">($48/year)</span>
+                )}
+              </div>
+              <p className="text-sm text-muted-foreground">Everything in Free, plus premium tools.</p>
+            </div>
+
+            <button
+              onClick={() => handleCta("Pro")}
+              disabled={checkoutLoading}
+              className="w-full py-2.5 rounded-md font-heading text-sm font-medium transition-opacity hover:opacity-90 mb-6 bg-foreground text-background disabled:opacity-50"
+            >
+              {isPro ? "Current Plan" : checkoutLoading ? "Loading..." : "Upgrade to Pro"}
+            </button>
+
+            <ul className="space-y-2.5 flex-1">
+              {proFeatures.map((f, i) => (
+                <li key={i} className="flex items-start gap-2.5 text-sm">
+                  {f.included ? (
+                    <Check className="w-4 h-4 text-foreground flex-shrink-0 mt-0.5" />
+                  ) : (
+                    <X className="w-4 h-4 text-muted-foreground/40 flex-shrink-0 mt-0.5" />
+                  )}
+                  <span className={f.included ? "text-foreground" : "text-muted-foreground/50"}>
+                    {f.text}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </main>
 
       <AuthModal open={showAuthModal} onClose={() => setShowAuthModal(false)} />
