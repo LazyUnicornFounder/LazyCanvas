@@ -187,10 +187,6 @@ const Index = () => {
     if (!target) return;
 
     setDownloading(true);
-    setShowDownloadWatermark(true);
-
-    // Wait for watermark to render
-    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
 
     try {
       const blob = await renderPreviewBlob(target, scale);
@@ -203,7 +199,6 @@ const Index = () => {
     } catch (err) {
       console.error("Failed to export", err);
     } finally {
-      setShowDownloadWatermark(false);
       setDownloading(false);
     }
   }, [downloadBlob, renderPreviewBlob, user]);
