@@ -17,7 +17,8 @@ const proFeatures = [
   { text: "Background image upload", included: true },
   { text: "Background image remover", included: true },
   { text: "No watermark", included: true },
-  { text: "Save and re-edit your quotes", included: true },
+  { text: "Save unlimited quotes", included: true },
+  { text: "Re-edit your quotes", included: true },
 ];
 
 const freeFeatures = [
