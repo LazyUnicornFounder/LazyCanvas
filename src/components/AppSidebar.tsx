@@ -1,7 +1,8 @@
-import { Plus, FileText, Trash2, Crown, LogOut, CreditCard, Pencil, PanelLeftClose, PanelLeftOpen, ImagePlus, FolderOpen, Loader2, Settings } from "lucide-react";
-import { useRef } from "react";
+import { Plus, FileText, Trash2, Crown, LogOut, CreditCard, Pencil, PanelLeftClose, PanelLeftOpen, ImagePlus, FolderOpen, Loader2, Settings, Sparkles } from "lucide-react";
+import { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
 import type { UserDesign } from "@/hooks/useUserDesigns";
 import type { DesignEditorState } from "@/components/DesignEditor";
 import { LogoWithTagline } from "@/components/MainNav";
