@@ -59,7 +59,7 @@ const Pricing = () => {
     setCheckoutLoading(true);
     try {
       const productId = billingInterval === "yearly" ? POLAR_PRO_YEARLY_ID : POLAR_PRO_MONTHLY_ID;
-      const successUrl = `${window.location.origin}/pricing?checkout=success&checkout_id={CHECKOUT_ID}`;
+      const successUrl = `${window.location.origin}/?checkout=success&checkout_id={CHECKOUT_ID}`;
       const { data, error } = await supabase.functions.invoke("polar-checkout", {
         body: { productId, successUrl },
       });
