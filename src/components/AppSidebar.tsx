@@ -18,6 +18,7 @@ import {
   SidebarMenuItem,
   SidebarMenuAction,
   SidebarSeparator,
+  useSidebar,
 } from "@/components/ui/sidebar";
 
 interface AppSidebarProps {
