@@ -161,34 +161,48 @@ export function AppSidebar({
       <SidebarFooter>
         <SidebarSeparator />
 
-        <div className="p-3 space-y-2">
-          <div className="flex items-center gap-2">
-            <Crown className="w-4 h-4 text-muted-foreground" />
-            <span className="text-xs font-heading font-medium text-foreground">{currentTier} Plan</span>
+        {!collapsed && (
+          <div className="p-3 space-y-2">
+            <div className="flex items-center gap-2">
+              <Crown className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+              <span className="text-xs font-heading font-medium text-foreground truncate">{currentTier} Plan</span>
+            </div>
+            <button
+              onClick={() => navigate("/pricing")}
+              className="flex items-center gap-2 w-full text-xs text-primary hover:underline"
+            >
+              <CreditCard className="w-3.5 h-3.5 flex-shrink-0" />
+              <span className="truncate">{currentTier === "Free" ? "Upgrade plan" : "Manage subscription"}</span>
+            </button>
           </div>
-          <button
-            onClick={() => navigate("/pricing")}
-            className="flex items-center gap-2 w-full text-xs text-primary hover:underline"
-          >
-            <CreditCard className="w-3.5 h-3.5" />
-            {currentTier === "Free" ? "Upgrade plan" : "Manage subscription"}
-          </button>
-        </div>
+        )}
 
         <SidebarSeparator />
 
-        <div className="p-3 flex items-center gap-2">
-          <div className="flex-1 min-w-0">
-            <p className="text-xs text-muted-foreground truncate">{user?.email}</p>
+        {!collapsed ? (
+          <div className="p-3 flex items-center gap-2">
+            <div className="flex-1 min-w-0">
+              <p className="text-xs text-muted-foreground truncate">{user?.email}</p>
+            </div>
+            <button
+              onClick={signOut}
+              className="p-1.5 hover:bg-accent rounded-md transition-colors flex-shrink-0"
+              title="Sign out"
+            >
+              <LogOut className="w-3.5 h-3.5 text-muted-foreground" />
+            </button>
           </div>
-          <button
-            onClick={signOut}
-            className="p-1.5 hover:bg-accent rounded-md transition-colors flex-shrink-0"
-            title="Sign out"
-          >
-            <LogOut className="w-3.5 h-3.5 text-muted-foreground" />
-          </button>
-        </div>
+        ) : (
+          <div className="p-2 flex justify-center">
+            <button
+              onClick={signOut}
+              className="p-1.5 hover:bg-accent rounded-md transition-colors"
+              title="Sign out"
+            >
+              <LogOut className="w-3.5 h-3.5 text-muted-foreground" />
+            </button>
+          </div>
+        )}
       </SidebarFooter>
     </Sidebar>
   );
