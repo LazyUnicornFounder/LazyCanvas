@@ -17,6 +17,7 @@ import type { UserQuote } from "@/hooks/useUserQuotes";
 import AuthModal from "@/components/AuthModal";
 import GalleryPromptDialog from "@/components/GalleryPromptDialog";
 import { MainNav, LogoWithTagline } from "@/components/MainNav";
+import { SiteFooter } from "@/components/SiteFooter";
 import { useAuth } from "@/hooks/useAuth";
 import QuoteEditor, { type QuoteEditorState, DEFAULT_EDITOR_STATE, SOCIAL_PLATFORMS } from "@/components/QuoteEditor";
 import QuotePreview, { type SocialPlatform } from "@/components/QuotePreview";
@@ -752,6 +753,7 @@ const Index = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+      {!user && <SiteFooter />}
     </div>
   );
 
