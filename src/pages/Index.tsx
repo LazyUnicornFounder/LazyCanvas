@@ -1,5 +1,4 @@
 import { useState, useRef, useCallback, useEffect, useMemo } from "react";
-import html2canvas from "html2canvas";
 import {
   AlertDialog,
   AlertDialogAction,
