@@ -179,18 +179,30 @@ export function AppSidebar({
 
         <SidebarSeparator />
 
-        <div className="p-3 flex items-center gap-2">
-          <div className="flex-1 min-w-0">
-            <p className="text-xs text-muted-foreground truncate">{user?.email}</p>
+        {!collapsed ? (
+          <div className="p-3 flex items-center gap-2">
+            <div className="flex-1 min-w-0">
+              <p className="text-xs text-muted-foreground truncate">{user?.email}</p>
+            </div>
+            <button
+              onClick={signOut}
+              className="p-1.5 hover:bg-accent rounded-md transition-colors flex-shrink-0"
+              title="Sign out"
+            >
+              <LogOut className="w-3.5 h-3.5 text-muted-foreground" />
+            </button>
           </div>
-          <button
-            onClick={signOut}
-            className="p-1.5 hover:bg-accent rounded-md transition-colors flex-shrink-0"
-            title="Sign out"
-          >
-            <LogOut className="w-3.5 h-3.5 text-muted-foreground" />
-          </button>
-        </div>
+        ) : (
+          <div className="p-2 flex justify-center">
+            <button
+              onClick={signOut}
+              className="p-1.5 hover:bg-accent rounded-md transition-colors"
+              title="Sign out"
+            >
+              <LogOut className="w-3.5 h-3.5 text-muted-foreground" />
+            </button>
+          </div>
+        )}
       </SidebarFooter>
     </Sidebar>
   );
