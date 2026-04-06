@@ -554,6 +554,44 @@ const QuotePreview = forwardRef<HTMLDivElement, QuotePreviewProps>(
             }}
           />
         )}
+        {/* Glass vignette */}
+        {glassVignette && (
+          <div
+            className="absolute inset-0 z-[5] pointer-events-none"
+            style={{
+              background: "radial-gradient(ellipse at center, transparent 40%, rgba(255,255,255,0.08) 70%, rgba(255,255,255,0.2) 100%)",
+              backdropFilter: "blur(0px)",
+              mask: "radial-gradient(ellipse at center, transparent 35%, black 80%)",
+              WebkitMask: "radial-gradient(ellipse at center, transparent 35%, black 80%)",
+            }}
+          />
+        )}
+        {glassVignette && (
+          <div
+            className="absolute inset-0 z-[5] pointer-events-none"
+            style={{
+              backdropFilter: "blur(6px)",
+              WebkitBackdropFilter: "blur(6px)",
+              mask: "radial-gradient(ellipse at center, transparent 40%, black 90%)",
+              WebkitMask: "radial-gradient(ellipse at center, transparent 40%, black 90%)",
+            }}
+          />
+        )}
+        {/* Glass inner frame */}
+        {glassInnerFrame && (
+          <div
+            className="absolute z-[6] pointer-events-none"
+            style={{
+              inset: "clamp(8px, 4%, 24px)",
+              borderRadius: "clamp(8px, 2%, 16px)",
+              border: "1px solid rgba(255,255,255,0.25)",
+              background: "linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)",
+              backdropFilter: "blur(2px)",
+              WebkitBackdropFilter: "blur(2px)",
+              boxShadow: "inset 0 1px 2px rgba(255,255,255,0.1), 0 0 20px rgba(255,255,255,0.03)",
+            }}
+          />
+        )}
         {/* Inner padding — nothing goes beyond this */}
         <div className="absolute inset-0 flex flex-col" style={{ padding: `clamp(${12 + (borderStyle !== "none" && borderWidth > 0 ? borderWidth * 1.5 : 0)}px, ${4 + (borderStyle !== "none" && borderWidth > 0 ? borderWidth * 0.8 : 0)}%, ${32 + (borderStyle !== "none" && borderWidth > 0 ? borderWidth * 1.5 : 0)}px)` }}>
           {/* Quote content */}
