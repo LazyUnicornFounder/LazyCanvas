@@ -238,7 +238,32 @@ const Index = () => {
       const target = previewRef.current || mobilePreviewRef.current;
       if (target) {
         html2canvas(target, { scale: 1, useCORS: true, logging: false, backgroundColor: null })
-          .then((canvas) => setProUpgradeSnapshot(canvas.toDataURL("image/png")))
+          .then((canvas) => {
+            // Clean version
+            setProUpgradeSnapshot(canvas.toDataURL("image/png"));
+            // Watermarked version
+            const ctx = canvas.getContext("2d");
+            if (ctx) {
+              const w = canvas.width;
+              const h = canvas.height;
+              const pad = Math.max(8, w * 0.03);
+              const fontSize = Math.max(8, Math.min(14, w * 0.025));
+              ctx.font = `600 ${fontSize}px sans-serif`;
+              const text = "Made with Lazy Faceless";
+              const metrics = ctx.measureText(text);
+              const boxW = metrics.width + pad * 1.5;
+              const boxH = fontSize * 1.8;
+              const x = w - boxW - pad;
+              const y = h - boxH - pad;
+              ctx.fillStyle = "rgba(0,0,0,0.55)";
+              ctx.beginPath();
+              ctx.roundRect(x, y, boxW, boxH, 4);
+              ctx.fill();
+              ctx.fillStyle = "rgba(255,255,255,0.85)";
+              ctx.fillText(text, x + pad * 0.75, y + boxH * 0.68);
+            }
+            setProWatermarkSnapshot(canvas.toDataURL("image/png"));
+          })
           .catch(() => {});
       }
       setShowProUpgradePrompt(true);
