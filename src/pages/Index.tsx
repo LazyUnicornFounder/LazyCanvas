@@ -368,7 +368,7 @@ const Index = () => {
             ) : (
               <>
                 <button
-                  onClick={() => setShowAuthModal(true)}
+                  onClick={() => { setAuthModalMode("login"); setShowAuthModal(true); }}
                   className="text-sm font-heading font-medium text-muted-foreground hover:text-foreground transition-colors"
                 >
                   Sign in
