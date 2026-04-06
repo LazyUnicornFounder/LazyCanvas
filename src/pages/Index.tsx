@@ -80,6 +80,7 @@ const Index = () => {
   });
   const [downloading, setDownloading] = useState(false);
   const [showDownloadWatermark, setShowDownloadWatermark] = useState(false);
+  const [freeEditorStateForSnapshot, setFreeEditorStateForSnapshot] = useState<QuoteEditorState | null>(null);
   const [showGalleryPrompt, setShowGalleryPrompt] = useState(false);
   const [showSignupPrompt, setShowSignupPrompt] = useState(false);
   const [showProUpgradePrompt, setShowProUpgradePrompt] = useState(false);
@@ -222,7 +223,7 @@ const Index = () => {
     }));
   }, []);
 
-  const handleDownloadClick = useCallback((scale: number = 3) => {
+  const handleDownloadClick = useCallback(async (scale: number = 3) => {
     const hasPro = usesProFeatures(editorState);
 
     if (isPro) {
@@ -230,33 +231,47 @@ const Index = () => {
     } else if (hasPro) {
       const target = previewRef.current || mobilePreviewRef.current;
       if (target) {
-        html2canvas(target, { scale: 1, useCORS: true, logging: false, backgroundColor: null, onclone: (doc) => { doc.querySelectorAll("[data-export-exclude]").forEach((el) => el.remove()); } })
-          .then((canvas) => {
-            setProUpgradeSnapshot(canvas.toDataURL("image/png"));
-            const ctx = canvas.getContext("2d");
-            if (ctx) {
-              const w = canvas.width;
-              const h = canvas.height;
-              const pad = Math.max(8, w * 0.03);
-              const fontSize = Math.max(8, Math.min(14, w * 0.025));
-              ctx.font = `600 ${fontSize}px sans-serif`;
-              const text = "Made with Lazy Faceless";
-              const metrics = ctx.measureText(text);
-              const boxW = metrics.width + pad * 1.5;
-              const boxH = fontSize * 1.8;
-              const x = w - boxW - pad;
-              const y = h - boxH - pad;
-              ctx.fillStyle = "rgba(0,0,0,0.55)";
-              ctx.beginPath();
-              ctx.roundRect(x, y, boxW, boxH, 4);
-              ctx.fill();
-              ctx.fillStyle = "rgba(255,255,255,0.85)";
-              ctx.fillText(text, x + pad * 0.75, y + boxH * 0.68);
-            }
-            setProWatermarkSnapshot(canvas.toDataURL("image/png"));
-            setShowProUpgradePrompt(true);
-          })
-          .catch(() => setShowProUpgradePrompt(true));
+        // Capture Pro version (as-is)
+        const proCanvas = await html2canvas(target, { scale: 1, useCORS: true, logging: false, backgroundColor: null, onclone: (doc) => { doc.querySelectorAll("[data-export-exclude]").forEach((el) => el.remove()); } });
+        setProUpgradeSnapshot(proCanvas.toDataURL("image/png"));
+
+        // Capture Free version (strip pro features from clone)
+        const freeCanvas = await html2canvas(target, {
+          scale: 1, useCORS: true, logging: false, backgroundColor: null,
+          onclone: (doc) => {
+            doc.querySelectorAll("[data-export-exclude]").forEach((el) => el.remove());
+            // Remove background images
+            const bgEls = doc.querySelectorAll("[class*='bg-cover']");
+            bgEls.forEach((el) => (el as HTMLElement).style.display = "none");
+            // Remove colored word spans - reset to inherit
+            doc.querySelectorAll("span[style*='color']").forEach((el) => {
+              (el as HTMLElement).style.color = "inherit";
+            });
+          },
+        });
+        // Add watermark to free version
+        const ctx = freeCanvas.getContext("2d");
+        if (ctx) {
+          const w = freeCanvas.width;
+          const h = freeCanvas.height;
+          const pad = Math.max(8, w * 0.03);
+          const fontSize = Math.max(8, Math.min(14, w * 0.025));
+          ctx.font = `600 ${fontSize}px sans-serif`;
+          const text = "Made with LazyFaceless.com";
+          const metrics = ctx.measureText(text);
+          const boxW = metrics.width + pad * 1.5;
+          const boxH = fontSize * 1.8;
+          const x = w - boxW - pad;
+          const y = h - boxH - pad;
+          ctx.fillStyle = "rgba(0,0,0,0.55)";
+          ctx.beginPath();
+          ctx.roundRect(x, y, boxW, boxH, 4);
+          ctx.fill();
+          ctx.fillStyle = "rgba(255,255,255,0.85)";
+          ctx.fillText(text, x + pad * 0.75, y + boxH * 0.68);
+        }
+        setProWatermarkSnapshot(freeCanvas.toDataURL("image/png"));
+        setShowProUpgradePrompt(true);
       } else {
         setShowProUpgradePrompt(true);
       }
@@ -638,28 +653,6 @@ const Index = () => {
             {/* Feature comparison */}
             <div className="grid grid-cols-2 gap-4 text-xs">
               <div>
-                <h4 className="font-heading font-semibold text-foreground mb-2">Free</h4>
-                <ul className="space-y-1.5">
-                  {[
-                    { text: "Unlimited designs", included: true },
-                    { text: "PNG download", included: true },
-                    { text: "Save unlimited quotes", included: false },
-                    { text: "Premium templates", included: false },
-                    { text: "Wallpaper backgrounds", included: false },
-                    { text: "Background image upload", included: false },
-                    { text: "Background image remover", included: false },
-                    { text: "Image filters", included: false },
-                    { text: "Word colors", included: false },
-                    { text: "No watermark", included: false },
-                  ].map((f, i) => (
-                    <li key={i} className={`flex items-center gap-1.5 ${f.included ? "text-foreground" : "text-muted-foreground/50 line-through"}`}>
-                      <span>{f.included ? "✓" : "✗"}</span>
-                      <span>{f.text}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div>
                 <h4 className="font-heading font-semibold text-primary mb-2">Pro</h4>
                 <ul className="space-y-1.5">
                   {[
@@ -671,12 +664,34 @@ const Index = () => {
                     "Image filters",
                     "Word colors",
                     "No watermark",
-                    "Save unlimited quotes",
-                    "Re-edit your quotes",
+                    "Save unlimited designs",
+                    "Re-edit your designs",
                   ].map((text, i) => (
                     <li key={i} className="flex items-center gap-1.5 text-foreground">
                       <span className="text-primary">✓</span>
                       <span>{text}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-heading font-semibold text-foreground mb-2">Free</h4>
+                <ul className="space-y-1.5">
+                  {[
+                    { text: "Unlimited designs", included: true },
+                    { text: "PNG download", included: true },
+                    { text: "Save unlimited designs", included: false },
+                    { text: "Premium templates", included: false },
+                    { text: "Wallpaper backgrounds", included: false },
+                    { text: "Background image upload", included: false },
+                    { text: "Background image remover", included: false },
+                    { text: "Image filters", included: false },
+                    { text: "Word colors", included: false },
+                    { text: "No watermark", included: false },
+                  ].map((f, i) => (
+                    <li key={i} className={`flex items-center gap-1.5 ${f.included ? "text-foreground" : "text-muted-foreground/50 line-through"}`}>
+                      <span>{f.included ? "✓" : "✗"}</span>
+                      <span>{f.text}</span>
                     </li>
                   ))}
                 </ul>
