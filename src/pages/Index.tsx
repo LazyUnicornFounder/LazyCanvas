@@ -684,8 +684,6 @@ const Index = () => {
                     "Image filters",
                     "Word colors",
                     "No watermark",
-                    "Save unlimited designs",
-                    "Re-edit your designs",
                   ].map((text, i) => (
                     <li key={i} className="flex items-center gap-1.5 text-foreground">
                       <span className="text-primary">✓</span>
@@ -700,7 +698,7 @@ const Index = () => {
                   {[
                     { text: "Unlimited designs", included: true },
                     { text: "PNG download", included: true },
-                    { text: "Save unlimited designs", included: false },
+                    { text: "Save unlimited designs", included: true },
                     { text: "Premium templates", included: false },
                     { text: "Wallpaper backgrounds", included: false },
                     { text: "Background image upload", included: false },
