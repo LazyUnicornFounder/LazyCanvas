@@ -33,7 +33,7 @@ const freeFeatures = [
   { text: "Background image remover", included: false },
   { text: "Image filters", included: false },
   { text: "Word colors", included: false },
-  { text: "Text formatting", included: false },
+  
   { text: "No watermark", included: false },
 ];
 
