@@ -775,7 +775,7 @@ const Index = () => {
                 Start 14-day free trial
               </AlertDialogAction>
               <AlertDialogCancel onClick={handleDownloadFreeVersion} className="w-full border-0 text-muted-foreground hover:text-foreground text-xs mt-0">
-                Go back to free
+                Download free version
               </AlertDialogCancel>
             </AlertDialogFooter>
           </div>
