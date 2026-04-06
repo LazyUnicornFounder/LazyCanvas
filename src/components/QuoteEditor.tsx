@@ -247,6 +247,9 @@ export interface QuoteEditorState {
   photoStroke: boolean;
   customWidth: number;
   customHeight: number;
+  borderWidth: number;
+  borderColor: string;
+  borderStyle: "none" | "solid" | "dashed" | "dotted" | "double";
 }
 
 export const BG_FILTERS: { value: string; label: string; css: string }[] = [
@@ -305,6 +308,9 @@ export const DEFAULT_EDITOR_STATE: QuoteEditorState = {
   photoStroke: false,
   customWidth: 1080,
   customHeight: 1080,
+  borderWidth: 0,
+  borderColor: "#000000",
+  borderStyle: "none",
 };
 
 interface QuoteEditorProps {
@@ -681,6 +687,54 @@ const QuoteEditor = ({ state: rawState, onChange, isPro = false }: QuoteEditorPr
               <span className="text-[10px] font-heading text-muted-foreground">{opt.label}</span>
             </button>
           ))}
+        </div>
+      </ControlSection>
+
+      {/* Border */}
+      <ControlSection label="Border">
+        <div className="space-y-3">
+          <div className="flex flex-wrap gap-2">
+            {(["none", "solid", "dashed", "dotted", "double"] as const).map((style) => (
+              <button
+                key={style}
+                onClick={() => set("borderStyle", style)}
+                className={`px-2.5 py-1.5 text-xs font-heading rounded-md border transition-all capitalize ${
+                  state.borderStyle === style
+                    ? "border-foreground bg-foreground/10 text-foreground"
+                    : "border-border text-muted-foreground hover:text-foreground hover:border-foreground/30"
+                }`}
+              >
+                {style}
+              </button>
+            ))}
+          </div>
+          {state.borderStyle !== "none" && (
+            <>
+              <div className="flex items-center gap-3">
+                <label className="text-xs text-muted-foreground font-heading w-14">Width</label>
+                <input
+                  type="range"
+                  min={1}
+                  max={20}
+                  step={1}
+                  value={state.borderWidth}
+                  onChange={(e) => set("borderWidth", Number(e.target.value))}
+                  className="flex-1 accent-foreground"
+                />
+                <span className="text-xs text-muted-foreground w-8 text-right">{state.borderWidth}px</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <label className="text-xs text-muted-foreground font-heading w-14">Color</label>
+                <input
+                  type="color"
+                  value={state.borderColor}
+                  onChange={(e) => set("borderColor", e.target.value)}
+                  className="w-8 h-8 rounded-md border border-border cursor-pointer bg-transparent"
+                />
+                <span className="text-xs text-muted-foreground">{state.borderColor}</span>
+              </div>
+            </>
+          )}
         </div>
       </ControlSection>
 
