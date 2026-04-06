@@ -343,6 +343,7 @@ const Index = () => {
             coloredWords={editorState.coloredWords}
             showWatermark={isFreeUser}
             showQuotationMarks={editorState.showQuotationMarks}
+            photoStroke={editorState.photoStroke}
             customWidth={editorState.customWidth}
             customHeight={editorState.customHeight}
           />
@@ -427,6 +428,7 @@ const Index = () => {
                   coloredWords={editorState.coloredWords}
                   showWatermark={isFreeUser}
                   showQuotationMarks={editorState.showQuotationMarks}
+                  photoStroke={editorState.photoStroke}
                   customWidth={editorState.customWidth}
                   customHeight={editorState.customHeight}
                 />

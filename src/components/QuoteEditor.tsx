@@ -225,6 +225,7 @@ export interface QuoteEditorState {
   isItalic: boolean;
   coloredWords: ColoredWord[];
   showQuotationMarks: boolean;
+  photoStroke: boolean;
   customWidth: number;
   customHeight: number;
 }
@@ -282,6 +283,7 @@ export const DEFAULT_EDITOR_STATE: QuoteEditorState = {
   isItalic: false,
   coloredWords: [],
   showQuotationMarks: false,
+  photoStroke: false,
   customWidth: 1080,
   customHeight: 1080,
 };
@@ -1073,7 +1075,7 @@ const QuoteEditor = ({ state: rawState, onChange, isPro = false }: QuoteEditorPr
                 <img
                   src={state.authorPhoto}
                   alt="Author"
-                  className={`border border-border ${
+                  className={`${
                     state.photoShape === "none" ? "max-w-[5rem] max-h-[5rem]" :
                     state.photoShape === "circle" ? "w-16 h-16 rounded-full object-cover" :
                     state.photoShape === "square" ? "w-16 h-16 rounded-none object-cover" :
@@ -1164,6 +1166,21 @@ const QuoteEditor = ({ state: rawState, onChange, isPro = false }: QuoteEditorPr
               ))}
             </div>
           </div>
+          {state.authorPhoto && (
+            <div className="flex items-center gap-3">
+              <span className="text-[10px] font-heading text-muted-foreground uppercase tracking-widest w-14">Stroke</span>
+              <button
+                onClick={() => set("photoStroke", !state.photoStroke)}
+                className={`px-3 py-1.5 text-[10px] font-heading font-medium rounded-md border transition-all ${
+                  state.photoStroke
+                    ? "bg-foreground text-background border-foreground"
+                    : "border-border text-muted-foreground hover:text-foreground hover:border-foreground/30"
+                }`}
+              >
+                {state.photoStroke ? "On" : "Off"}
+              </button>
+            </div>
+          )}
         </div>
       </ControlSection>
 
