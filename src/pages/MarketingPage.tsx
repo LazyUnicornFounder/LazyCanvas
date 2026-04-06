@@ -35,7 +35,7 @@ const MarketingPage = ({ config }: { config: MarketingPageConfig }) => {
 
   useEffect(() => {
     document.title = config.title;
-    return () => { document.title = "Lazy Faceless — Marketing content for anything."; };
+    return () => { document.title = "Lazy Canvas — Marketing content for anything."; };
   }, [config.title]);
 
   const handleApplyTemplate = (partial: Partial<DesignEditorState>) => {
@@ -149,7 +149,7 @@ const MarketingPage = ({ config }: { config: MarketingPageConfig }) => {
       <footer className="border-t border-border px-4 sm:px-6 py-6">
         <div className="max-w-[1400px] mx-auto">
           <p className="text-xs text-muted-foreground">
-            Lazy Faceless is part of{" "}
+            Lazy Canvas is part of{" "}
             <a href="https://lazyfactoryventures.com/" target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground transition-colors">
               Lazy Factory Ventures
             </a>

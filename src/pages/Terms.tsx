@@ -26,12 +26,12 @@ const Terms = () => {
 
           <section className="space-y-3">
             <h2 className="font-heading text-lg font-semibold text-foreground">1. Acceptance of Terms</h2>
-            <p>By accessing or using LazyFaceless.com ("the Service"), you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use the Service.</p>
+            <p>By accessing or using LazyCanvas.com ("the Service"), you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use the Service.</p>
           </section>
 
           <section className="space-y-3">
             <h2 className="font-heading text-lg font-semibold text-foreground">2. Description of Service</h2>
-            <p>LazyFaceless provides an online tool for creating quote images and visual content for social media, print, and personal use. The Service is provided "as is" and "as available."</p>
+            <p>LazyCanvas provides an online tool for creating quote images and visual content for social media, print, and personal use. The Service is provided "as is" and "as available."</p>
           </section>
 
           <section className="space-y-3">
@@ -61,7 +61,7 @@ const Terms = () => {
 
           <section className="space-y-3">
             <h2 className="font-heading text-lg font-semibold text-foreground">8. Limitation of Liability</h2>
-            <p>To the fullest extent permitted by law, LazyFaceless shall not be liable for any indirect, incidental, or consequential damages arising from your use of the Service.</p>
+            <p>To the fullest extent permitted by law, LazyCanvas shall not be liable for any indirect, incidental, or consequential damages arising from your use of the Service.</p>
           </section>
 
           <section className="space-y-3">

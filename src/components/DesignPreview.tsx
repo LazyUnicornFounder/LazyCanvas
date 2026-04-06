@@ -648,7 +648,7 @@ const DesignPreview = forwardRef<HTMLDivElement, DesignPreviewProps>(
               }}
             >
               <span>Made with </span>
-              <span style={{ fontWeight: 600 }}>LazyFaceless.com</span>
+              <span style={{ fontWeight: 600 }}>LazyCanvas.com</span>
             </div>
           )}
         </div>

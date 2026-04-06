@@ -199,7 +199,7 @@ const Index = () => {
         const pad = Math.max(8, w * 0.03);
         const fontSize = Math.max(8, Math.min(14, w * 0.025));
         ctx.font = `600 ${fontSize}px sans-serif`;
-        const text = "Made with LazyFaceless.com";
+        const text = "Made with LazyCanvas.com";
         const metrics = ctx.measureText(text);
         const boxW = metrics.width + pad * 1.5;
         const boxH = fontSize * 1.8;
@@ -364,7 +364,7 @@ const Index = () => {
           const pad = Math.max(8, w * 0.03);
           const fontSize = Math.max(8, Math.min(14, w * 0.025));
           ctx.font = `600 ${fontSize}px sans-serif`;
-          const text = "Made with LazyFaceless.com";
+          const text = "Made with LazyCanvas.com";
           const metrics = ctx.measureText(text);
           const boxW = metrics.width + pad * 1.5;
           const boxH = fontSize * 1.8;
@@ -722,7 +722,7 @@ const Index = () => {
       <section className="border-t border-border px-4 sm:px-6 py-8">
         <div className="max-w-[1400px] mx-auto">
           <p className="text-xs text-muted-foreground">
-            Lazy Faceless is part of{" "}
+            Lazy Canvas is part of{" "}
             <a
               href="https://lazyfactoryventures.com/"
               target="_blank"
@@ -811,7 +811,7 @@ const Index = () => {
                       className="w-full h-auto object-contain opacity-75"
                     />
                     <div className="absolute bottom-0 right-0 z-10 px-1.5 py-0.5 text-[6px] font-semibold text-white/90" style={{ backgroundColor: "rgba(0,0,0,0.55)" }}>
-                      Made with <span className="font-bold">LazyFaceless.com</span>
+                      Made with <span className="font-bold">LazyCanvas.com</span>
                     </div>
                   </div>
                   <span className="text-[11px] font-heading text-muted-foreground">Without Pro features</span>
