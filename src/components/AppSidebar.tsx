@@ -1,4 +1,4 @@
-import { Plus, FileText, Trash2, Crown, LogOut, CreditCard, Pencil, PanelLeftClose, PanelLeftOpen, ImagePlus, FolderOpen, Loader2 } from "lucide-react";
+import { Plus, FileText, Trash2, Crown, LogOut, CreditCard, Pencil, PanelLeftClose, PanelLeftOpen, ImagePlus, FolderOpen, Loader2, Settings } from "lucide-react";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
@@ -240,6 +240,13 @@ export function AppSidebar({
             >
               <CreditCard className="w-3.5 h-3.5 flex-shrink-0" />
               <span className="truncate">{currentTier === "Free" ? "Upgrade plan" : "Manage subscription"}</span>
+            </button>
+            <button
+              onClick={() => navigate("/settings")}
+              className="flex items-center gap-2 w-full text-xs text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <Settings className="w-3.5 h-3.5 flex-shrink-0" />
+              <span className="truncate">Settings</span>
             </button>
           </div>
         )}
