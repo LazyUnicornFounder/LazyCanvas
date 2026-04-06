@@ -83,7 +83,7 @@ const Index = () => {
     return DEFAULT_EDITOR_STATE;
   });
   const [downloading, setDownloading] = useState(false);
-  const [showDownloadWatermark, setShowDownloadWatermark] = useState(false);
+  
   const [freeEditorStateForSnapshot, setFreeEditorStateForSnapshot] = useState<DesignEditorState | null>(null);
   const [showGalleryPrompt, setShowGalleryPrompt] = useState(false);
   const [showSignupPrompt, setShowSignupPrompt] = useState(false);
@@ -185,6 +185,38 @@ const Index = () => {
     });
   }, []);
 
+  const addCanvasWatermark = useCallback((blob: Blob): Promise<Blob> => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext("2d")!;
+        ctx.drawImage(img, 0, 0);
+        const w = canvas.width;
+        const h = canvas.height;
+        const pad = Math.max(8, w * 0.03);
+        const fontSize = Math.max(8, Math.min(14, w * 0.025));
+        ctx.font = `600 ${fontSize}px sans-serif`;
+        const text = "Made with LazyFaceless.com";
+        const metrics = ctx.measureText(text);
+        const boxW = metrics.width + pad * 1.5;
+        const boxH = fontSize * 1.8;
+        const x = w - boxW - pad;
+        const y = h - boxH - pad;
+        ctx.fillStyle = "rgba(0,0,0,0.55)";
+        ctx.beginPath();
+        ctx.roundRect(x, y, boxW, boxH, 4);
+        ctx.fill();
+        ctx.fillStyle = "rgba(255,255,255,0.85)";
+        ctx.fillText(text, x + pad * 0.75, y + boxH * 0.68);
+        canvas.toBlob((b) => resolve(b!), "image/png");
+      };
+      img.src = URL.createObjectURL(blob);
+    });
+  }, []);
+
   const renderPreviewBlob = useCallback(async (target: HTMLElement, scale: number) => {
     // For print-ready exports, temporarily enlarge the element to get true high-res rendering
     const isPrintScale = scale > 3;
@@ -258,13 +290,10 @@ const Index = () => {
     setDownloading(true);
 
     try {
-      // Show watermark for free users during capture
+      let blob = await renderPreviewBlob(target, scale);
       if (!isPro) {
-        setShowDownloadWatermark(true);
-        await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+        blob = await addCanvasWatermark(blob);
       }
-
-      const blob = await renderPreviewBlob(target, scale);
       const suffix = scale > 3 ? "-print" : "";
       downloadBlob(blob, `design${suffix}-${Date.now()}.png`);
 
@@ -274,10 +303,9 @@ const Index = () => {
     } catch (err) {
       console.error("Failed to export", err);
     } finally {
-      setShowDownloadWatermark(false);
       setDownloading(false);
     }
-  }, [downloadBlob, renderPreviewBlob, user, isPro]);
+  }, [downloadBlob, renderPreviewBlob, user, isPro, addCanvasWatermark]);
 
   
 
@@ -365,21 +393,17 @@ const Index = () => {
         });
       }
 
-      // Show watermark for free users during capture
+      let blob = await renderPreviewBlob(target, 3);
       if (!isPro) {
-        setShowDownloadWatermark(true);
-        await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+        blob = await addCanvasWatermark(blob);
       }
-
-      const blob = await renderPreviewBlob(target, 3);
       downloadBlob(blob, `quote-${Date.now()}.png`);
     } catch (err) {
       console.error("Failed to export", err);
     } finally {
-      setShowDownloadWatermark(false);
       setDownloading(false);
     }
-  }, [downloadBlob, renderPreviewBlob, user, editorState, isPro]);
+  }, [downloadBlob, renderPreviewBlob, user, editorState, isPro, addCanvasWatermark]);
 
   const handleSignupAccept = useCallback(() => {
     setShowSignupPrompt(false);
@@ -496,7 +520,7 @@ const Index = () => {
             isBold={editorState.isBold}
             isItalic={editorState.isItalic}
             coloredWords={editorState.coloredWords}
-            showWatermark={showDownloadWatermark}
+            showWatermark={false}
             showQuotationMarks={editorState.showQuotationMarks}
             photoStroke={editorState.photoStroke}
             customWidth={editorState.customWidth}
@@ -616,7 +640,7 @@ const Index = () => {
                   isBold={editorState.isBold}
                   isItalic={editorState.isItalic}
                   coloredWords={editorState.coloredWords}
-                  showWatermark={showDownloadWatermark}
+                  showWatermark={false}
                   showQuotationMarks={editorState.showQuotationMarks}
                   photoStroke={editorState.photoStroke}
                   customWidth={editorState.customWidth}
