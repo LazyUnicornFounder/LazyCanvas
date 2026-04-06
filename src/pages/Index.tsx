@@ -469,13 +469,7 @@ const Index = () => {
             <button
               onClick={() => {
                 if (!isPro) {
-                  toast("Pro Feature", {
-                    description: "Re-editing saved designs is a Pro feature. Upgrade to unlock!",
-                    action: {
-                      label: "Upgrade",
-                      onClick: () => navigate("/pricing"),
-                    },
-                  });
+                  openProEditPrompt();
                   return;
                 }
               }}
@@ -600,13 +594,7 @@ const Index = () => {
                 <button
                   onClick={() => {
                     if (!isPro) {
-                      toast("Pro Feature", {
-                        description: "Re-editing saved designs is a Pro feature. Upgrade to unlock!",
-                        action: {
-                          label: "Upgrade",
-                          onClick: () => navigate("/pricing"),
-                        },
-                      });
+                      openProEditPrompt();
                       return;
                     }
                   }}
