@@ -338,9 +338,10 @@ const QuotePreview = forwardRef<HTMLDivElement, QuotePreviewProps>(
         const s = Math.min(cW / tW, cH / tH, 1);
         setScale(s);
 
-        // If overflowing, auto-reduce font size to fit
-        if (s < 0.95 && onAutoFontSize) {
-          const maxSize = Math.max(fontSize * s * 0.9, 0.6);
+        // If overflowing, auto-reduce font size to fit — but stop at a readable minimum
+        const MIN_AUTO_FONT = 1.2;
+        if (s < 0.95 && onAutoFontSize && fontSize > MIN_AUTO_FONT) {
+          const maxSize = Math.max(fontSize * s * 0.9, MIN_AUTO_FONT);
           if (maxSize < fontSize) {
             onAutoFontSize(maxSize);
           }
