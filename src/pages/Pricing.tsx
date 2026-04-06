@@ -25,6 +25,7 @@ const tiers = [
       { text: "Word colors", included: false },
       { text: "Text formatting", included: false },
       { text: "Background image upload", included: false },
+      { text: "Background image remover", included: false },
       { text: "No watermark", included: false },
     ],
   },

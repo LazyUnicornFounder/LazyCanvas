@@ -551,14 +551,16 @@ const QuoteEditor = ({ state: rawState, onChange, isPro = false }: QuoteEditorPr
             {state.backgroundImage && (
               <>
                 <button onClick={() => set("backgroundImage", null)} className="text-xs text-muted-foreground hover:text-foreground transition-colors">Remove</button>
-                <button
-                  onClick={handleRemoveBgImage}
-                  disabled={removingBgImage}
-                  className="flex items-center gap-1 text-xs font-heading text-muted-foreground hover:text-foreground transition-colors disabled:opacity-50"
-                >
-                  {removingBgImage ? <Loader2 className="w-3 h-3 animate-spin" /> : <Eraser className="w-3 h-3" />}
-                  {removingBgImage ? "Removing…" : "Remove BG"}
-                </button>
+                {isPro && (
+                  <button
+                    onClick={handleRemoveBgImage}
+                    disabled={removingBgImage}
+                    className="flex items-center gap-1 text-xs font-heading text-muted-foreground hover:text-foreground transition-colors disabled:opacity-50"
+                  >
+                    {removingBgImage ? <Loader2 className="w-3 h-3 animate-spin" /> : <Eraser className="w-3 h-3" />}
+                    {removingBgImage ? "Removing…" : "Remove BG"}
+                  </button>
+                )}
               </>
             )}
           </div>
@@ -1114,14 +1116,16 @@ const QuoteEditor = ({ state: rawState, onChange, isPro = false }: QuoteEditorPr
                 >
                   Change
                 </button>
-                <button
-                  onClick={handleRemoveBg}
-                  disabled={removingBg}
-                  className="flex items-center gap-1 text-xs font-heading text-muted-foreground hover:text-foreground transition-colors disabled:opacity-50"
-                >
-                  {removingBg ? <Loader2 className="w-3 h-3 animate-spin" /> : <Eraser className="w-3 h-3" />}
-                  {removingBg ? "Removing…" : "Remove BG"}
-                </button>
+                {isPro && (
+                  <button
+                    onClick={handleRemoveBg}
+                    disabled={removingBg}
+                    className="flex items-center gap-1 text-xs font-heading text-muted-foreground hover:text-foreground transition-colors disabled:opacity-50"
+                  >
+                    {removingBg ? <Loader2 className="w-3 h-3 animate-spin" /> : <Eraser className="w-3 h-3" />}
+                    {removingBg ? "Removing…" : "Remove BG"}
+                  </button>
+                )}
               </div>
             )}
           </div>
