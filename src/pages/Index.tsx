@@ -581,13 +581,11 @@ const Index = () => {
                 )}
             </div>
             <div className="flex items-center gap-2">
-              {user && activeQuoteId && (
+              {user && (
                 <button
                   onClick={() => {
                     if (!isPro) {
-                      toast.info("Upgrade to Pro to edit your saved designs", {
-                        action: { label: "Upgrade", onClick: () => navigate("/pricing") },
-                      });
+                      navigate("/pricing");
                       return;
                     }
                   }}
