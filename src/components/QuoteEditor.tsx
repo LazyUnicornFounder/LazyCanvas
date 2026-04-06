@@ -433,7 +433,7 @@ const QuoteEditor = ({ state: rawState, onChange, isPro = false }: QuoteEditorPr
       }
     } catch (err) {
       console.error("Remove bg error:", err);
-      import("sonner").then(({ toast }) => toast.error("Failed to remove background. Try again."));
+      import("sonner").then(({ toast }) => toast.error("Failed to remove background. This feature may not work if the background isn't clearly detectable in the image."));
     } finally {
       setRemovingBg(false);
     }
@@ -455,7 +455,7 @@ const QuoteEditor = ({ state: rawState, onChange, isPro = false }: QuoteEditorPr
       }
     } catch (err) {
       console.error("Remove bg image error:", err);
-      import("sonner").then(({ toast }) => toast.error("Failed to remove background. Try again."));
+      import("sonner").then(({ toast }) => toast.error("Failed to remove background. This feature may not work if the background isn't clearly detectable in the image."));
     } finally {
       setRemovingBgImage(false);
     }
