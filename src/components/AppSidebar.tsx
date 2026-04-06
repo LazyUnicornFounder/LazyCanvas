@@ -37,8 +37,9 @@ export function AppSidebar({ activeDesignId, onSelectDesign, onNewDesign, curren
   const currentTier = "Free"; // TODO: check actual subscription
 
   const handleSave = async () => {
-    const title = currentEditorState.design
-      ? currentEditorState.design.slice(0, 40) + (currentEditorState.design.length > 40 ? "…" : "")
+    const text = (currentEditorState as any).quote || "";
+    const title = text
+      ? text.slice(0, 40) + (text.length > 40 ? "…" : "")
       : "Untitled";
     await saveDesign(activeDesignId, title, currentEditorState);
   };
