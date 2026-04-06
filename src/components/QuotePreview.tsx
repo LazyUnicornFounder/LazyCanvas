@@ -366,6 +366,7 @@ const QuotePreview = forwardRef<HTMLDivElement, QuotePreviewProps>(
             <span
               className={`${fontClasses[authorFont]} font-medium`}
               style={{
+                fontFamily: fontFamilies[authorFont],
                 fontSize: `${authorFontSize}rem`,
                 color: authorColor || textColor || undefined,
                 textShadow: getShadowStyle(textShadow, shadowOpacity),
