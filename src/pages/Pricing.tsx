@@ -15,6 +15,8 @@ const POLAR_PRO_YEARLY_ID = "3652d762-6798-41e9-89d5-3603e0f5a6f5";
 const featureRows: [string, boolean, boolean][] = [
   ["Unlimited designs", true, true],
   ["PNG download", true, true],
+  ["Save unlimited designs", true, true],
+  ["Re-edit your designs", true, true],
   ["Premium templates", false, true],
   ["Wallpaper backgrounds", false, true],
   ["Background image upload", false, true],
@@ -23,8 +25,6 @@ const featureRows: [string, boolean, boolean][] = [
   ["Word colors", false, true],
   ["All formats & sizes", false, true],
   ["No watermark", false, true],
-  ["Save unlimited designs", false, true],
-  ["Re-edit your designs", false, true],
 ];
 
 const Pricing = () => {

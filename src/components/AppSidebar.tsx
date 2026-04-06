@@ -34,16 +34,6 @@ export function AppSidebar({ activeQuoteId, onSelectQuote, onNewQuote, currentEd
   const currentTier = "Free"; // TODO: check actual subscription
 
   const handleSave = async () => {
-    if (!isPro) {
-      toast("Saving is a Pro feature", {
-        description: "Upgrade to Pro to save and re-edit your content.",
-        action: {
-          label: "Upgrade",
-          onClick: () => navigate("/pricing"),
-        },
-      });
-      return;
-    }
     const title = currentEditorState.quote
       ? currentEditorState.quote.slice(0, 40) + (currentEditorState.quote.length > 40 ? "…" : "")
       : "Untitled";
