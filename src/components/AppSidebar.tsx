@@ -18,6 +18,7 @@ import {
   SidebarMenuItem,
   SidebarMenuAction,
   SidebarSeparator,
+  useSidebar,
 } from "@/components/ui/sidebar";
 
 interface AppSidebarProps {
@@ -34,6 +35,8 @@ interface AppSidebarProps {
 export function AppSidebar({ activeDesignId, onSelectDesign, onNewDesign, currentEditorState, designs, loading, saveDesign, deleteDesign }: AppSidebarProps) {
   const { user, signOut, isPro } = useAuth();
   const navigate = useNavigate();
+  const { state } = useSidebar();
+  const collapsed = state === "collapsed";
 
   const currentTier = "Free"; // TODO: check actual subscription
 
@@ -47,11 +50,13 @@ export function AppSidebar({ activeDesignId, onSelectDesign, onNewDesign, curren
 
   return (
     <Sidebar collapsible="icon" className="border-r border-border">
-      <SidebarHeader className="p-3 space-y-3">
-        <LogoWithTagline />
-        <h2 className="font-heading text-sm font-semibold tracking-tight text-foreground truncate">
-          My Content
-        </h2>
+      <SidebarHeader className="p-3 space-y-3 overflow-hidden">
+        {!collapsed && <LogoWithTagline />}
+        {!collapsed && (
+          <h2 className="font-heading text-sm font-semibold tracking-tight text-foreground truncate">
+            My Content
+          </h2>
+        )}
       </SidebarHeader>
 
       <SidebarContent>
