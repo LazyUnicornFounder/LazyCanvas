@@ -106,6 +106,9 @@ interface QuotePreviewProps {
   borderWidth?: number;
   borderColor?: string;
   borderStyle?: "none" | "solid" | "dashed" | "dotted" | "double";
+  logo?: string | null;
+  logoPosition?: "top-left" | "top-right" | "bottom-left" | "bottom-right";
+  logoSize?: number;
   onAutoFontSize?: (newSize: number) => void;
 }
 
@@ -346,7 +349,7 @@ const renderColoredQuote = (text: string, coloredWords: ColoredWord[] = [], show
 };
 
 const QuotePreview = forwardRef<HTMLDivElement, QuotePreviewProps>(
-  ({ quote, authorName, authorPhoto, photoShape = "none", socials, socialPlatform, aspectRatio, font, theme, backgroundImage, backgroundOpacity, backgroundBlur = 0, backgroundFilter = "none", filterIntensity = 1, fontSize, textAlign, letterSpacing, lineHeight, textColor, authorFontSize, authorColor, authorFont, textShadow, shadowOpacity = 1, authorPosition, backgroundColor, isBold, isItalic, coloredWords, showWatermark, showQuotationMarks = false, photoStroke = false, customWidth, customHeight, borderWidth = 0, borderColor = "#000000", borderStyle = "none", onAutoFontSize }, ref) => {
+  ({ quote, authorName, authorPhoto, photoShape = "none", socials, socialPlatform, aspectRatio, font, theme, backgroundImage, backgroundOpacity, backgroundBlur = 0, backgroundFilter = "none", filterIntensity = 1, fontSize, textAlign, letterSpacing, lineHeight, textColor, authorFontSize, authorColor, authorFont, textShadow, shadowOpacity = 1, authorPosition, backgroundColor, isBold, isItalic, coloredWords, showWatermark, showQuotationMarks = false, photoStroke = false, customWidth, customHeight, borderWidth = 0, borderColor = "#000000", borderStyle = "none", logo, logoPosition = "bottom-right", logoSize = 2.5, onAutoFontSize }, ref) => {
     const t = themeStyles[theme];
     const isPlaceholder = !quote;
 
@@ -597,6 +600,27 @@ const QuotePreview = forwardRef<HTMLDivElement, QuotePreviewProps>(
           {isDetached && authorBlock && (
             <div className="relative z-10 pt-2">
               {authorBlock}
+            </div>
+          )}
+          {/* Logo */}
+          {logo && (
+            <div
+              className="absolute z-20"
+              style={{
+                ...(logoPosition.includes("top") ? { top: "clamp(8px, 3%, 16px)" } : { bottom: "clamp(8px, 3%, 16px)" }),
+                ...(logoPosition.includes("left") ? { left: "clamp(8px, 3%, 16px)" } : { right: "clamp(8px, 3%, 16px)" }),
+              }}
+            >
+              <img
+                src={logo}
+                alt="Logo"
+                style={{
+                  width: `${logoSize}rem`,
+                  height: "auto",
+                  maxHeight: `${logoSize}rem`,
+                  objectFit: "contain",
+                }}
+              />
             </div>
           )}
           {/* Watermark */}

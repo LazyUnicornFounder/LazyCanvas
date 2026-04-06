@@ -263,6 +263,9 @@ export interface QuoteEditorState {
   borderWidth: number;
   borderColor: string;
   borderStyle: "none" | "solid" | "dashed" | "dotted" | "double";
+  logo: string | null;
+  logoPosition: "top-left" | "top-right" | "bottom-left" | "bottom-right";
+  logoSize: number;
 }
 
 export const BG_FILTERS: { value: string; label: string; css: string }[] = [
@@ -325,6 +328,9 @@ export const DEFAULT_EDITOR_STATE: QuoteEditorState = {
   borderWidth: 0,
   borderColor: "#000000",
   borderStyle: "none",
+  logo: null,
+  logoPosition: "bottom-right",
+  logoSize: 2.5,
 };
 
 interface QuoteEditorProps {
@@ -347,6 +353,7 @@ const QuoteEditor = ({ state: rawState, onChange, isPro = false }: QuoteEditorPr
   const emojiPickerRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const bgInputRef = useRef<HTMLInputElement>(null);
+  const logoInputRef = useRef<HTMLInputElement>(null);
   const [removingBg, setRemovingBg] = useState(false);
   const [removingBgImage, setRemovingBgImage] = useState(false);
   const [pexelsQuery, setPexelsQuery] = useState("");
@@ -515,6 +522,13 @@ const QuoteEditor = ({ state: rawState, onChange, isPro = false }: QuoteEditorPr
     reader.readAsDataURL(file);
   };
 
+  const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => set("logo", ev.target?.result as string);
+    reader.readAsDataURL(file);
+  };
 
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -1385,6 +1399,92 @@ const QuoteEditor = ({ state: rawState, onChange, isPro = false }: QuoteEditorPr
                 {state.photoStroke ? "On" : "Off"}
               </button>
             </div>
+          )}
+        </div>
+      </ControlSection>
+
+      {/* Logo */}
+      <ControlSection label="Logo" pro={!isPro} onProClick={goToPricing}>
+        <input ref={logoInputRef} type="file" accept="image/*" onChange={handleLogoUpload} className="hidden" />
+        <div className="space-y-3">
+          <div className="flex items-center gap-3">
+            {state.logo ? (
+              <div className="relative group">
+                <img src={state.logo} alt="Logo" className="w-16 h-16 rounded-lg object-contain bg-muted/30" />
+              </div>
+            ) : (
+              <button
+                onClick={() => logoInputRef.current?.click()}
+                className="w-16 h-16 rounded-lg border-2 border-dashed border-muted-foreground/40 flex flex-col items-center justify-center hover:border-foreground/50 transition-colors gap-0.5"
+              >
+                <ImageIcon className="w-4 h-4 text-muted-foreground" />
+                <span className="text-[8px] font-heading text-muted-foreground uppercase tracking-wider">Logo</span>
+              </button>
+            )}
+            {state.logo && (
+              <div className="flex flex-col gap-1">
+                <button
+                  onClick={() => logoInputRef.current?.click()}
+                  className="text-xs font-heading text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Change
+                </button>
+                <button
+                  onClick={() => set("logo", null)}
+                  className="flex items-center gap-1 text-xs font-heading text-destructive hover:text-destructive/80 transition-colors"
+                >
+                  <Trash2 className="w-3 h-3" />
+                  Delete
+                </button>
+              </div>
+            )}
+            {!state.logo && (
+              <button
+                onClick={() => logoInputRef.current?.click()}
+                className="text-xs font-heading text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Upload logo
+              </button>
+            )}
+          </div>
+          {state.logo && (
+            <>
+              <div>
+                <p className="text-[10px] text-muted-foreground/70 uppercase tracking-wider mb-1.5">Position</p>
+                <div className="flex flex-wrap gap-2">
+                  {([
+                    { value: "top-left" as const, label: "Top Left" },
+                    { value: "top-right" as const, label: "Top Right" },
+                    { value: "bottom-left" as const, label: "Bottom Left" },
+                    { value: "bottom-right" as const, label: "Bottom Right" },
+                  ]).map((pos) => (
+                    <button
+                      key={pos.value}
+                      onClick={() => set("logoPosition", pos.value)}
+                      className={`px-2.5 py-1.5 text-[10px] font-heading font-medium rounded-md border transition-all ${
+                        state.logoPosition === pos.value
+                          ? "bg-foreground text-background border-foreground"
+                          : "border-border text-muted-foreground hover:text-foreground hover:border-foreground/30"
+                      }`}
+                    >
+                      {pos.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <p className="text-[10px] text-muted-foreground/70 uppercase tracking-wider mb-1.5">Size</p>
+                <input
+                  type="range"
+                  min="1"
+                  max="6"
+                  step="0.25"
+                  value={state.logoSize}
+                  onChange={(e) => set("logoSize", parseFloat(e.target.value))}
+                  className="w-full accent-foreground"
+                />
+              </div>
+            </>
           )}
         </div>
       </ControlSection>
