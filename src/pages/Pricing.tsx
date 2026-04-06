@@ -23,6 +23,7 @@ const featureRows: [string, boolean, boolean][] = [
   ["Upload your own image library", false, true],
   ["Background image remover", false, true],
   ["Image filters", false, true],
+  ["Logo upload", false, true],
   ["Word colors", false, true],
   ["All formats & sizes", false, true],
   ["No watermark", false, true],
