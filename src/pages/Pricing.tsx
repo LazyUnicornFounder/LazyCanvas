@@ -256,7 +256,7 @@ const Pricing = () => {
         </div>
       </main>
 
-      <AuthModal open={showAuthModal} onClose={() => setShowAuthModal(false)} />
+      <AuthModal open={showAuthModal} onClose={() => setShowAuthModal(false)} defaultMode={authModalMode} />
       <SiteFooter />
     </div>
   );
