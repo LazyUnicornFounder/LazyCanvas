@@ -522,7 +522,7 @@ const QuotePreview = forwardRef<HTMLDivElement, QuotePreviewProps>(
         ref={ref}
         className={`${aspectRatio !== "custom" ? aspectClasses[aspectRatio] : ""} w-full max-w-lg max-h-full relative overflow-hidden`}
         style={{
-          backgroundColor: isGlass ? (backgroundColor || "transparent") : (backgroundColor || t.bg),
+          backgroundColor: isGlass ? (backgroundColor || t.bg) : (backgroundColor || t.bg),
           color: t.text,
           ...(aspectRatio === "custom" && customWidth && customHeight ? { aspectRatio: `${customWidth} / ${customHeight}` } : {}),
           ...(borderStyle !== "none" && borderWidth > 0 ? { border: `${borderWidth}px ${borderStyle} ${borderColor}`, boxSizing: "border-box" as const } : {}),
