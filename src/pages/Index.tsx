@@ -714,9 +714,9 @@ const Index = () => {
                 <h4 className="font-heading font-semibold text-primary mb-2">Pro</h4>
                 <ul className="space-y-1.5">
                   {[
-                    "Unlimited designs",
-                    "PNG download",
+                    "Create unlimited designs",
                     "Save unlimited designs",
+                    "PNG download",
                     "Re-edit your designs",
                     "Premium templates",
                     "Wallpaper backgrounds",
@@ -739,9 +739,9 @@ const Index = () => {
                 <h4 className="font-heading font-semibold text-foreground mb-2">Free</h4>
                 <ul className="space-y-1.5">
                   {[
-                    { text: "Unlimited designs", included: true },
-                    { text: "PNG download", included: true },
+                    { text: "Create unlimited designs", included: true },
                     { text: "Save unlimited designs", included: true },
+                    { text: "PNG download", included: true },
                     { text: "Re-edit your designs", included: false },
                     { text: "Premium templates", included: false },
                     { text: "Wallpaper backgrounds", included: false },
