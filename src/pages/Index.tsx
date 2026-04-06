@@ -189,6 +189,12 @@ const Index = () => {
     setDownloading(true);
 
     try {
+      // Show watermark for free users during capture
+      if (!isPro) {
+        setShowDownloadWatermark(true);
+        await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+      }
+
       const blob = await renderPreviewBlob(target, scale);
       const suffix = scale > 3 ? "-print" : "";
       downloadBlob(blob, `quote${suffix}-${Date.now()}.png`);
@@ -199,9 +205,10 @@ const Index = () => {
     } catch (err) {
       console.error("Failed to export", err);
     } finally {
+      setShowDownloadWatermark(false);
       setDownloading(false);
     }
-  }, [downloadBlob, renderPreviewBlob, user]);
+  }, [downloadBlob, renderPreviewBlob, user, isPro]);
 
   
 
@@ -289,14 +296,21 @@ const Index = () => {
         });
       }
 
+      // Show watermark for free users during capture
+      if (!isPro) {
+        setShowDownloadWatermark(true);
+        await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+      }
+
       const blob = await renderPreviewBlob(target, 3);
       downloadBlob(blob, `quote-${Date.now()}.png`);
     } catch (err) {
       console.error("Failed to export", err);
     } finally {
+      setShowDownloadWatermark(false);
       setDownloading(false);
     }
-  }, [downloadBlob, renderPreviewBlob, user, editorState]);
+  }, [downloadBlob, renderPreviewBlob, user, editorState, isPro]);
 
   const handleSignupAccept = useCallback(() => {
     setShowSignupPrompt(false);
@@ -398,7 +412,7 @@ const Index = () => {
             isBold={editorState.isBold}
             isItalic={editorState.isItalic}
             coloredWords={editorState.coloredWords}
-            showWatermark={false}
+            showWatermark={showDownloadWatermark}
             showQuotationMarks={editorState.showQuotationMarks}
             photoStroke={editorState.photoStroke}
             customWidth={editorState.customWidth}
@@ -494,7 +508,7 @@ const Index = () => {
                   isBold={editorState.isBold}
                   isItalic={editorState.isItalic}
                   coloredWords={editorState.coloredWords}
-                  showWatermark={false}
+                  showWatermark={showDownloadWatermark}
                   showQuotationMarks={editorState.showQuotationMarks}
                   photoStroke={editorState.photoStroke}
                   customWidth={editorState.customWidth}
