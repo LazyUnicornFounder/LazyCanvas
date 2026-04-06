@@ -24,7 +24,7 @@ const proFeatures = [
 ];
 
 const freeFeatures = [
-  { text: "Unlimited quote designs", included: true },
+  { text: "Unlimited designs", included: true },
   { text: "PNG download", included: true },
   { text: "Save unlimited quotes", included: false },
   { text: "Premium templates", included: false },
