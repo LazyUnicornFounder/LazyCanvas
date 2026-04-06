@@ -238,6 +238,42 @@ export function AppSidebar({
             </SidebarGroup>
           </>
         )}
+
+        {/* What's New */}
+        {whatsNewPosts.length > 0 && (
+          <>
+            <SidebarSeparator />
+            <SidebarGroup>
+              <SidebarGroupLabel>
+                <Sparkles className="w-3.5 h-3.5 mr-1.5" />
+                What's New
+              </SidebarGroupLabel>
+              <SidebarGroupContent>
+                {!collapsed && (
+                  <div className="px-3 pb-2 space-y-2">
+                    {(whatsNewOpen ? whatsNewPosts : whatsNewPosts.slice(0, 2)).map((post) => (
+                      <div key={post.id} className="space-y-0.5">
+                        <p className="text-xs font-heading font-medium text-foreground leading-tight">{post.title}</p>
+                        <p className="text-[10px] text-muted-foreground line-clamp-2 leading-snug">{post.content}</p>
+                        {post.published_at && (
+                          <p className="text-[9px] text-muted-foreground/60">{new Date(post.published_at).toLocaleDateString()}</p>
+                        )}
+                      </div>
+                    ))}
+                    {whatsNewPosts.length > 2 && (
+                      <button
+                        onClick={() => setWhatsNewOpen(!whatsNewOpen)}
+                        className="text-[10px] text-primary hover:underline"
+                      >
+                        {whatsNewOpen ? "Show less" : `Show ${whatsNewPosts.length - 2} more`}
+                      </button>
+                    )}
+                  </div>
+                )}
+              </SidebarGroupContent>
+            </SidebarGroup>
+          </>
+        )}
       </SidebarContent>
 
       <SidebarFooter>
