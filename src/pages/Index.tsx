@@ -68,6 +68,7 @@ const Index = () => {
   const { user, signOut, isPro, isAdmin } = useAuth();
   const navigate = useNavigate();
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [authModalMode, setAuthModalMode] = useState<"login" | "signup">("signup");
   const [editorState, setEditorState] = useState<QuoteEditorState>(() => {
     try {
       const saved = localStorage.getItem(DRAFT_KEY);
