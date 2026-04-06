@@ -87,6 +87,7 @@ const Index = () => {
   const [freeEditorStateForSnapshot, setFreeEditorStateForSnapshot] = useState<DesignEditorState | null>(null);
   
   
+  const [pendingSaveAfterAuth, setPendingSaveAfterAuth] = useState(false);
   const [showProUpgradePrompt, setShowProUpgradePrompt] = useState(false);
   const [proUpgradeSnapshot, setProUpgradeSnapshot] = useState<string | null>(null);
   const [proWatermarkSnapshot, setProWatermarkSnapshot] = useState<string | null>(null);
@@ -151,12 +152,16 @@ const Index = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  // Clear draft from localStorage once user is logged in and state is restored
+  // After login, clear draft and auto-save if user clicked Save while logged out
   useEffect(() => {
     if (user) {
       localStorage.removeItem(DRAFT_KEY);
+      if (pendingSaveAfterAuth) {
+        setPendingSaveAfterAuth(false);
+        handleSaveDesign();
+      }
     }
-  }, [user]);
+  }, [user, pendingSaveAfterAuth, handleSaveDesign]);
 
   const usesProFeatures = useCallback((state: DesignEditorState) => {
     return (
@@ -536,7 +541,7 @@ const Index = () => {
           )}
           <button
             onClick={() => {
-              if (!user) { setAuthModalMode("signup"); setShowAuthModal(true); return; }
+              if (!user) { localStorage.setItem(DRAFT_KEY, JSON.stringify(editorState)); setPendingSaveAfterAuth(true); setAuthModalMode("signup"); setShowAuthModal(true); return; }
               handleSaveDesign();
             }}
             className="flex items-center justify-center gap-1.5 px-3 py-2 border border-border text-foreground font-heading text-xs font-medium rounded-md hover:bg-accent transition-colors"
@@ -656,7 +661,7 @@ const Index = () => {
               )}
               <button
                 onClick={() => {
-                  if (!user) { setAuthModalMode("signup"); setShowAuthModal(true); return; }
+                  if (!user) { localStorage.setItem(DRAFT_KEY, JSON.stringify(editorState)); setPendingSaveAfterAuth(true); setAuthModalMode("signup"); setShowAuthModal(true); return; }
                   handleSaveDesign();
                 }}
                 className="flex items-center justify-center gap-2 px-4 py-2 border border-border text-foreground font-heading text-sm font-medium rounded-md hover:bg-accent transition-colors"
