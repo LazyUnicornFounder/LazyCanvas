@@ -505,7 +505,12 @@ const QuotePreview = forwardRef<HTMLDivElement, QuotePreviewProps>(
           backgroundColor: isGlass ? (backgroundColor || "transparent") : (backgroundColor || t.bg),
           color: t.text,
           ...(aspectRatio === "custom" && customWidth && customHeight ? { aspectRatio: `${customWidth} / ${customHeight}` } : {}),
-          ...(borderStyle !== "none" && borderWidth > 0 ? { border: `${borderWidth}px ${borderStyle} ${borderColor}`, boxSizing: "border-box" as const } : {}),
+          ...(borderStyle !== "none" && borderWidth > 0 && !glassBorder ? { border: `${borderWidth}px ${borderStyle} ${borderColor}`, boxSizing: "border-box" as const } : {}),
+          ...(glassBorder ? {
+            border: "1px solid rgba(255,255,255,0.3)",
+            boxShadow: "inset 0 0 20px rgba(255,255,255,0.08), 0 0 15px rgba(255,255,255,0.05), 0 8px 32px rgba(0,0,0,0.12)",
+            boxSizing: "border-box" as const,
+          } : {}),
         }}
       >
         {backgroundImage && (
