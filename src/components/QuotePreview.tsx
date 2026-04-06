@@ -338,17 +338,17 @@ const QuotePreview = forwardRef<HTMLDivElement, QuotePreviewProps>(
         const s = Math.min(cW / tW, cH / tH, 1);
         setScale(s);
 
-        // If overflowing, clamp font size to max that fits (don't reduce below current)
+        // If overflowing, auto-reduce font size to fit
         if (s < 0.95 && onAutoFontSize) {
-          const maxSize = fontSize * s * 0.95;
-          if (maxSize < fontSize && maxSize >= 1.2) {
+          const maxSize = Math.max(fontSize * s * 0.9, 0.6);
+          if (maxSize < fontSize) {
             onAutoFontSize(maxSize);
           }
         }
       } else {
         setScale(1);
       }
-    }, [quote, fontSize, letterSpacing, lineHeight, font, aspectRatio, textAlign, authorFontSize, authorFont, authorName, authorPosition, socials, authorPhoto, fontLoaded]);
+    }, [quote, fontSize, letterSpacing, lineHeight, font, aspectRatio, textAlign, authorFontSize, authorFont, authorName, authorPosition, socials, authorPhoto, fontLoaded, borderWidth, borderStyle]);
 
     const hasAuthor = authorName || authorPhoto || socials;
     const isDetached = authorPosition !== "below-quote";
@@ -448,7 +448,7 @@ const QuotePreview = forwardRef<HTMLDivElement, QuotePreviewProps>(
           <div className="absolute inset-0" style={{ backgroundColor: backgroundColor || t.bg, opacity: 1 - backgroundOpacity }} />
         )}
         {/* Inner padding — nothing goes beyond this */}
-        <div className="absolute inset-0 flex flex-col" style={{ padding: `clamp(${12 + (borderStyle !== "none" && borderWidth > 0 ? borderWidth + Math.max(0, borderWidth - 8) : 0)}px, ${4 + (borderStyle !== "none" && borderWidth > 0 ? borderWidth * 0.5 : 0)}%, ${32 + (borderStyle !== "none" && borderWidth > 0 ? borderWidth + Math.max(0, borderWidth - 8) : 0)}px)` }}>
+        <div className="absolute inset-0 flex flex-col" style={{ padding: `clamp(${12 + (borderStyle !== "none" && borderWidth > 0 ? borderWidth * 1.5 : 0)}px, ${4 + (borderStyle !== "none" && borderWidth > 0 ? borderWidth * 0.8 : 0)}%, ${32 + (borderStyle !== "none" && borderWidth > 0 ? borderWidth * 1.5 : 0)}px)` }}>
           {/* Quote content */}
           <div ref={containerRef} className="flex-1 flex items-center justify-center relative z-10 overflow-hidden">
             <div ref={contentRef} style={{ textAlign, maxWidth: "90%", width: "90%", transform: `scale(${scale})`, transformOrigin: "center center", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
