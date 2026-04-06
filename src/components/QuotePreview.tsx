@@ -414,6 +414,7 @@ const QuotePreview = forwardRef<HTMLDivElement, QuotePreviewProps>(
           {/* Overflow nudge */}
           {isOverflowing && (
             <div
+              data-export-exclude
               className="absolute top-0 left-0 right-0 z-30 px-3 py-2 flex items-center justify-center gap-1.5 animate-fade-in"
               style={{
                 backgroundColor: "rgba(220,38,38,0.92)",
