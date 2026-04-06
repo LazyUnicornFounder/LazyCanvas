@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import QuoteGallery from "@/components/QuoteGallery";
+import DesignGallery from "@/components/DesignGallery";
 import { MainNav, LogoWithTagline } from "@/components/MainNav";
 
 const Gallery = () => {
@@ -28,7 +28,7 @@ const Gallery = () => {
         <h1 className="font-heading text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-8">
           Gallery
         </h1>
-        <QuoteGallery hideWrapper />
+        <DesignGallery hideWrapper />
       </main>
     </div>
   );

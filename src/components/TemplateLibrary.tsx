@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import type { QuoteEditorState } from "@/components/QuoteEditor";
+import type { DesignEditorState } from "@/components/DesignEditor";
 
 interface Template {
   id: string;
   name: string;
   category: string;
-  editorState: Partial<QuoteEditorState>;
+  editorState: Partial<DesignEditorState>;
   previewImage?: string;
   isDb?: boolean;
 }
@@ -3134,7 +3134,7 @@ const PREVIEW_QUOTES: Record<string, { text: string; author: string }> = {
 };
 
 interface TemplateLibraryProps {
-  onApply: (state: Partial<QuoteEditorState>) => void;
+  onApply: (state: Partial<DesignEditorState>) => void;
   backgroundOpacity?: number;
   onOpacityChange?: (value: number) => void;
   defaultCategory?: string;
@@ -3156,7 +3156,7 @@ export default function TemplateLibrary({ onApply, backgroundOpacity = 1, onOpac
               id: t.id,
               name: t.name,
               category: t.category,
-              editorState: t.editor_state as Partial<QuoteEditorState>,
+              editorState: t.editor_state as Partial<DesignEditorState>,
               isDb: true,
             }))
           );

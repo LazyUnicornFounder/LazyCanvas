@@ -1,18 +1,18 @@
 import { useState, useRef, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import QuotePreview, {
+import DesignPreview, {
   type AspectRatio,
-  type QuoteFont,
-  type QuoteTheme,
+  type DesignFont,
+  type DesignTheme,
   type TextShadow,
   type AuthorPosition,
   type SocialPlatform,
-} from "@/components/QuotePreview";
-import QuoteEditor, {
-  type QuoteEditorState,
+} from "@/components/DesignPreview";
+import DesignEditor, {
+  type DesignEditorState,
   DEFAULT_EDITOR_STATE,
   SOCIAL_PLATFORMS,
-} from "@/components/QuoteEditor";
+} from "@/components/DesignEditor";
 import { Trash2, Plus } from "lucide-react";
 import { toast } from "sonner";
 
@@ -47,7 +47,7 @@ interface SlideshowQuote {
 }
 
 const AdminSlideshow = () => {
-  const [editorState, setEditorState] = useState<QuoteEditorState>(DEFAULT_EDITOR_STATE);
+  const [editorState, setEditorState] = useState<DesignEditorState>(DEFAULT_EDITOR_STATE);
   const [savedQuotes, setSavedQuotes] = useState<SlideshowQuote[]>([]);
   const [saving, setSaving] = useState(false);
   const previewRef = useRef<HTMLDivElement>(null);
@@ -133,7 +133,7 @@ const AdminSlideshow = () => {
   return (
     <div className="flex gap-6 items-start">
       <div className="flex-1 min-w-0 space-y-4">
-        <QuoteEditor state={editorState} onChange={setEditorState} />
+        <DesignEditor state={editorState} onChange={setEditorState} />
 
         <button
           onClick={handleSave}
@@ -152,14 +152,14 @@ const AdminSlideshow = () => {
             {savedQuotes.map((sq) => (
               <div key={sq.id} className="relative group">
                 <div className="w-full">
-                  <QuotePreview
+                  <DesignPreview
                     quote={sq.quote}
                     authorName={sq.author_name || ""}
                     authorPhoto={sq.author_photo_url || null}
                     socials={sq.socials || ""}
                     aspectRatio={(sq.aspect_ratio as AspectRatio) || "square"}
-                    font={(sq.font as QuoteFont) || "playfair"}
-                    theme={(sq.theme as QuoteTheme) || "dark"}
+                    font={(sq.font as DesignFont) || "playfair"}
+                    theme={(sq.theme as DesignTheme) || "dark"}
                     backgroundImage={sq.background_image_url || null}
                     backgroundOpacity={sq.background_opacity || 0.4}
                     fontSize={sq.font_size || 1.4}
@@ -169,7 +169,7 @@ const AdminSlideshow = () => {
                     textColor={sq.text_color || ""}
                     authorFontSize={sq.author_font_size || 0.875}
                     authorColor={sq.author_color || ""}
-                    authorFont={(sq.author_font as QuoteFont) || "playfair"}
+                    authorFont={(sq.author_font as DesignFont) || "playfair"}
                     textShadow={(sq.text_shadow as TextShadow) || "none"}
                     authorPosition={(sq.author_position as AuthorPosition) || "below-quote"}
                     backgroundColor={sq.background_color || ""}
@@ -194,7 +194,7 @@ const AdminSlideshow = () => {
       <div className="hidden lg:block sticky top-4 flex-shrink-0" style={{ width: "clamp(280px, 28vw, 400px)" }}>
         <div className="flex justify-center items-start">
           <div className="shadow-xl w-full">
-            <QuotePreview
+            <DesignPreview
               ref={previewRef}
               quote={editorState.quote}
               authorName={editorState.authorName}

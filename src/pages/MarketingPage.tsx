@@ -5,7 +5,7 @@ import TemplateLibrary from "@/components/TemplateLibrary";
 import { MainNav, LogoWithTagline } from "@/components/MainNav";
 import { useAuth } from "@/hooks/useAuth";
 import AuthModal from "@/components/AuthModal";
-import type { QuoteEditorState } from "@/components/QuoteEditor";
+import type { DesignEditorState } from "@/components/DesignEditor";
 
 interface Feature {
   icon: string;
@@ -38,7 +38,7 @@ const MarketingPage = ({ config }: { config: MarketingPageConfig }) => {
     return () => { document.title = "Lazy Faceless — Marketing content for anything."; };
   }, [config.title]);
 
-  const handleApplyTemplate = (partial: Partial<QuoteEditorState>) => {
+  const handleApplyTemplate = (partial: Partial<DesignEditorState>) => {
     localStorage.setItem(DRAFT_KEY, JSON.stringify(partial));
     navigate("/");
   };
