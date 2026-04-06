@@ -185,7 +185,7 @@ const Index = () => {
       const suffix = scale > 3 ? "-print" : "";
       downloadBlob(blob, `quote${suffix}-${Date.now()}.png`);
 
-      if (!user && showGuestPrompt) {
+      if (!user && showGuestPrompt && !localStorage.getItem("lazy-quotes-signup-dismissed")) {
         window.setTimeout(() => setShowSignupPrompt(true), 300);
       }
     } catch (err) {
@@ -245,12 +245,14 @@ const Index = () => {
 
   const handleSignupAccept = useCallback(() => {
     setShowSignupPrompt(false);
+    localStorage.setItem("lazy-quotes-signup-dismissed", "true");
     localStorage.setItem(DRAFT_KEY, JSON.stringify(editorState));
     setShowAuthModal(true);
   }, [editorState]);
 
   const handleSignupDownload = useCallback(() => {
     setShowSignupPrompt(false);
+    localStorage.setItem("lazy-quotes-signup-dismissed", "true");
     performDownloadOnly(3, false);
   }, [performDownloadOnly]);
 
