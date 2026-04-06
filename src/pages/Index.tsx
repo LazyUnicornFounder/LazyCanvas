@@ -753,6 +753,7 @@ const Index = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+      {!user && <SiteFooter />}
     </div>
   );
 
