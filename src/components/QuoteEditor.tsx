@@ -1374,21 +1374,6 @@ const QuoteEditor = ({ state: rawState, onChange, isPro = false }: QuoteEditorPr
                     {UNIT_OPTIONS.map((u) => <option key={u.value} value={u.value}>{u.label}</option>)}
                   </select>
                 </div>
-                {customUnit !== "px" && (
-                  <div className="w-20">
-                    <label className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1 block">DPI</label>
-                    <input
-                      type="number"
-                      min={1}
-                      value={customDpi}
-                      onChange={(e) => {
-                        const val = parseInt(e.target.value);
-                        if (!isNaN(val) && val >= 1) setCustomDpi(val);
-                      }}
-                      className="w-full px-2 py-1.5 text-sm bg-background border border-border rounded-md focus:outline-none focus:ring-1 focus:ring-foreground/20"
-                    />
-                  </div>
-                )}
               </div>
             </div>
           </div>
