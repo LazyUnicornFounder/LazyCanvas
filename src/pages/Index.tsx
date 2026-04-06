@@ -108,6 +108,19 @@ const Index = () => {
     setEditorState(DEFAULT_EDITOR_STATE);
   };
 
+  const handleSaveQuote = useCallback(async () => {
+    if (!user) return;
+    const title = editorState.quote
+      ? editorState.quote.slice(0, 40) + (editorState.quote.length > 40 ? "…" : "")
+      : "Untitled";
+    const result = await saveQuote(activeQuoteId, title, editorState);
+    if (result && !activeQuoteId) {
+      setActiveQuoteId(result.id);
+    }
+    const { toast } = await import("sonner");
+    toast.success(activeQuoteId ? "Changes saved!" : "Quote saved!");
+  }, [user, editorState, activeQuoteId, saveQuote]);
+
   // Scroll to top on mount (e.g. when navigating from marketing pages)
   useEffect(() => {
     window.scrollTo(0, 0);
