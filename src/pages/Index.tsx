@@ -68,6 +68,7 @@ const Index = () => {
   const { user, signOut, isPro, isAdmin } = useAuth();
   const navigate = useNavigate();
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [authModalMode, setAuthModalMode] = useState<"login" | "signup">("signup");
   const [editorState, setEditorState] = useState<QuoteEditorState>(() => {
     try {
       const saved = localStorage.getItem(DRAFT_KEY);
@@ -367,13 +368,13 @@ const Index = () => {
             ) : (
               <>
                 <button
-                  onClick={() => setShowAuthModal(true)}
+                  onClick={() => { setAuthModalMode("login"); setShowAuthModal(true); }}
                   className="text-sm font-heading font-medium text-muted-foreground hover:text-foreground transition-colors"
                 >
                   Sign in
                 </button>
                 <button
-                  onClick={() => setShowAuthModal(true)}
+                  onClick={() => { setAuthModalMode("signup"); setShowAuthModal(true); }}
                   className="px-4 py-2 bg-foreground text-background font-heading text-sm font-medium rounded-md hover:opacity-90 transition-opacity"
                 >
                   Get started free
@@ -591,6 +592,7 @@ const Index = () => {
         open={showAuthModal}
         onClose={() => setShowAuthModal(false)}
         onSuccess={() => navigate("/create")}
+        defaultMode={authModalMode}
       />
 
       {/* Signup prompt after download for non-logged-in users */}
