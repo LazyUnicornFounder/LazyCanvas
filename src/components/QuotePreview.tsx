@@ -82,6 +82,7 @@ interface QuotePreviewProps {
   backgroundOpacity: number;
   backgroundBlur?: number;
   backgroundFilter?: string;
+  filterIntensity?: number;
   fontSize: number;
   textAlign: "left" | "center" | "right";
   letterSpacing: number;
@@ -296,7 +297,7 @@ const renderColoredQuote = (text: string, coloredWords: ColoredWord[] = [], show
 };
 
 const QuotePreview = forwardRef<HTMLDivElement, QuotePreviewProps>(
-  ({ quote, authorName, authorPhoto, photoShape = "none", socials, socialPlatform, aspectRatio, font, theme, backgroundImage, backgroundOpacity, backgroundBlur = 0, backgroundFilter = "none", fontSize, textAlign, letterSpacing, lineHeight, textColor, authorFontSize, authorColor, authorFont, textShadow, shadowOpacity = 1, authorPosition, backgroundColor, isBold, isItalic, coloredWords, showWatermark, showQuotationMarks = false, photoStroke = false, customWidth, customHeight, borderWidth = 0, borderColor = "#000000", borderStyle = "none", onAutoFontSize }, ref) => {
+  ({ quote, authorName, authorPhoto, photoShape = "none", socials, socialPlatform, aspectRatio, font, theme, backgroundImage, backgroundOpacity, backgroundBlur = 0, backgroundFilter = "none", filterIntensity = 1, fontSize, textAlign, letterSpacing, lineHeight, textColor, authorFontSize, authorColor, authorFont, textShadow, shadowOpacity = 1, authorPosition, backgroundColor, isBold, isItalic, coloredWords, showWatermark, showQuotationMarks = false, photoStroke = false, customWidth, customHeight, borderWidth = 0, borderColor = "#000000", borderStyle = "none", onAutoFontSize }, ref) => {
     const t = themeStyles[theme];
     const isPlaceholder = !quote;
 
@@ -428,7 +429,18 @@ const QuotePreview = forwardRef<HTMLDivElement, QuotePreviewProps>(
               opacity: backgroundOpacity,
               filter: [
                 backgroundBlur > 0 ? `blur(${backgroundBlur}px)` : "",
-                BG_FILTERS.find(f => f.value === backgroundFilter)?.css || "",
+                (() => {
+                  const raw = BG_FILTERS.find(f => f.value === backgroundFilter)?.css || "";
+                  if (!raw || filterIntensity >= 1) return raw;
+                  if (filterIntensity <= 0) return "";
+                  // Scale numeric values toward their neutral points
+                  return raw.replace(/([\w-]+)\(([\d.]+)\)/g, (_, fn, val) => {
+                    const v = parseFloat(val);
+                    const neutral = ["brightness", "contrast", "saturate"].includes(fn) ? 1 : 0;
+                    const scaled = neutral + (v - neutral) * filterIntensity;
+                    return `${fn}(${scaled.toFixed(3)})`;
+                  });
+                })(),
               ].filter(Boolean).join(" ") || undefined,
               transform: backgroundBlur > 0 ? "scale(1.05)" : undefined,
             }}
