@@ -610,7 +610,6 @@ const QuoteEditor = ({ state: rawState, onChange, isPro = false }: QuoteEditorPr
               )}
             </div>
           </div>
-          </div>
         </ControlSection>
       </div>
 
