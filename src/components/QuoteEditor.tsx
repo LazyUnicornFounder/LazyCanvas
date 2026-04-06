@@ -514,19 +514,18 @@ const QuoteEditor = ({ state: rawState, onChange, isPro = false }: QuoteEditorPr
         <ControlSection label="Templates" pro={!isPro} onProClick={goToPricing}>
           <TemplateLibrary
             onApply={(partial) => {
-              // Auto-scale font size to avoid overflow with user's actual quote
-              let adjustedFontSize = partial.fontSize ?? state.fontSize;
-              const currentQuote = state.quote || "";
-              const templateQuote = partial.quote || "";
-              if (currentQuote.length > 0 && templateQuote.length > 0 && currentQuote.length > templateQuote.length) {
-                const ratio = templateQuote.length / currentQuote.length;
-                // Scale font size proportionally, with a floor of 40% of original
-                adjustedFontSize = Math.max(adjustedFontSize * Math.max(ratio, 0.4), 1.5);
-              }
+              // Cap font size based on quote length to prevent overflow
+              const finalQuote = partial.quote || state.quote || "";
+              let fontSize = partial.fontSize ?? state.fontSize;
+              const charCount = finalQuote.length;
+              if (charCount > 60) fontSize = Math.min(fontSize, 3.6);
+              else if (charCount > 40) fontSize = Math.min(fontSize, 4.5);
+              else if (charCount > 20) fontSize = Math.min(fontSize, 5.4);
+
               onChange({
                 ...state,
                 ...partial,
-                fontSize: adjustedFontSize,
+                fontSize,
                 socialPlatform: state.socialPlatform,
                 socialUsername: state.socialUsername,
                 website: state.website,
