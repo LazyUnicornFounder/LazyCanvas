@@ -1166,6 +1166,21 @@ const QuoteEditor = ({ state: rawState, onChange, isPro = false }: QuoteEditorPr
               ))}
             </div>
           </div>
+          {state.authorPhoto && (
+            <div className="flex items-center gap-3">
+              <span className="text-[10px] font-heading text-muted-foreground uppercase tracking-widest w-14">Stroke</span>
+              <button
+                onClick={() => set("photoStroke", !state.photoStroke)}
+                className={`px-3 py-1.5 text-[10px] font-heading font-medium rounded-md border transition-all ${
+                  state.photoStroke
+                    ? "bg-foreground text-background border-foreground"
+                    : "border-border text-muted-foreground hover:text-foreground hover:border-foreground/30"
+                }`}
+              >
+                {state.photoStroke ? "On" : "Off"}
+              </button>
+            </div>
+          )}
         </div>
       </ControlSection>
 
