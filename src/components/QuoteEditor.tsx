@@ -247,6 +247,9 @@ export interface QuoteEditorState {
   photoStroke: boolean;
   customWidth: number;
   customHeight: number;
+  borderWidth: number;
+  borderColor: string;
+  borderStyle: "none" | "solid" | "dashed" | "dotted" | "double";
 }
 
 export const BG_FILTERS: { value: string; label: string; css: string }[] = [
@@ -305,6 +308,9 @@ export const DEFAULT_EDITOR_STATE: QuoteEditorState = {
   photoStroke: false,
   customWidth: 1080,
   customHeight: 1080,
+  borderWidth: 0,
+  borderColor: "#000000",
+  borderStyle: "none",
 };
 
 interface QuoteEditorProps {
