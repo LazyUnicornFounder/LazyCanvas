@@ -17,11 +17,11 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import { useUserDesigns, type UserDesign } from "@/hooks/useUserDesigns";
 
-const DRAFT_KEY = "lazy-quotes-draft";
+const DRAFT_KEY = "lazy-designs-draft";
 
 const Create = () => {
   const { user, signOut, isPro } = useAuth();
-  const { quotes, loading: quotesLoading, saveDesign, deleteDesign } = useUserDesigns();
+  const { designs, loading: designsLoading, saveDesign, deleteDesign } = useUserDesigns();
   const navigate = useNavigate();
   const [editorState, setEditorState] = useState<DesignEditorState>(() => {
     try {
@@ -204,8 +204,8 @@ const Create = () => {
             onSelectDesign={handleSelectDesign}
             onNewDesign={handleNewDesign}
             currentEditorState={editorState}
-            quotes={quotes}
-            loading={quotesLoading}
+            designs={designs}
+            loading={designsLoading}
             saveDesign={saveDesign}
             deleteDesign={deleteDesign}
           />

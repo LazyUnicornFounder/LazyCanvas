@@ -27,7 +27,7 @@ import { toBlob as toImageBlob } from "html-to-image";
 import DesignGallery from "@/components/DesignGallery";
 import { supabase } from "@/integrations/supabase/client";
 
-const DRAFT_KEY = "lazy-quotes-draft";
+const DRAFT_KEY = "lazy-designs-draft";
 
 const ASPECT_RATIOS: Record<string, number> = {
   square: 1, "3:4": 3/4, "2:3": 2/3, "9:16": 9/16, "1:2": 1/2,
@@ -68,7 +68,7 @@ const sanitizeExportStyles = (root: ParentNode) => {
 
 const Index = () => {
   const { user, signOut, isPro, isAdmin } = useAuth();
-  const { quotes, loading: quotesLoading, saveDesign, deleteDesign } = useUserDesigns();
+  const { designs, loading: designsLoading, saveDesign, deleteDesign } = useUserDesigns();
   const navigate = useNavigate();
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [authModalMode, setAuthModalMode] = useState<"login" | "signup">("signup");
@@ -216,7 +216,7 @@ const Index = () => {
       const suffix = scale > 3 ? "-print" : "";
       downloadBlob(blob, `design${suffix}-${Date.now()}.png`);
 
-      if (!user && showGuestPrompt && !localStorage.getItem("lazy-quotes-signup-dismissed")) {
+      if (!user && showGuestPrompt && !localStorage.getItem("lazy-designs-signup-dismissed")) {
         window.setTimeout(() => setShowSignupPrompt(true), 300);
       }
     } catch (err) {
@@ -331,14 +331,14 @@ const Index = () => {
 
   const handleSignupAccept = useCallback(() => {
     setShowSignupPrompt(false);
-    localStorage.setItem("lazy-quotes-signup-dismissed", "true");
+    localStorage.setItem("lazy-designs-signup-dismissed", "true");
     localStorage.setItem(DRAFT_KEY, JSON.stringify(editorState));
     setShowAuthModal(true);
   }, [editorState]);
 
   const handleSignupDownload = useCallback(() => {
     setShowSignupPrompt(false);
-    localStorage.setItem("lazy-quotes-signup-dismissed", "true");
+    localStorage.setItem("lazy-designs-signup-dismissed", "true");
     performDownloadOnly(3, false);
   }, [performDownloadOnly]);
 
@@ -845,8 +845,8 @@ const Index = () => {
             onSelectDesign={handleSelectDesign}
             onNewDesign={handleNewDesign}
             currentEditorState={editorState}
-            quotes={quotes}
-            loading={quotesLoading}
+            designs={designs}
+            loading={designsLoading}
             saveDesign={saveDesign}
             deleteDesign={deleteDesign}
           />

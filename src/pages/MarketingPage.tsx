@@ -24,7 +24,7 @@ interface MarketingPageConfig {
   ctaText?: string;
 }
 
-const DRAFT_KEY = "lazy-quotes-draft";
+const DRAFT_KEY = "lazy-designs-draft";
 
 const MarketingPage = ({ config }: { config: MarketingPageConfig }) => {
   const navigate = useNavigate();
