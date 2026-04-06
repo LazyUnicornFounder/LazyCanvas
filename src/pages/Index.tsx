@@ -198,6 +198,29 @@ const Index = () => {
     }
   }, [downloadBlob, renderPreviewBlob, user]);
 
+  const pendingFreeDownload = useRef(false);
+
+  const handleDownloadFreeVersion = useCallback(() => {
+    setShowProUpgradePrompt(false);
+    setProUpgradeSnapshot(null);
+    setEditorState((prev) => ({
+      ...prev,
+      coloredWords: [],
+      backgroundImage: null,
+      aspectRatio: "square" as const,
+    }));
+    pendingFreeDownload.current = true;
+  }, []);
+
+  useEffect(() => {
+    if (!pendingFreeDownload.current) return;
+    pendingFreeDownload.current = false;
+    const timer = setTimeout(() => {
+      performDownloadOnly(3, false);
+    }, 250);
+    return () => clearTimeout(timer);
+  }, [editorState, performDownloadOnly]);
+
   const handleDownloadClick = useCallback((scale: number = 3) => {
     const hasPro = usesProFeatures(editorState);
 
@@ -556,13 +579,13 @@ const Index = () => {
               />
             </div>
           )}
-          <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => { setShowProUpgradePrompt(false); setProUpgradeSnapshot(null); }}>
-              Go back
-            </AlertDialogCancel>
-            <AlertDialogAction onClick={() => { setShowProUpgradePrompt(false); setProUpgradeSnapshot(null); navigate("/pricing"); }}>
+          <AlertDialogFooter className="flex-col sm:flex-col gap-2">
+            <AlertDialogAction onClick={() => { setShowProUpgradePrompt(false); setProUpgradeSnapshot(null); navigate("/pricing"); }} className="w-full">
               Upgrade to Pro
             </AlertDialogAction>
+            <AlertDialogCancel onClick={handleDownloadFreeVersion} className="w-full border-0 text-muted-foreground hover:text-foreground text-xs mt-0">
+              Download free version instead
+            </AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
