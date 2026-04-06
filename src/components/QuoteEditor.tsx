@@ -1310,6 +1310,13 @@ const QuoteEditor = ({ state: rawState, onChange, isPro = false }: QuoteEditorPr
                 >
                   Change
                 </button>
+                <button
+                  onClick={() => set("authorPhoto", null)}
+                  className="flex items-center gap-1 text-xs font-heading text-destructive hover:text-destructive/80 transition-colors"
+                >
+                  <Trash2 className="w-3 h-3" />
+                  Delete
+                </button>
                 {isPro && (
                   <button
                     onClick={handleRemoveBg}
