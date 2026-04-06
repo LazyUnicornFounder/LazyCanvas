@@ -1,7 +1,8 @@
-import { Plus, FileText, Trash2, Crown, LogOut, CreditCard, Pencil, PanelLeftClose, PanelLeftOpen, ImagePlus, FolderOpen, Loader2, Settings } from "lucide-react";
-import { useRef } from "react";
+import { Plus, FileText, Trash2, Crown, LogOut, CreditCard, Pencil, PanelLeftClose, PanelLeftOpen, ImagePlus, FolderOpen, Loader2, Settings, Sparkles } from "lucide-react";
+import { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
 import type { UserDesign } from "@/hooks/useUserDesigns";
 import type { DesignEditorState } from "@/components/DesignEditor";
 import { LogoWithTagline } from "@/components/MainNav";
@@ -49,6 +50,20 @@ export function AppSidebar({
   const navigate = useNavigate();
   const { state, toggleSidebar } = useSidebar();
   const collapsed = state === "collapsed";
+
+  // Fetch what's new posts
+  const [whatsNewPosts, setWhatsNewPosts] = useState<{ id: string; title: string; content: string; published_at: string | null }[]>([]);
+  const [whatsNewOpen, setWhatsNewOpen] = useState(false);
+
+  useEffect(() => {
+    supabase
+      .from("whats_new_posts")
+      .select("id, title, content, published_at")
+      .eq("is_published", true)
+      .order("published_at", { ascending: false })
+      .limit(5)
+      .then(({ data }) => { if (data) setWhatsNewPosts(data); });
+  }, []);
 
   const currentTier = isPro ? "Pro" : "Free";
   const { images: userImages, uploading: uploadingImage, uploadImage, deleteImage: deleteUserImage } = useUserImages();
@@ -218,6 +233,42 @@ export function AppSidebar({
                 )}
                 {!collapsed && userImages.length === 0 && (
                   <p className="text-[10px] text-muted-foreground px-3 pb-2">Upload images to build your library.</p>
+                )}
+              </SidebarGroupContent>
+            </SidebarGroup>
+          </>
+        )}
+
+        {/* What's New */}
+        {whatsNewPosts.length > 0 && (
+          <>
+            <SidebarSeparator />
+            <SidebarGroup>
+              <SidebarGroupLabel>
+                <Sparkles className="w-3.5 h-3.5 mr-1.5" />
+                What's New
+              </SidebarGroupLabel>
+              <SidebarGroupContent>
+                {!collapsed && (
+                  <div className="px-3 pb-2 space-y-2">
+                    {(whatsNewOpen ? whatsNewPosts : whatsNewPosts.slice(0, 2)).map((post) => (
+                      <div key={post.id} className="space-y-0.5">
+                        <p className="text-xs font-heading font-medium text-foreground leading-tight">{post.title}</p>
+                        <p className="text-[10px] text-muted-foreground line-clamp-2 leading-snug">{post.content}</p>
+                        {post.published_at && (
+                          <p className="text-[9px] text-muted-foreground/60">{new Date(post.published_at).toLocaleDateString()}</p>
+                        )}
+                      </div>
+                    ))}
+                    {whatsNewPosts.length > 2 && (
+                      <button
+                        onClick={() => setWhatsNewOpen(!whatsNewOpen)}
+                        className="text-[10px] text-primary hover:underline"
+                      >
+                        {whatsNewOpen ? "Show less" : `Show ${whatsNewPosts.length - 2} more`}
+                      </button>
+                    )}
+                  </div>
                 )}
               </SidebarGroupContent>
             </SidebarGroup>
