@@ -172,11 +172,15 @@ const FUTURISTIC_FONTS: { value: QuoteFont; label: string; preview: string }[] =
 
 const FONT_OPTIONS = [...SERIF_FONTS, ...SANS_FONTS, ...CURSIVE_FONTS, ...FUTURISTIC_FONTS];
 
-const THEME_OPTIONS: { value: QuoteTheme; label: string; swatch: string }[] = [
+const THEME_OPTIONS: { value: QuoteTheme; label: string; swatch: string; isGlass?: boolean }[] = [
   { value: "light", label: "Light", swatch: "#FFFFFF" },
   { value: "dark", label: "Dark", swatch: "#1a1a1a" },
   { value: "cream", label: "Cream", swatch: "#F5F0E8" },
   { value: "ink", label: "Ink", swatch: "#0d1117" },
+  { value: "glass-light", label: "Glass", swatch: "linear-gradient(135deg, rgba(255,255,255,0.6), rgba(255,255,255,0.2))", isGlass: true },
+  { value: "glass-dark", label: "Dark Glass", swatch: "linear-gradient(135deg, rgba(40,40,40,0.8), rgba(20,20,20,0.4))", isGlass: true },
+  { value: "glass-frost", label: "Frost", swatch: "linear-gradient(135deg, rgba(200,220,240,0.6), rgba(180,200,230,0.2))", isGlass: true },
+  { value: "glass-aurora", label: "Aurora", swatch: "linear-gradient(135deg, rgba(139,92,246,0.6), rgba(59,130,246,0.3), rgba(16,185,129,0.4))", isGlass: true },
 ];
 
 const WALLPAPER_CATEGORIES = [
@@ -710,7 +714,11 @@ const QuoteEditor = ({ state: rawState, onChange, isPro = false }: QuoteEditorPr
                     ? "border-foreground scale-110"
                     : "border-border group-hover:border-foreground/30"
                 }`}
-                style={{ backgroundColor: opt.swatch }}
+                style={{
+                  ...(opt.isGlass
+                    ? { background: opt.swatch, backdropFilter: "blur(8px)" }
+                    : { backgroundColor: opt.swatch }),
+                }}
               />
               <span className="text-[10px] font-heading text-muted-foreground">{opt.label}</span>
             </button>

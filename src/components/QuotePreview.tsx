@@ -59,7 +59,7 @@ const socialIcons: Record<SocialPlatform, IconComponent> = {
 
 export type AspectRatio = "square" | "3:4" | "2:3" | "9:16" | "1:2" | "4:3" | "3:2" | "16:9" | "2:1" | "1.91:1" | "3:1" | "4:1" | "820:312" | "a0" | "a1" | "a2" | "a3" | "a4" | "letter" | "legal" | "tabloid" | "poster-18x24" | "poster-24x36" | "banner-2x5" | "ios-screenshot" | "ios-ipad" | "android-phone" | "android-tablet" | "mac-screenshot" | "app-icon" | "iphone-wallpaper" | "android-wallpaper" | "lock-screen" | "business-card" | "custom";
 export type QuoteFont = "playfair" | "cormorant" | "bebas" | "mono" | "heading" | "lora" | "inter" | "oswald" | "merriweather" | "raleway" | "dancing" | "archivo" | "crimson" | "montserrat" | "poppins" | "pacifico" | "great-vibes" | "satisfy" | "caveat" | "permanent-marker" | "shadows-into-light" | "orbitron" | "rajdhani" | "audiowide";
-export type QuoteTheme = "light" | "dark" | "cream" | "ink";
+export type QuoteTheme = "light" | "dark" | "cream" | "ink" | "glass-light" | "glass-dark" | "glass-frost" | "glass-aurora";
 export type TextShadow = "none" | "soft" | "hard" | "glow" | "outline" | "neon";
 export type AuthorPosition = "below-quote" | "bottom-left" | "bottom-center" | "bottom-right";
 
@@ -201,11 +201,27 @@ const fontFamilies: Record<QuoteFont, string> = {
   audiowide: "'Audiowide', sans-serif",
 };
 
-const themeStyles: Record<QuoteTheme, { bg: string; text: string; muted: string; border: string }> = {
+const themeStyles: Record<QuoteTheme, { bg: string; text: string; muted: string; border: string; glass?: { blur: number; opacity: number; borderGlow: string; gradient: string } }> = {
   light: { bg: "#FFFFFF", text: "#1a1a1a", muted: "#888888", border: "#e5e5e5" },
   dark: { bg: "#1a1a1a", text: "#f5f5f0", muted: "#888888", border: "#333333" },
   cream: { bg: "#F5F0E8", text: "#2d2a26", muted: "#8a8477", border: "#e0d9cc" },
   ink: { bg: "#0d1117", text: "#c9d1d9", muted: "#6e7681", border: "#21262d" },
+  "glass-light": {
+    bg: "rgba(255,255,255,0.25)", text: "#1a1a1a", muted: "#666666", border: "rgba(255,255,255,0.5)",
+    glass: { blur: 20, opacity: 0.25, borderGlow: "rgba(255,255,255,0.6)", gradient: "linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.1) 100%)" },
+  },
+  "glass-dark": {
+    bg: "rgba(0,0,0,0.3)", text: "#f0f0f0", muted: "#aaaaaa", border: "rgba(255,255,255,0.15)",
+    glass: { blur: 24, opacity: 0.3, borderGlow: "rgba(255,255,255,0.2)", gradient: "linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%)" },
+  },
+  "glass-frost": {
+    bg: "rgba(200,220,240,0.2)", text: "#1e293b", muted: "#64748b", border: "rgba(148,163,184,0.4)",
+    glass: { blur: 30, opacity: 0.2, borderGlow: "rgba(148,163,184,0.5)", gradient: "linear-gradient(135deg, rgba(200,220,240,0.35) 0%, rgba(180,200,230,0.1) 100%)" },
+  },
+  "glass-aurora": {
+    bg: "rgba(120,60,200,0.15)", text: "#ffffff", muted: "#c4b5fd", border: "rgba(167,139,250,0.4)",
+    glass: { blur: 22, opacity: 0.15, borderGlow: "rgba(167,139,250,0.5)", gradient: "linear-gradient(135deg, rgba(139,92,246,0.3) 0%, rgba(59,130,246,0.15) 50%, rgba(16,185,129,0.2) 100%)" },
+  },
 };
 
 const shadowStylesBase: Record<TextShadow, string> = {
@@ -475,12 +491,14 @@ const QuotePreview = forwardRef<HTMLDivElement, QuotePreviewProps>(
       </div>
     ) : null;
 
+    const isGlass = !!t.glass;
+
     return (
       <div
         ref={ref}
         className={`${aspectRatio !== "custom" ? aspectClasses[aspectRatio] : ""} w-full max-w-lg max-h-full relative overflow-hidden`}
         style={{
-          backgroundColor: backgroundColor || t.bg,
+          backgroundColor: isGlass ? (backgroundColor || "transparent") : (backgroundColor || t.bg),
           color: t.text,
           ...(aspectRatio === "custom" && customWidth && customHeight ? { aspectRatio: `${customWidth} / ${customHeight}` } : {}),
           ...(borderStyle !== "none" && borderWidth > 0 ? { border: `${borderWidth}px ${borderStyle} ${borderColor}`, boxSizing: "border-box" as const } : {}),
@@ -511,8 +529,21 @@ const QuotePreview = forwardRef<HTMLDivElement, QuotePreviewProps>(
             }}
           />
         )}
-        {backgroundImage && (
+        {backgroundImage && !isGlass && (
           <div className="absolute inset-0" style={{ backgroundColor: backgroundColor || t.bg, opacity: 1 - backgroundOpacity }} />
+        )}
+        {/* Glass overlay */}
+        {isGlass && t.glass && (
+          <div
+            className="absolute inset-0"
+            style={{
+              background: t.glass.gradient,
+              backdropFilter: `blur(${t.glass.blur}px)`,
+              WebkitBackdropFilter: `blur(${t.glass.blur}px)`,
+              border: `1px solid ${t.glass.borderGlow}`,
+              boxShadow: `inset 0 1px 1px 0 rgba(255,255,255,0.15), 0 4px 30px rgba(0,0,0,0.1)`,
+            }}
+          />
         )}
         {/* Inner padding — nothing goes beyond this */}
         <div className="absolute inset-0 flex flex-col" style={{ padding: `clamp(${12 + (borderStyle !== "none" && borderWidth > 0 ? borderWidth * 1.5 : 0)}px, ${4 + (borderStyle !== "none" && borderWidth > 0 ? borderWidth * 0.8 : 0)}%, ${32 + (borderStyle !== "none" && borderWidth > 0 ? borderWidth * 1.5 : 0)}px)` }}>
