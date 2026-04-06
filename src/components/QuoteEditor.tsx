@@ -337,6 +337,9 @@ const QuoteEditor = ({ state: rawState, onChange, isPro = false }: QuoteEditorPr
   // Normalize state to handle old saved states missing new fields
   const state: QuoteEditorState = { ...DEFAULT_EDITOR_STATE, ...rawState, coloredWords: rawState.coloredWords || [], photoShape: rawState.photoShape || "none" };
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const { images: userImages, uploading: uploadingUserImage, uploadImage: uploadUserImage, deleteImage: deleteUserImage } = useUserImages();
+  const userImageInputRef = useRef<HTMLInputElement>(null);
   const goToPricing = () => navigate("/pricing");
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [emojiCategory, setEmojiCategory] = useState(0);
