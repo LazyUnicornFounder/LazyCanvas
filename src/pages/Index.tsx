@@ -616,6 +616,7 @@ const Index = () => {
               <div className="grid grid-cols-2 gap-3">
                 {/* Pro version */}
                 <div className="flex flex-col items-center gap-2">
+                  <span className="text-[11px] font-heading font-semibold text-primary">Pro</span>
                   <div className="relative rounded-lg overflow-hidden border-2 border-primary shadow-lg ring-1 ring-primary/20">
                     <img
                       src={proUpgradeSnapshot}
@@ -623,14 +624,12 @@ const Index = () => {
                       className="w-full h-auto object-contain blur-[1px]"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-                    <span className="absolute bottom-2 left-1/2 -translate-x-1/2 px-2.5 py-0.5 text-[10px] font-heading font-bold uppercase tracking-wider bg-primary text-primary-foreground rounded-full shadow">
-                      Pro
-                    </span>
                   </div>
                   <span className="text-[11px] font-heading font-semibold text-foreground">Your design</span>
                 </div>
                 {/* Free version */}
                 <div className="flex flex-col items-center gap-2">
+                  <span className="text-[11px] font-heading font-medium text-muted-foreground">Free</span>
                   <div className="relative rounded-lg overflow-hidden border border-border shadow-sm">
                     <img
                       src={proWatermarkSnapshot}
@@ -638,12 +637,9 @@ const Index = () => {
                       className="w-full h-auto object-contain opacity-75"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-                    <div className="absolute bottom-6 right-1 z-10 px-1.5 py-0.5 rounded text-[6px] font-semibold text-white/90" style={{ backgroundColor: "rgba(0,0,0,0.55)" }}>
+                    <div className="absolute bottom-2 right-1 z-10 px-1.5 py-0.5 rounded text-[6px] font-semibold text-white/90" style={{ backgroundColor: "rgba(0,0,0,0.55)" }}>
                       Made with <span className="font-bold">LazyFaceless.com</span>
                     </div>
-                    <span className="absolute bottom-2 left-1/2 -translate-x-1/2 px-2.5 py-0.5 text-[10px] font-heading font-medium uppercase tracking-wider bg-muted text-muted-foreground rounded-full">
-                      Free
-                    </span>
                   </div>
                   <span className="text-[11px] font-heading text-muted-foreground">Without Pro features</span>
                 </div>
