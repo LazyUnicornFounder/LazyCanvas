@@ -107,7 +107,7 @@ interface QuotePreviewProps {
   borderColor?: string;
   borderStyle?: "none" | "solid" | "dashed" | "dotted" | "double";
   logo?: string | null;
-  logoPosition?: "top-left" | "top-right" | "bottom-left" | "bottom-right";
+  logoPosition?: "top-left" | "top-center" | "top-right" | "bottom-left" | "bottom-center" | "bottom-right" | "center";
   logoSize?: number;
   onAutoFontSize?: (newSize: number) => void;
 }
@@ -607,8 +607,17 @@ const QuotePreview = forwardRef<HTMLDivElement, QuotePreviewProps>(
             <div
               className="absolute z-20"
               style={{
-                ...(logoPosition.includes("top") ? { top: "clamp(8px, 3%, 16px)" } : { bottom: "clamp(8px, 3%, 16px)" }),
-                ...(logoPosition.includes("left") ? { left: "clamp(8px, 3%, 16px)" } : { right: "clamp(8px, 3%, 16px)" }),
+                ...(logoPosition === "center"
+                  ? { top: "50%", left: "50%", transform: "translate(-50%, -50%)" }
+                  : {
+                      ...(logoPosition.includes("top") ? { top: "clamp(8px, 3%, 16px)" } : {}),
+                      ...(logoPosition.includes("bottom") ? { bottom: "clamp(8px, 3%, 16px)" } : {}),
+                      ...(logoPosition.includes("left") ? { left: "clamp(8px, 3%, 16px)" } : {}),
+                      ...(logoPosition.includes("right") ? { right: "clamp(8px, 3%, 16px)" } : {}),
+                      ...(logoPosition === "top-center" || logoPosition === "bottom-center"
+                        ? { left: "50%", transform: "translateX(-50%)" }
+                        : {}),
+                    }),
               }}
             >
               <img

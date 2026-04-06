@@ -264,7 +264,7 @@ export interface QuoteEditorState {
   borderColor: string;
   borderStyle: "none" | "solid" | "dashed" | "dotted" | "double";
   logo: string | null;
-  logoPosition: "top-left" | "top-right" | "bottom-left" | "bottom-right";
+  logoPosition: "top-left" | "top-center" | "top-right" | "bottom-left" | "bottom-center" | "bottom-right" | "center";
   logoSize: number;
 }
 
@@ -1439,8 +1439,11 @@ const QuoteEditor = ({ state: rawState, onChange, isPro = false }: QuoteEditorPr
                 <div className="flex flex-wrap gap-2">
                   {([
                     { value: "top-left" as const, label: "Top Left" },
+                    { value: "top-center" as const, label: "Top Center" },
                     { value: "top-right" as const, label: "Top Right" },
+                    { value: "center" as const, label: "Center" },
                     { value: "bottom-left" as const, label: "Bottom Left" },
+                    { value: "bottom-center" as const, label: "Bottom Center" },
                     { value: "bottom-right" as const, label: "Bottom Right" },
                   ]).map((pos) => (
                     <button
