@@ -497,7 +497,6 @@ const Index = () => {
             )}
           </div>
         </div>
-        </div>
       </div>
 
       <section className="min-h-[calc(100vh-4rem)] flex px-4 sm:px-6">
