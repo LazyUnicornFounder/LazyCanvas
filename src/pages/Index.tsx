@@ -86,7 +86,7 @@ const Index = () => {
   
   const [freeEditorStateForSnapshot, setFreeEditorStateForSnapshot] = useState<DesignEditorState | null>(null);
   
-  const [showSignupPrompt, setShowSignupPrompt] = useState(false);
+  
   const [showProUpgradePrompt, setShowProUpgradePrompt] = useState(false);
   const [proUpgradeSnapshot, setProUpgradeSnapshot] = useState<string | null>(null);
   const [proWatermarkSnapshot, setProWatermarkSnapshot] = useState<string | null>(null);
@@ -297,9 +297,6 @@ const Index = () => {
       const suffix = scale > 3 ? "-print" : "";
       downloadBlob(blob, `design${suffix}-${Date.now()}.png`);
 
-      if (!user && showGuestPrompt && !localStorage.getItem("lazy-designs-signup-dismissed")) {
-        window.setTimeout(() => setShowSignupPrompt(true), 300);
-      }
     } catch (err) {
       console.error("Failed to export", err);
     } finally {
@@ -405,18 +402,6 @@ const Index = () => {
     }
   }, [downloadBlob, renderPreviewBlob, isPro, addCanvasWatermark]);
 
-  const handleSignupAccept = useCallback(() => {
-    setShowSignupPrompt(false);
-    localStorage.setItem("lazy-designs-signup-dismissed", "true");
-    localStorage.setItem(DRAFT_KEY, JSON.stringify(editorState));
-    setShowAuthModal(true);
-  }, [editorState]);
-
-  const handleSignupDownload = useCallback(() => {
-    setShowSignupPrompt(false);
-    localStorage.setItem("lazy-designs-signup-dismissed", "true");
-    performDownloadOnly(3, false);
-  }, [performDownloadOnly]);
 
   const socials = [
     editorState.socialUsername
@@ -743,25 +728,6 @@ const Index = () => {
         defaultMode={authModalMode}
       />
 
-      {/* Signup prompt after download for non-logged-in users */}
-      <AlertDialog open={showSignupPrompt} onOpenChange={(o) => !o && setShowSignupPrompt(false)}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle className="font-heading">Sign up free to save this design and create more free designs.</AlertDialogTitle>
-            <AlertDialogDescription className="text-sm text-muted-foreground">
-              Create a free account to save your designs, and create unlimited new ones from your personal dashboard.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel onClick={handleSignupDownload}>
-              Download
-            </AlertDialogCancel>
-            <AlertDialogAction onClick={handleSignupAccept}>
-              Sign up free
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
 
       {/* Pro upgrade prompt for free users */}
       <AlertDialog open={showProUpgradePrompt} onOpenChange={(o) => { if (!o) { setShowProUpgradePrompt(false); setProUpgradeSnapshot(null); setProWatermarkSnapshot(null); } }}>
