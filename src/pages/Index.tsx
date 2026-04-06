@@ -653,28 +653,6 @@ const Index = () => {
             {/* Feature comparison */}
             <div className="grid grid-cols-2 gap-4 text-xs">
               <div>
-                <h4 className="font-heading font-semibold text-foreground mb-2">Free</h4>
-                <ul className="space-y-1.5">
-                  {[
-                    { text: "Unlimited designs", included: true },
-                    { text: "PNG download", included: true },
-                    { text: "Save unlimited quotes", included: false },
-                    { text: "Premium templates", included: false },
-                    { text: "Wallpaper backgrounds", included: false },
-                    { text: "Background image upload", included: false },
-                    { text: "Background image remover", included: false },
-                    { text: "Image filters", included: false },
-                    { text: "Word colors", included: false },
-                    { text: "No watermark", included: false },
-                  ].map((f, i) => (
-                    <li key={i} className={`flex items-center gap-1.5 ${f.included ? "text-foreground" : "text-muted-foreground/50 line-through"}`}>
-                      <span>{f.included ? "✓" : "✗"}</span>
-                      <span>{f.text}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div>
                 <h4 className="font-heading font-semibold text-primary mb-2">Pro</h4>
                 <ul className="space-y-1.5">
                   {[
@@ -686,12 +664,34 @@ const Index = () => {
                     "Image filters",
                     "Word colors",
                     "No watermark",
-                    "Save unlimited quotes",
-                    "Re-edit your quotes",
+                    "Save unlimited designs",
+                    "Re-edit your designs",
                   ].map((text, i) => (
                     <li key={i} className="flex items-center gap-1.5 text-foreground">
                       <span className="text-primary">✓</span>
                       <span>{text}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-heading font-semibold text-foreground mb-2">Free</h4>
+                <ul className="space-y-1.5">
+                  {[
+                    { text: "Unlimited designs", included: true },
+                    { text: "PNG download", included: true },
+                    { text: "Save unlimited designs", included: false },
+                    { text: "Premium templates", included: false },
+                    { text: "Wallpaper backgrounds", included: false },
+                    { text: "Background image upload", included: false },
+                    { text: "Background image remover", included: false },
+                    { text: "Image filters", included: false },
+                    { text: "Word colors", included: false },
+                    { text: "No watermark", included: false },
+                  ].map((f, i) => (
+                    <li key={i} className={`flex items-center gap-1.5 ${f.included ? "text-foreground" : "text-muted-foreground/50 line-through"}`}>
+                      <span>{f.included ? "✓" : "✗"}</span>
+                      <span>{f.text}</span>
                     </li>
                   ))}
                 </ul>
