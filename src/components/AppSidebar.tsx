@@ -45,7 +45,7 @@ export function AppSidebar({
 }: AppSidebarProps) {
   const { user, signOut, isPro } = useAuth();
   const navigate = useNavigate();
-  const { state } = useSidebar();
+  const { state, toggleSidebar } = useSidebar();
   const collapsed = state === "collapsed";
 
   const currentTier = "Free"; // TODO: check actual subscription
