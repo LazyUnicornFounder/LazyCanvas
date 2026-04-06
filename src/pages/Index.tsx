@@ -80,6 +80,7 @@ const Index = () => {
   });
   const [downloading, setDownloading] = useState(false);
   const [showDownloadWatermark, setShowDownloadWatermark] = useState(false);
+  const [freeEditorStateForSnapshot, setFreeEditorStateForSnapshot] = useState<QuoteEditorState | null>(null);
   const [showGalleryPrompt, setShowGalleryPrompt] = useState(false);
   const [showSignupPrompt, setShowSignupPrompt] = useState(false);
   const [showProUpgradePrompt, setShowProUpgradePrompt] = useState(false);
