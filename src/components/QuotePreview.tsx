@@ -82,6 +82,7 @@ interface QuotePreviewProps {
   backgroundOpacity: number;
   backgroundBlur?: number;
   backgroundFilter?: string;
+  filterIntensity?: number;
   fontSize: number;
   textAlign: "left" | "center" | "right";
   letterSpacing: number;
