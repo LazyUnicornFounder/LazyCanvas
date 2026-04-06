@@ -51,6 +51,20 @@ export function AppSidebar({
   const { state, toggleSidebar } = useSidebar();
   const collapsed = state === "collapsed";
 
+  // Fetch what's new posts
+  const [whatsNewPosts, setWhatsNewPosts] = useState<{ id: string; title: string; content: string; published_at: string | null }[]>([]);
+  const [whatsNewOpen, setWhatsNewOpen] = useState(false);
+
+  useEffect(() => {
+    supabase
+      .from("whats_new_posts")
+      .select("id, title, content, published_at")
+      .eq("is_published", true)
+      .order("published_at", { ascending: false })
+      .limit(5)
+      .then(({ data }) => { if (data) setWhatsNewPosts(data); });
+  }, []);
+
   const currentTier = isPro ? "Pro" : "Free";
   const { images: userImages, uploading: uploadingImage, uploadImage, deleteImage: deleteUserImage } = useUserImages();
   const imageInputRef = useRef<HTMLInputElement>(null);
