@@ -1168,7 +1168,7 @@ const DesignEditor = ({ state: rawState, onChange, isPro = false, onDownload, do
     return (
       <div ref={editorRootRef} className="relative">
         {/* Bottom sheet panel overlay */}
-        {activePanel && (
+        {activePanel && createPortal(
           <>
             <div
               className="fixed inset-0 bg-black/40 z-[45]"
@@ -1187,7 +1187,8 @@ const DesignEditor = ({ state: rawState, onChange, isPro = false, onDownload, do
                 {panelInner}
               </div>
             </div>
-          </>
+          </>,
+          document.body
         )}
 
         {/* Fixed bottom tab bar */}
