@@ -638,14 +638,6 @@ const Index = () => {
           </div>
         </div>
       </section>
-      {/* Footer */}
-      <section className="border-t border-border px-4 sm:px-6 py-8">
-        <div className="max-w-[1400px] mx-auto">
-          <p className="text-xs text-muted-foreground">
-            © 2026 Lazy Canvas. All rights reserved.
-          </p>
-        </div>
-      </section>
 
       <AuthModal
         open={showAuthModal}
