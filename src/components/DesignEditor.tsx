@@ -583,9 +583,9 @@ const DesignEditor = ({ state: rawState, onChange, isPro = false, onDownload, do
     { id: "units", icon: Ruler, label: "Units" },
   ];
 
-  // Panel content shared between mobile and desktop
-  const panelContent = activePanel ? (
-    <div className="flex-1 min-w-0 overflow-y-auto lg:scrollbar-thin p-3 space-y-4">
+  // Panel inner content — shared between mobile bottom sheet and desktop sidebar
+  const panelInner = activePanel ? (
+    <>
 
           {activePanel === "text" && (
             <ControlSection label="Text">
