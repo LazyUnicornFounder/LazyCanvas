@@ -569,7 +569,7 @@ const DesignEditor = ({ state: rawState, onChange, isPro = false }: DesignEditor
   return (
     <div className="flex h-full">
       {/* Thin icon sidebar */}
-      <div className="flex flex-col items-center gap-1 py-2.5 px-2 border-r border-border bg-card/50 flex-shrink-0 w-16">
+      <div className="flex flex-col items-center gap-1.5 py-3 px-2.5 border-r border-border bg-card/50 flex-shrink-0 w-24">
         {PANELS.map((panel) => {
           const Icon = panel.icon;
           const isActive = activePanel === panel.id;
@@ -578,7 +578,7 @@ const DesignEditor = ({ state: rawState, onChange, isPro = false }: DesignEditor
               key={panel.id}
               onClick={() => setActivePanel(isActive ? null : panel.id)}
               onMouseEnter={() => setActivePanel(panel.id)}
-              className={`flex flex-col items-center gap-1 p-2 rounded-md transition-all w-full ${
+              className={`flex flex-col items-center gap-1.5 p-2.5 rounded-md transition-all w-full ${
                 isActive
                   ? "bg-foreground text-background"
                   : "text-muted-foreground hover:text-foreground hover:bg-accent"
@@ -586,7 +586,7 @@ const DesignEditor = ({ state: rawState, onChange, isPro = false }: DesignEditor
               title={panel.label}
             >
               <Icon className="w-5 h-5 shrink-0" />
-              <span className="w-full max-w-full text-center text-[9px] font-heading font-medium leading-[1.05] whitespace-normal break-words">
+              <span className="text-center text-[10px] font-heading font-medium leading-none whitespace-nowrap">
                 {panel.label}
               </span>
             </button>
