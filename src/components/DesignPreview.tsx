@@ -356,7 +356,7 @@ const renderColoredQuote = (text: string, coloredWords: ColoredWord[] = [], show
 };
 
 const DesignPreview = forwardRef<HTMLDivElement, DesignPreviewProps>(
-  ({ quote, authorName, authorPhoto, photoShape = "none", socials, socialPlatform, aspectRatio, font, theme, backgroundImage, backgroundOpacity, backgroundBlur = 0, backgroundFilter = "none", filterIntensity = 1, fontSize, textAlign, letterSpacing, lineHeight, textColor, authorFontSize, authorColor, authorFont, textShadow, shadowOpacity = 1, authorPosition, backgroundColor, isBold, isItalic, coloredWords, showWatermark, showQuotationMarks = false, photoStroke = false, customWidth, customHeight, borderWidth = 0, borderColor = "#000000", borderStyle = "none", logo, logoPosition = "bottom-right", logoSize = 2.5, onAutoFontSize }, ref) => {
+  ({ quote, authorName, authorPhoto, photoShape = "none", socials, socialPlatform, aspectRatio, font, theme, backgroundImage, backgroundOpacity, backgroundBlur = 0, backgroundFilter = "none", filterIntensity = 1, fontSize, textAlign, letterSpacing, lineHeight, textColor, authorFontSize, authorColor, authorFont, textShadow, shadowOpacity = 1, authorPosition, backgroundColor, isBold, isItalic, coloredWords, showWatermark, showQuotationMarks = false, photoStroke = false, customWidth, customHeight, borderWidth = 0, borderColor = "#000000", borderStyle = "none", logo, logoPosition = "bottom-right", logoSize = 2.5, onAutoFontSize, textOffsetX = 0, textOffsetY = 0, authorOffsetX = 0, authorOffsetY = 0, logoOffsetX = 0, logoOffsetY = 0, onOffsetChange }, ref) => {
     const t = themeStyles[theme];
     const isPlaceholder = !quote;
 
@@ -367,6 +367,43 @@ const DesignPreview = forwardRef<HTMLDivElement, DesignPreviewProps>(
     const peakVisualRef = useRef(0);
     const lastSafeFontSizeRef = useRef(0);
     const nonFontDepsKeyRef = useRef("");
+
+    // Drag state
+    const [dragging, setDragging] = useState<{ target: "text" | "author" | "logo"; startX: number; startY: number; origX: number; origY: number } | null>(null);
+
+    useEffect(() => {
+      if (!dragging || !onOffsetChange) return;
+      const handleMove = (e: MouseEvent) => {
+        const outerEl = (ref as React.RefObject<HTMLDivElement>)?.current || containerRef.current?.parentElement?.parentElement;
+        if (!outerEl) return;
+        const rect = outerEl.getBoundingClientRect();
+        const dx = ((e.clientX - dragging.startX) / rect.width) * 100;
+        const dy = ((e.clientY - dragging.startY) / rect.height) * 100;
+        if (dragging.target === "text") {
+          onOffsetChange("text", dragging.origX + dx, dragging.origY + dy);
+        } else if (dragging.target === "author") {
+          onOffsetChange("author", dragging.origX + dx, dragging.origY + dy);
+        } else if (dragging.target === "logo") {
+          onOffsetChange("logo", dragging.origX + dx, dragging.origY + dy);
+        }
+      };
+      const handleUp = () => setDragging(null);
+      window.addEventListener("mousemove", handleMove);
+      window.addEventListener("mouseup", handleUp);
+      return () => {
+        window.removeEventListener("mousemove", handleMove);
+        window.removeEventListener("mouseup", handleUp);
+      };
+    }, [dragging, onOffsetChange, ref]);
+
+    const startDrag = (target: "text" | "author" | "logo", e: React.MouseEvent) => {
+      if (!onOffsetChange) return;
+      e.preventDefault();
+      e.stopPropagation();
+      const origX = target === "text" ? textOffsetX : target === "author" ? authorOffsetX : logoOffsetX;
+      const origY = target === "text" ? textOffsetY : target === "author" ? authorOffsetY : logoOffsetY;
+      setDragging({ target, startX: e.clientX, startY: e.clientY, origX, origY });
+    };
 
     // Force re-render when font finishes loading
     useEffect(() => {
