@@ -1170,10 +1170,10 @@ const DesignEditor = ({ state: rawState, onChange, isPro = false, onDownload, do
         {activePanel && (
           <>
             <div
-              className="fixed inset-0 bg-black/40 z-40"
+              className="fixed inset-0 bg-black/40 z-[45]"
               onClick={() => setActivePanel(null)}
             />
-            <div className="fixed bottom-[60px] left-0 right-0 z-50 bg-card border-t border-border rounded-t-2xl shadow-2xl max-h-[60vh] overflow-y-auto animate-in slide-in-from-bottom-4 duration-200">
+            <div className="fixed bottom-[60px] left-0 right-0 z-[48] bg-card border-t border-border rounded-t-2xl shadow-2xl max-h-[60vh] overflow-y-auto animate-in slide-in-from-bottom-4 duration-200">
               <div className="sticky top-0 bg-card z-10 flex items-center justify-between px-4 py-2 border-b border-border">
                 <span className="text-xs font-heading font-semibold uppercase tracking-widest">
                   {PANELS.find(p => p.id === activePanel)?.label}
