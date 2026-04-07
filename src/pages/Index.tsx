@@ -455,8 +455,8 @@ const Index = () => {
       </header>
 
       {/* Mobile sticky preview */}
-      <div className="lg:hidden sticky top-0 z-20 bg-background border-b border-border px-4 py-3">
-        <div className="max-w-[280px] max-h-[50vh] mx-auto overflow-hidden rounded-lg relative">
+      <div className="lg:hidden sticky top-0 z-20 bg-background border-b border-border px-4 py-3 pb-3 mb-0">
+        <div className="max-w-[340px] max-h-[55vh] mx-auto overflow-hidden rounded-lg relative">
             <DesignPreview
               key={`mobile-${editorState.font}-${editorState.authorFont}-${editorState.isBold}-${editorState.isItalic}`}
               ref={mobilePreviewRef}
@@ -510,7 +510,7 @@ const Index = () => {
               onAutoFontSize={(size) => setEditorState((prev) => ({ ...prev, fontSize: size }))}
             />
         </div>
-        <div className="relative w-full mt-2 max-w-[280px] mx-auto flex gap-2">
+        <div className="relative w-full mt-2 max-w-[340px] mx-auto flex gap-2">
           {user && (
             <button
               onClick={handleLockedEditAttempt}
