@@ -5,7 +5,7 @@ export function SiteFooter() {
     <footer className="border-t border-border mt-auto">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-3">
         <span className="text-xs text-muted-foreground">
-          © {new Date().getFullYear()} LazyCanvas. All rights reserved.
+          © 2026 Lazy Canvas. All rights reserved.
         </span>
         <div className="flex items-center gap-4">
           <Link to="/terms" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
