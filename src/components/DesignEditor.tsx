@@ -583,51 +583,9 @@ const DesignEditor = ({ state: rawState, onChange, isPro = false, onDownload, do
     { id: "units", icon: Ruler, label: "Units" },
   ];
 
-  return (
-    <div ref={editorRootRef} className="flex h-full">
-      {/* Thin icon sidebar */}
-      <div className="flex flex-col items-center gap-1.5 py-3 px-2.5 border-r border-border bg-card/50 flex-shrink-0 w-24 justify-between">
-        {PANELS.map((panel) => {
-          const Icon = panel.icon;
-          const isActive = activePanel === panel.id;
-          return (
-            <button
-              key={panel.id}
-              onClick={() => setActivePanel(isActive ? null : panel.id)}
-              onMouseEnter={() => setActivePanel(panel.id)}
-              className={`flex flex-col items-center gap-1.5 p-2.5 rounded-md transition-all w-full ${
-                isActive
-                  ? "bg-foreground text-background"
-                  : "text-muted-foreground hover:text-foreground hover:bg-accent"
-              }`}
-              title={panel.label}
-            >
-              <Icon className="w-5 h-5 shrink-0" />
-              <span className="text-center text-[10px] font-heading font-medium leading-none whitespace-nowrap">
-                {panel.label}
-              </span>
-            </button>
-          );
-        })}
-        <div className="flex-1" />
-        {onDownload && (
-          <button
-            onClick={onDownload}
-            disabled={downloading}
-            className="flex flex-col items-center gap-1.5 p-2.5 rounded-md transition-all w-full bg-foreground text-background hover:opacity-90 disabled:opacity-50"
-            title="Download"
-          >
-            <Download className="w-5 h-5 shrink-0" />
-            <span className="text-center text-[10px] font-heading font-medium leading-none whitespace-nowrap">
-              {downloading ? "Exporting…" : "Download"}
-            </span>
-          </button>
-        )}
-      </div>
-
-      {/* Expandable panel content */}
-      {activePanel && (
-        <div className="flex-1 min-w-0 overflow-y-auto lg:scrollbar-thin p-3 space-y-4">
+  // Panel content shared between mobile and desktop
+  const panelContent = activePanel ? (
+    <div className="flex-1 min-w-0 overflow-y-auto lg:scrollbar-thin p-3 space-y-4">
 
           {activePanel === "text" && (
             <ControlSection label="Text">
