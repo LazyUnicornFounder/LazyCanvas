@@ -605,6 +605,20 @@ const DesignEditor = ({ state: rawState, onChange, isPro = false, onDownload, do
             </button>
           );
         })}
+        <div className="flex-1" />
+        {onDownload && (
+          <button
+            onClick={onDownload}
+            disabled={downloading}
+            className="flex flex-col items-center gap-1.5 p-2.5 rounded-md transition-all w-full bg-foreground text-background hover:opacity-90 disabled:opacity-50"
+            title="Download"
+          >
+            <Download className="w-5 h-5 shrink-0" />
+            <span className="text-center text-[10px] font-heading font-medium leading-none whitespace-nowrap">
+              {downloading ? "Exporting…" : "Download"}
+            </span>
+          </button>
+        )}
       </div>
 
       {/* Expandable panel content */}
