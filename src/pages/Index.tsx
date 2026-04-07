@@ -585,10 +585,10 @@ const Index = () => {
         </div>
       </div>
 
-      <section className="min-h-[calc(100vh-4rem)] flex px-4 sm:px-6">
-        <div className="max-w-[1800px] mx-auto w-full flex gap-6 lg:gap-8 py-4">
+      <section className="min-h-[calc(100vh-4rem)] flex justify-center px-4 sm:px-6">
+        <div className="w-full flex gap-6 lg:gap-8 py-4">
           {/* Left — editor (fixed narrow width) */}
-          <div className="hidden lg:flex flex-col flex-shrink-0 w-[420px] xl:w-[460px]">
+          <div className="hidden lg:flex flex-col flex-shrink-0 w-[360px] xl:w-[400px]">
             <div className="flex-1 min-h-0 overflow-y-auto lg:scrollbar-thin">
               <DesignEditor state={editorState} onChange={handleEditorChange} isPro={isPro} />
             </div>
@@ -600,8 +600,8 @@ const Index = () => {
             </div>
           </div>
           {/* Preview — right (fills remaining space) */}
-          <div className="hidden lg:flex flex-1 min-w-0 flex-col gap-3 sticky top-6 self-start transition-all duration-300 items-center justify-center">
-            <div className="overflow-hidden relative" style={{ width: getPreviewContainerWidth(editorState.aspectRatio, editorState.customWidth, editorState.customHeight), maxWidth: '100%' }}>
+           <div className="hidden lg:flex flex-1 min-w-0 flex-col gap-3 sticky top-6 self-start transition-all duration-300 items-center justify-center mx-auto">
+            <div className="overflow-hidden relative mx-auto" style={{ width: getPreviewContainerWidth(editorState.aspectRatio, editorState.customWidth, editorState.customHeight), maxWidth: '100%' }}>
                 <DesignPreview
                   key={`desktop-${editorState.font}-${editorState.authorFont}-${editorState.isBold}-${editorState.isItalic}`}
                   ref={previewRef}
