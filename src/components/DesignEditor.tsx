@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { Image as ImageIcon, X, Upload, Smile, Plus, Palette, Rainbow, LayoutGrid, Eraser, Loader2, Search, Trash2, FolderOpen } from "lucide-react";
+import { Image as ImageIcon, X, Upload, Smile, Plus, Palette, Rainbow, LayoutGrid, Eraser, Loader2, Search, Trash2, FolderOpen, Type, User, Square, Ruler, SlidersHorizontal, Layers, Camera } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { EMOJI_CATEGORIES } from "@/data/emojis";
 import TemplateLibrary from "@/components/TemplateLibrary";
