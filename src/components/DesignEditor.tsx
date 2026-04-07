@@ -889,7 +889,6 @@ const DesignEditor = ({ state: rawState, onChange, isPro = false }: DesignEditor
           )}
 
           {activePanel === "theme" && (
-            <>
               <ControlSection label="Theme">
                 <div className="flex flex-wrap gap-3">
                   {THEME_OPTIONS.map((opt) => (
@@ -900,30 +899,32 @@ const DesignEditor = ({ state: rawState, onChange, isPro = false }: DesignEditor
                   ))}
                 </div>
               </ControlSection>
-              <ControlSection label="Border">
-                <div className="space-y-3">
-                  <div className="flex flex-wrap gap-2">
-                    {(["none", "solid", "dashed", "dotted", "double"] as const).map((style) => (
-                      <button key={style} onClick={() => set("borderStyle", style)} className={`px-2.5 py-1.5 text-xs font-heading rounded-md border transition-all capitalize ${state.borderStyle === style ? "border-foreground bg-foreground/10 text-foreground" : "border-border text-muted-foreground hover:text-foreground hover:border-foreground/30"}`}>{style}</button>
-                    ))}
-                  </div>
-                  {state.borderStyle !== "none" && (
-                    <>
-                      <div className="flex items-center gap-3">
-                        <label className="text-xs text-muted-foreground font-heading w-14">Width</label>
-                        <input type="range" min={1} max={20} step={1} value={state.borderWidth} onChange={(e) => set("borderWidth", Number(e.target.value))} className="w-1/2 max-w-[140px] accent-foreground h-1" />
-                        <span className="text-xs text-muted-foreground w-8 text-right">{state.borderWidth}px</span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <label className="text-xs text-muted-foreground font-heading w-14">Color</label>
-                        <input type="color" value={state.borderColor} onChange={(e) => set("borderColor", e.target.value)} className="w-8 h-8 rounded-md border border-border cursor-pointer bg-transparent" />
-                        <span className="text-xs text-muted-foreground">{state.borderColor}</span>
-                      </div>
-                    </>
-                  )}
+          )}
+
+          {activePanel === "border" && (
+            <ControlSection label="Border">
+              <div className="space-y-3">
+                <div className="flex flex-wrap gap-2">
+                  {(["none", "solid", "dashed", "dotted", "double"] as const).map((style) => (
+                    <button key={style} onClick={() => set("borderStyle", style)} className={`px-2.5 py-1.5 text-xs font-heading rounded-md border transition-all capitalize ${state.borderStyle === style ? "border-foreground bg-foreground/10 text-foreground" : "border-border text-muted-foreground hover:text-foreground hover:border-foreground/30"}`}>{style}</button>
+                  ))}
                 </div>
-              </ControlSection>
-            </>
+                {state.borderStyle !== "none" && (
+                  <>
+                    <div className="flex items-center gap-3">
+                      <label className="text-xs text-muted-foreground font-heading w-14 shrink-0">Width</label>
+                      <input type="range" min={1} max={20} step={1} value={state.borderWidth} onChange={(e) => set("borderWidth", Number(e.target.value))} className="flex-1 min-w-0 accent-foreground h-1" />
+                      <span className="text-xs text-muted-foreground w-8 text-right">{state.borderWidth}px</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <label className="text-xs text-muted-foreground font-heading w-14 shrink-0">Color</label>
+                      <input type="color" value={state.borderColor} onChange={(e) => set("borderColor", e.target.value)} className="w-8 h-8 rounded-md border border-border cursor-pointer bg-transparent" />
+                      <span className="text-xs text-muted-foreground">{state.borderColor}</span>
+                    </div>
+                  </>
+                )}
+              </div>
+            </ControlSection>
           )}
 
           {activePanel === "colors" && (
