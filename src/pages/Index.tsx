@@ -558,16 +558,16 @@ const Index = () => {
         </div>
       </div>
 
-      <section className="min-h-[calc(100vh-4rem)] px-4 sm:px-6">
+      <section className="min-h-[calc(100vh-4rem)] px-4 sm:px-6 pb-[70px] lg:pb-0">
         <div className="w-full flex gap-6 py-4">
-          {/* Left — editor */}
+          {/* Left — editor (desktop) */}
           <div data-editor-column className="hidden lg:flex flex-col flex-shrink-0 w-[456px] xl:w-[496px]">
             <div className="flex-1 min-h-0 overflow-y-auto lg:scrollbar-thin">
               <DesignEditor state={editorState} onChange={handleEditorChange} isPro={isPro} onDownload={() => handleDownloadClick(3)} downloading={downloading} />
             </div>
           </div>
-          {/* Mobile editor — bottom tab bar handled by DesignEditor */}
-          <div className="lg:hidden">
+          {/* Mobile editor — fixed bottom tab bar */}
+          <div className="lg:hidden fixed bottom-0 left-0 right-0 z-30">
             <DesignEditor state={editorState} onChange={handleEditorChange} isPro={isPro} onDownload={() => handleDownloadClick(3)} downloading={downloading} />
           </div>
           {/* Preview — right (fills remaining space) */}
