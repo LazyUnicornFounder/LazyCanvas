@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
+import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
 import { Image as ImageIcon, X, Upload, Smile, Plus, Palette, Rainbow, LayoutGrid, Eraser, Loader2, Search, Trash2, FolderOpen, Type, User, Square, Ruler, SlidersHorizontal, Layers, Camera, Download } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -583,9 +584,9 @@ const DesignEditor = ({ state: rawState, onChange, isPro = false, onDownload, do
     { id: "units", icon: Ruler, label: "Units" },
   ];
 
-  // Panel content shared between mobile and desktop
-  const panelContent = activePanel ? (
-    <div className="flex-1 min-w-0 overflow-y-auto lg:scrollbar-thin p-3 space-y-4">
+  // Panel inner content — shared between mobile bottom sheet and desktop sidebar
+  const panelInner = activePanel ? (
+    <>
 
           {activePanel === "text" && (
             <ControlSection label="Text">
@@ -1159,7 +1160,7 @@ const DesignEditor = ({ state: rawState, onChange, isPro = false, onDownload, do
             </ControlSection>
           )}
 
-        </div>
+    </>
   ) : null;
 
   // ── Mobile layout: bottom tab bar + sliding panel ──
@@ -1167,13 +1168,13 @@ const DesignEditor = ({ state: rawState, onChange, isPro = false, onDownload, do
     return (
       <div ref={editorRootRef} className="relative">
         {/* Bottom sheet panel overlay */}
-        {activePanel && (
+        {activePanel && createPortal(
           <>
             <div
-              className="fixed inset-0 bg-black/40 z-40"
+              className="fixed inset-0 bg-black/40 z-[45]"
               onClick={() => setActivePanel(null)}
             />
-            <div className="fixed bottom-[60px] left-0 right-0 z-50 bg-card border-t border-border rounded-t-2xl shadow-2xl max-h-[60vh] overflow-y-auto animate-in slide-in-from-bottom-4 duration-200">
+            <div className="fixed bottom-[60px] left-0 right-0 z-[48] bg-card border-t border-border rounded-t-2xl shadow-2xl max-h-[60vh] overflow-y-auto animate-in slide-in-from-bottom-4 duration-200">
               <div className="sticky top-0 bg-card z-10 flex items-center justify-between px-4 py-2 border-b border-border">
                 <span className="text-xs font-heading font-semibold uppercase tracking-widest">
                   {PANELS.find(p => p.id === activePanel)?.label}
@@ -1183,14 +1184,15 @@ const DesignEditor = ({ state: rawState, onChange, isPro = false, onDownload, do
                 </button>
               </div>
               <div className="p-3 space-y-4">
-                {panelContent?.props?.children}
+                {panelInner}
               </div>
             </div>
-          </>
+          </>,
+          document.body
         )}
 
         {/* Fixed bottom tab bar */}
-        <div className="fixed bottom-0 left-0 right-0 z-40 bg-card border-t border-border safe-area-pb">
+        <div className="fixed bottom-0 left-0 right-0 z-50 bg-card border-t border-border safe-area-pb">
           <div className="flex items-center overflow-x-auto scrollbar-none gap-0.5 px-1 py-1.5">
             {PANELS.map((panel) => {
               const Icon = panel.icon;
@@ -1262,7 +1264,11 @@ const DesignEditor = ({ state: rawState, onChange, isPro = false, onDownload, do
       </div>
 
       {/* Expandable panel content */}
-      {panelContent}
+      {activePanel && (
+        <div className="flex-1 min-w-0 overflow-y-auto lg:scrollbar-thin p-3 space-y-4">
+          {panelInner}
+        </div>
+      )}
     </div>
   );
 };
