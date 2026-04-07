@@ -619,7 +619,19 @@ const DesignPreview = forwardRef<HTMLDivElement, DesignPreviewProps>(
         <div className="absolute inset-0 flex flex-col" style={{ padding: `clamp(${12 + (borderStyle !== "none" && borderWidth > 0 ? borderWidth * 1.5 : 0)}px, ${4 + (borderStyle !== "none" && borderWidth > 0 ? borderWidth * 0.8 : 0)}%, ${32 + (borderStyle !== "none" && borderWidth > 0 ? borderWidth * 1.5 : 0)}px)` }}>
           {/* Design content */}
           <div ref={containerRef} className="flex-1 flex items-center justify-center relative z-10 overflow-hidden">
-            <div ref={contentRef} style={{ textAlign, maxWidth: "90%", width: "90%", transform: `scale(${scale})`, transformOrigin: "center center", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", willChange: scale < 1 ? "transform" : undefined }}>
+            <div
+              ref={contentRef}
+              style={{
+                textAlign, maxWidth: "90%", width: "90%",
+                transform: `scale(${scale}) translate(${textOffsetX}%, ${textOffsetY}%)`,
+                transformOrigin: "center center",
+                display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+                willChange: scale < 1 || dragging?.target === "text" ? "transform" : undefined,
+                cursor: onOffsetChange ? (dragging?.target === "text" ? "grabbing" : "grab") : undefined,
+                userSelect: dragging ? "none" as const : undefined,
+              }}
+              onMouseDown={(e) => startDrag("text", e)}
+            >
               <p
                 className={`${fontClasses[font]} ${isPlaceholder ? "opacity-40" : ""} m-0 whitespace-pre-wrap break-words`}
                 style={{
