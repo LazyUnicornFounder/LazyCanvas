@@ -1262,7 +1262,11 @@ const DesignEditor = ({ state: rawState, onChange, isPro = false, onDownload, do
       </div>
 
       {/* Expandable panel content */}
-      {panelContent}
+      {activePanel && (
+        <div className="flex-1 min-w-0 overflow-y-auto lg:scrollbar-thin p-3 space-y-4">
+          {panelInner}
+        </div>
+      )}
     </div>
   );
 };
