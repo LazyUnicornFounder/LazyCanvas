@@ -557,14 +557,11 @@ const DesignEditor = ({ state: rawState, onChange, isPro = false, onDownload, do
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
-      const target = e.target as Node;
-      // Close panel only when clicking truly outside — not in the editor itself or its parent column container
-      const editorColumn = editorRootRef.current?.closest('.flex.flex-col.flex-shrink-0');
-      const isInsideEditor = editorRootRef.current?.contains(target);
-      const isInsideColumn = editorColumn?.contains(target);
-      if (!isInsideEditor && !isInsideColumn) {
-        setActivePanel(null);
-      }
+      const target = e.target as HTMLElement;
+      // Close panel only when clicking truly outside the editor column
+      if (target.closest?.('[data-editor-column]')) return;
+      if (editorRootRef.current?.contains(target)) return;
+      setActivePanel(null);
     };
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
