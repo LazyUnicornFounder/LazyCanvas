@@ -47,7 +47,7 @@ const getPreviewContainerWidth = (aspectRatio: string, customW?: number, customH
   if (!ratio) ratio = 1;
   // Height-first: fill viewport height, compute width from ratio
   const offsetPx = 100;
-  return `clamp(180px, calc((100vh - ${offsetPx}px) * ${ratio.toFixed(4)}), 500px)`;
+  return `clamp(180px, calc((100vh - ${offsetPx}px) * ${ratio.toFixed(4)}), 700px)`;
 };
 
 const sanitizeExportStyles = (root: ParentNode) => {
@@ -594,16 +594,22 @@ const Index = () => {
       </div>
 
       <section className="min-h-[calc(100vh-4rem)] flex px-4 sm:px-6">
-        <div className="max-w-[1400px] mx-auto w-full flex gap-8 lg:gap-12 py-4">
-          {/* Left — editor */}
-          <div className="flex-1 min-w-0 flex flex-col">
+        <div className="max-w-[1800px] mx-auto w-full flex gap-6 lg:gap-8 py-4">
+          {/* Left — editor (fixed narrow width) */}
+          <div className="hidden lg:flex flex-col flex-shrink-0 w-[340px] xl:w-[380px]">
+            <div className="flex-1 min-h-0 overflow-y-auto lg:scrollbar-thin">
+              <DesignEditor state={editorState} onChange={handleEditorChange} isPro={isPro} />
+            </div>
+          </div>
+          {/* Mobile editor */}
+          <div className="flex-1 min-w-0 flex flex-col lg:hidden">
             <div className="flex-1 min-h-0">
               <DesignEditor state={editorState} onChange={handleEditorChange} isPro={isPro} />
             </div>
           </div>
-          {/* Preview — right */}
-          <div className="hidden lg:flex flex-shrink-0 flex-col gap-3 sticky top-6 self-start transition-all duration-300" style={{ width: getPreviewContainerWidth(editorState.aspectRatio, editorState.customWidth, editorState.customHeight) }}>
-            <div className="w-full overflow-hidden relative">
+          {/* Preview — right (fills remaining space) */}
+          <div className="hidden lg:flex flex-1 min-w-0 flex-col gap-3 sticky top-6 self-start transition-all duration-300 items-center justify-start">
+            <div className="overflow-hidden relative" style={{ width: getPreviewContainerWidth(editorState.aspectRatio, editorState.customWidth, editorState.customHeight), maxWidth: '100%' }}>
                 <DesignPreview
                   key={`desktop-${editorState.font}-${editorState.authorFont}-${editorState.isBold}-${editorState.isItalic}`}
                   ref={previewRef}
