@@ -728,7 +728,7 @@ const DesignEditor = ({ state: rawState, onChange, isPro = false, onDownload, do
           )}
 
           {activePanel === "templates" && (
-            <ControlSection label="Templates" pro={!isPro} onProClick={goToPricing}>
+            <ControlSection label="Templates">
               <TemplateLibrary
                 onApply={(partial) => {
                   onChange({
@@ -742,7 +742,7 @@ const DesignEditor = ({ state: rawState, onChange, isPro = false, onDownload, do
                 }}
               />
               <div className="mt-3">
-                <ControlSection label="Wallpapers" pro={!isPro} onProClick={goToPricing}>
+                <ControlSection label="Wallpapers">
                   <div className="flex flex-wrap gap-2">
                     {WALLPAPER_CATEGORIES.map((cat) => (
                       <button
@@ -822,7 +822,7 @@ const DesignEditor = ({ state: rawState, onChange, isPro = false, onDownload, do
           )}
 
           {activePanel === "background" && (
-            <ControlSection label="Background" pro={!isPro} onProClick={goToPricing}>
+            <ControlSection label="Background">
               <input ref={bgInputRef} type="file" accept="image/*" onChange={handleBgUpload} className="hidden" />
               <div className="space-y-3">
                 <div className="flex flex-wrap items-center gap-2 sm:gap-3">
@@ -918,7 +918,7 @@ const DesignEditor = ({ state: rawState, onChange, isPro = false, onDownload, do
           )}
 
           {activePanel === "colors" && (
-            <ControlSection label="Word Colors" pro={!isPro} onProClick={goToPricing}>
+            <ControlSection label="Word Colors">
               <p className="text-[10px] text-muted-foreground mb-2">Color specific words or phrases in your text.</p>
               <div className="space-y-2">
                 {(state.coloredWords || []).map((cw, i) => (
@@ -1026,7 +1026,7 @@ const DesignEditor = ({ state: rawState, onChange, isPro = false, onDownload, do
                 </div>
               </ControlSection>
 
-              <ControlSection label="Logo" pro={!isPro} onProClick={goToPricing}>
+              <ControlSection label="Logo">
                 <input ref={logoInputRef} type="file" accept="image/*" onChange={handleLogoUpload} className="hidden" />
                 <div className="space-y-2">
                   <div className="flex items-center gap-3">
@@ -1078,7 +1078,7 @@ const DesignEditor = ({ state: rawState, onChange, isPro = false, onDownload, do
           )}
 
           {activePanel === "format" && (
-            <ControlSection label="Format" pro={!isPro} onProClick={goToPricing}>
+            <ControlSection label="Format">
               {[
                 { heading: "Digital", groups: DIGITAL_FORMAT_GROUPS },
                 { heading: "Physical", groups: PHYSICAL_FORMAT_GROUPS },
