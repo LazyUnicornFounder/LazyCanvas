@@ -728,7 +728,7 @@ const DesignEditor = ({ state: rawState, onChange, isPro = false, onDownload, do
           )}
 
           {activePanel === "templates" && (
-            <ControlSection label="Templates" pro={!isPro} onProClick={goToPricing}>
+            <ControlSection label="Templates">
               <TemplateLibrary
                 onApply={(partial) => {
                   onChange({
