@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
-import { Image as ImageIcon, X, Upload, Smile, Plus, Palette, Rainbow, LayoutGrid, Eraser, Loader2, Search, Trash2, FolderOpen, Type, User, Square, Ruler, SlidersHorizontal, Layers, Camera, Download } from "lucide-react";
+import { Image as ImageIcon, X, Upload, Smile, Plus, Palette, Rainbow, LayoutGrid, Eraser, Loader2, Search, Trash2, FolderOpen, Type, User, Square, Ruler, SlidersHorizontal, Layers, Camera, Download, Film } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { supabase } from "@/integrations/supabase/client";
 import { EMOJI_CATEGORIES } from "@/data/emojis";
@@ -274,6 +274,8 @@ export interface DesignEditorState {
   authorOffsetY: number;
   logoOffsetX: number;
   logoOffsetY: number;
+  reelsText: string;
+  reelsSpeed: number;
 }
 
 export const BG_FILTERS: { value: string; label: string; css: string }[] = [
@@ -345,6 +347,8 @@ export const DEFAULT_EDITOR_STATE: DesignEditorState = {
   authorOffsetY: 0,
   logoOffsetX: 0,
   logoOffsetY: 0,
+  reelsText: "",
+  reelsSpeed: 15,
 };
 
 interface DesignEditorProps {
@@ -581,6 +585,7 @@ const DesignEditor = ({ state: rawState, onChange, isPro = false, onDownload, do
     { id: "photo", icon: Camera, label: "Photo" },
     { id: "border", icon: Square, label: "Border" },
     { id: "format", icon: Layers, label: "Format" },
+    { id: "reels", icon: Film, label: "Reels" },
     { id: "units", icon: Ruler, label: "Units" },
   ];
 
