@@ -717,6 +717,35 @@ const DesignPreview = forwardRef<HTMLDivElement, DesignPreviewProps>(
               </span>
             </div>
           )}
+          {/* Reels scrolling text */}
+          {reelsText && (
+            <div className="absolute inset-0 z-15 overflow-hidden pointer-events-none">
+              <div
+                className="absolute left-0 right-0 reels-scroll-up"
+                style={{
+                  animationDuration: `${reelsSpeed}s`,
+                  padding: "0 clamp(12px, 5%, 32px)",
+                }}
+              >
+                {reelsText.split("\n").map((line, i) => (
+                  <p
+                    key={i}
+                    className={`${fontClasses[font]} m-0 whitespace-pre-wrap`}
+                    style={{
+                      fontFamily: fontFamilies[font],
+                      fontSize: `${Math.max(fontSize * 0.5, 0.7)}rem`,
+                      color: textColor || t.text,
+                      textAlign,
+                      textShadow: getShadowStyle(textShadow, shadowOpacity),
+                      lineHeight: 1.8,
+                    }}
+                  >
+                    {line || "\u00A0"}
+                  </p>
+                ))}
+              </div>
+            </div>
+          )}
           {/* Watermark */}
           {showWatermark && (
             <div
