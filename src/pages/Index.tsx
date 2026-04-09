@@ -288,6 +288,91 @@ const Index = () => {
     }
   }, []);
 
+  const renderReelsVideo = useCallback(async (target: HTMLElement): Promise<Blob> => {
+    const speed = editorState.reelsSpeed;
+    const fps = 30;
+    const totalFrames = speed * fps;
+    // Cap at 900 frames (30s) to keep it reasonable
+    const maxFrames = Math.min(totalFrames, 900);
+
+    // Stop the CSS animation so we can manually position text per frame
+    const reelsEl = target.querySelector('.reels-scroll-up') as HTMLElement | null;
+    if (!reelsEl) throw new Error("No reels element found");
+
+    // Get dimensions from the preview
+    const rect = target.getBoundingClientRect();
+    const scale = 2;
+    const w = Math.round(rect.width * scale);
+    const h = Math.round(rect.height * scale);
+
+    const canvas = document.createElement('canvas');
+    canvas.width = w;
+    canvas.height = h;
+    const ctx = canvas.getContext('2d')!;
+
+    // Pause the CSS animation
+    const origAnimation = reelsEl.style.animation;
+    reelsEl.style.animation = 'none';
+
+    const chunks: Blob[] = [];
+    const stream = canvas.captureStream(0); // 0 = manual frame capture
+    const recorder = new MediaRecorder(stream, { mimeType: 'video/webm;codecs=vp9', videoBitsPerSecond: 5_000_000 });
+    recorder.ondataavailable = (e) => { if (e.data.size > 0) chunks.push(e.data); };
+
+    const done = new Promise<Blob>((resolve) => {
+      recorder.onstop = () => resolve(new Blob(chunks, { type: 'video/webm' }));
+    });
+
+    recorder.start();
+
+    for (let frame = 0; frame < maxFrames; frame++) {
+      // Progress from 0 (text at bottom) to 1 (text scrolled past top)
+      const progress = frame / maxFrames;
+      // translateY from 100% to -100%
+      const translateY = 100 - progress * 200;
+      reelsEl.style.transform = `translateY(${translateY}%)`;
+
+      // Wait for paint
+      await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+
+      // Capture frame
+      const frameCanvas = await html2canvas(target, {
+        scale,
+        useCORS: true,
+        logging: false,
+        backgroundColor: null,
+        onclone: (doc) => {
+          doc.querySelectorAll("[data-export-exclude]").forEach((el) => el.remove());
+          sanitizeExportStyles(doc.body);
+          // Apply same transform in cloned doc
+          const clonedReels = doc.querySelector('.reels-scroll-up') as HTMLElement | null;
+          if (clonedReels) {
+            clonedReels.style.animation = 'none';
+            clonedReels.style.transform = `translateY(${translateY}%)`;
+          }
+        },
+      });
+
+      ctx.clearRect(0, 0, w, h);
+      ctx.drawImage(frameCanvas, 0, 0, w, h);
+      (stream.getVideoTracks()[0] as any).requestFrame?.();
+
+      // Update progress toast every 30 frames
+      if (frame % 30 === 0) {
+        const pct = Math.round((frame / maxFrames) * 100);
+        toast.loading(`Recording video… ${pct}%`, { id: 'reels-recording' });
+      }
+    }
+
+    recorder.stop();
+    // Restore animation
+    reelsEl.style.animation = origAnimation;
+    reelsEl.style.transform = '';
+
+    toast.dismiss('reels-recording');
+    return done;
+  }, [editorState.reelsSpeed]);
+
   const performDownloadOnly = useCallback(async (scale: number = 3, showGuestPrompt = true) => {
     const target = previewRef.current || mobilePreviewRef.current;
     if (!target) return;
@@ -295,19 +380,28 @@ const Index = () => {
     setDownloading(true);
 
     try {
-      let blob = await renderPreviewBlob(target, scale);
-      if (!isPro) {
-        blob = await addCanvasWatermark(blob);
+      // If reels text is present, export as video
+      if (editorState.reelsText?.trim()) {
+        toast.loading('Preparing video…', { id: 'reels-recording' });
+        const videoBlob = await renderReelsVideo(target);
+        downloadBlob(videoBlob, `reel-${Date.now()}.webm`);
+        toast.success('Video downloaded!', { id: 'reels-recording' });
+      } else {
+        let blob = await renderPreviewBlob(target, scale);
+        if (!isPro) {
+          blob = await addCanvasWatermark(blob);
+        }
+        const suffix = scale > 3 ? "-print" : "";
+        downloadBlob(blob, `design${suffix}-${Date.now()}.png`);
       }
-      const suffix = scale > 3 ? "-print" : "";
-      downloadBlob(blob, `design${suffix}-${Date.now()}.png`);
-
     } catch (err) {
       console.error("Failed to export", err);
+      toast.dismiss('reels-recording');
+      toast.error('Export failed. Try again.');
     } finally {
       setDownloading(false);
     }
-  }, [downloadBlob, renderPreviewBlob, user, isPro, addCanvasWatermark]);
+  }, [downloadBlob, renderPreviewBlob, user, isPro, addCanvasWatermark, editorState.reelsText, renderReelsVideo]);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
